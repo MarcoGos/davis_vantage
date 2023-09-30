@@ -1,0 +1,40 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Looks like the weather station isn't reacting, try again.",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "protocol": "Protocol",
+                    "link": "Link",
+                    "interval": "Interval",
+                    "rain_collector": "Rain collector",
+                    "windrose8": "Wind rose with 8 cardinal directions"
+                }
+            },
+            "setup_serial": {
+                "data": {
+                    "link": "Device"
+                }
+            },
+            "setup_network": {
+                "data": {
+                    "link": "Host"
+                }
+            },
+            "setup_other_info": {
+                "data": {
+                    "interval": "Interval",
+                    "rain_collector": "Rain collector",
+                    "windrose8": "Wind rose with 8 cardinal directions"
+                }
+            }
+        }
+    }
+}

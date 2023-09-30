@@ -1,0 +1,17 @@
+{
+  "domain": "davis_vantage",
+  "name": "Davis Vantage",
+  "version": "0.0.1",
+  "config_flow": true,
+  "documentation": "https://github.com/MarcoGos/davis_vantage",
+  "requirements": ["PyVantagePro==0.3.2"],
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "dependencies": [],
+  "codeowners": [
+    "@MarcoGos"
+  ],
+  "iot_class": "",
+  "integration_type": "hub"
+}

@@ -1,0 +1,36 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "link": "[%key:common::config_flow::data::link%]"
+        }
+      },
+      "setup_serial": {
+        "data": {
+          "link": "[%key:common::config_flow::data::link%]"
+        }
+      },
+      "setup_network": {
+        "data": {
+          "link": "[%key:common::config_flow::data::link%]"
+        }
+      },
+      "setup_other_info": {
+        "data": {
+          "interval": "[%key:common::config_flow::data::interval%]",
+          "rain_collector": "[%key:common::config_flow::data::rain_collector%]",
+          "windrose8": "[%key:common::config_flow::data::windrose8%]"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    }
+  }
+}

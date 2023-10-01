@@ -2,7 +2,7 @@
 
 # Davis Vantage
 
-This is a custom integration for the Davis Vantage Pro2 and Vue.
+This is a custom integration for the Davis Vantage Pro2 and Vue. Either use a serial port or use an ip adress to connect to your device. Tested with the Vantage Pro 2 combined with a Davis WeatherLink 6510SER serial port data logger (connected via a ser2usb converter to the ha server) and with a Vantage Vue combined with a WeatherLink IP. Probably works with the WeatherLink 6510USB as well. Other models unsure.
 
 ## Installation
 

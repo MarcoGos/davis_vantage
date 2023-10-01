@@ -15,11 +15,9 @@ Via HACS:
 
 ## Setup
 
-During the setup of the integration the serial port of the weather station needs to be provided.
+During the setup of the integration the serial port or the hostname of the weather station needs to be provided.
 
-Examples:
-- tcp:192.168.0.18:1111
-- serial:/dev/ttyUSB0:19200:8N1
+Example network host: 192.168.0.18:1111
 
 ![Setup](/assets/setup.png)
 

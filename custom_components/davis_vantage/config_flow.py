@@ -143,7 +143,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         list_of_rain_collector = [RAIN_COLLECTOR_IMPERIAL, RAIN_COLLECTOR_METRIC]
         STEP_USER_DATA_SCHEMA = vol.Schema(
             {
-                vol.Required("interval", default=DEFAULT_SYNC_INTERVAL): int, #type: ignore
+                vol.Required("interval", default=DEFAULT_SYNC_INTERVAL): vol.All(int, vol.Range(min=5)), #type: ignore
                 vol.Required("rain_collector"): vol.In(list_of_rain_collector),
                 vol.Required("windrose8"): bool
             }

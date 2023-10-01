@@ -34,6 +34,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     link = entry.data.get("link", "")
     rain_collector = entry.data.get("rain_collector", "0.01""")
     windrose8 = entry.data.get("windrose8", False)
+    
+    hass.data[DOMAIN]['interval'] = entry.data.get("interval", 30)
 
     client = DavisVantageClient(hass, protocol, link, rain_collector, windrose8)
 

@@ -9,7 +9,6 @@ from pyvantagepro.parser import LoopDataParserRevB
 
 from .client import DavisVantageClient
 from .const import (
-    DEFAULT_SYNC_INTERVAL,
     DOMAIN,
 )
 
@@ -25,12 +24,13 @@ class DavisVantageDataUpdateCoordinator(DataUpdateCoordinator):
         self.platforms: list[str] = []
         self.last_updated = None
         self.device_info = device_info
+        interval = hass.data[DOMAIN].get('interval', 30)
 
         super().__init__(
             hass,
             _LOGGER,
             name=DOMAIN,
-            update_interval=timedelta(seconds=DEFAULT_SYNC_INTERVAL),
+            update_interval=timedelta(seconds=interval),
         )
 
     async def _async_update_data(self) -> dict[str, Any]:

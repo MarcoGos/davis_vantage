@@ -1,6 +1,7 @@
 from typing import Any
 from datetime import datetime
 import logging
+from time import sleep
 from pyvantagepro import VantagePro2
 from pyvantagepro.parser import LoopDataParserRevB
 
@@ -8,8 +9,6 @@ from homeassistant.core import HomeAssistant
 
 from .utils import *
 from .const import RAIN_COLLECTOR_METRIC, PROTOCOL_NETWORK, PROTOCOL_SERIAL
-
-TIMEOUT = 10
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -34,7 +33,6 @@ class DavisVantageClient:
         data = self._last_data
         try:
             vantagepro2 = VantagePro2.from_url(self.get_link()) # type: ignore
-            # vantagepro2.link.open() # type: ignore
             data = vantagepro2.get_current_data()
             if data:
                 self.add_additional_info(data)
@@ -42,26 +40,28 @@ class DavisVantageClient:
                 data['LastError'] = "No error"
                 self._last_data = data
             else:
-                data['LastError'] = "Couldn't acquire data"
+                data['LastError'] = "Couldn't acquire data, no data received"
         except Exception as e:
-            _LOGGER.warning(f"Couldn't acquire data from {self._link}")
+            _LOGGER.warning(f"Couldn't acquire data from {self.get_link()}")
             data['LastError'] = f"Couldn't acquire data: {e}" # type: ignore
-        # finally:
-            # vantagepro2.link.close() # type: ignore
         return data # type: ignore
 
     async def async_get_davis_time(self) -> datetime | None:
         """Get time from weather station."""
-        data = None
-        try:
-            vantagepro2 = VantagePro2.from_url(self.get_link()) # type: ignore
-            # vantagepro2.link.open() # type: ignore
-            data = vantagepro2.gettime()
-        except Exception:
-            _LOGGER.warning(f"Couldn't acquire data from {self._link}")
-        # finally:
-        #     vantagepro2.link.close() # type: ignore
-        return data
+        tries = 3
+        last_error: Exception = None
+        while tries > 0:
+            try:
+                vantagepro2 = VantagePro2.from_url(self.get_link()) # type: ignore
+                data = vantagepro2.gettime()
+                return data
+            except Exception as e:
+                last_error = e
+                pass
+            sleep(0.2)
+            tries -=1
+        _LOGGER.error(f"Couldn't acquire data from {self.get_link()}: {last_error}")
+        return None
     
     def add_additional_info(self, data: dict[str, Any]) -> None:
         data['HeatIndex'] = calc_heat_index(data['TempOut'], data['HumOut'])

@@ -1,12 +1,12 @@
 {
     "config": {
         "abort": {
-            "already_configured": "Device is already configured."
+            "already_configured": "Apparaat is reeds geconfigureerd."
         },
         "error": {
-            "cannot_connect": "Failed to connect.",
-            "invalid_auth": "Looks like the weather station isn't reacting, try again.",
-            "unknown": "Unexpected error."
+            "cannot_connect": "Kan geen verbinding maken.",
+            "invalid_auth": "Het lijkt erop dat het weerstation niet reageert, probeer het opnieuw.",
+            "unknown": "Onverwachte fout."
         },
         "step": {
             "user": {
@@ -16,19 +16,19 @@
             },
             "setup_serial": {
                 "data": {
-                    "link": "Device"
+                    "link": "Apparaat"
                 }
             },
             "setup_network": {
                 "data": {
-                    "link": "Host"
+                    "link": "Hostnaam"
                 }
             },
             "setup_other_info": {
                 "data": {
                     "interval": "Interval",
-                    "rain_collector": "Rain collector",
-                    "windrose8": "Wind rose with 8 cardinal directions"
+                    "rain_collector": "Regenmeter",
+                    "windrose8": "Windroos met 8 cardinale richtingen"
                 }
             }
         }

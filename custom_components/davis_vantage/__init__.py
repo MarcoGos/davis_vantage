@@ -40,7 +40,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     client = DavisVantageClient(hass, protocol, link, rain_collector, windrose8)
 
     device_info = DeviceInfo(
-        entry_type=DeviceEntryType.SERVICE,
         identifiers={(DOMAIN, entry.entry_id)},
         manufacturer=MANUFACTURER,
         name=NAME,

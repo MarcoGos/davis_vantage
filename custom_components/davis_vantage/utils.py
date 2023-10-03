@@ -252,12 +252,12 @@ def convert_ms_to_bft(windspeed: float) -> int:
 def convert_kmh_to_bft(windspeed_kmh: float) -> int:
     return convert_ms_to_bft(convert_kmh_to_ms(windspeed_kmh))
 
-def contains_correct_data(json_data: dict[str, Any]) -> None:
-    return json_data['OutsideTemp']['value'] < 60 \
-        and json_data['RainRate']['value'] < 1000 \
-        and json_data['WindSpeed']['value'] < 40 \
-        and json_data['OutsideHum']['value'] < 100 \
-        and json_data['WindAvgSpeed']['value'] < 250
+def contains_correct_data(data: dict[str, Any]) -> None:
+    return data['TempOut'] * 10 != 32767 \
+        and data['RainRate'] * 100 != 32767 \
+        and data['WindSpeed'] != 255 \
+        and data['HumOut'] != 255 \
+        and data['WindSpeed10Min'] != 255
 
 def calc_heat_index(temperature_f: float, humidity: float) -> float:
     if temperature_f < 80.0 or humidity < 40.0:

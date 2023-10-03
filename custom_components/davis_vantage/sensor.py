@@ -25,7 +25,7 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
     ),
     SensorEntityDescription(
         key="TempOut",
-        name="Temperature (Outside)",
+        name="Temperature",
         device_class=SensorDeviceClass.TEMPERATURE,
         state_class="measurement",
         native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
@@ -35,9 +35,9 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         key="TempIn",
         name="Temperature (Inside)",
         device_class=SensorDeviceClass.TEMPERATURE,
-        state_class="measurement",
         native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
-        suggested_display_precision=1
+        suggested_display_precision=1,
+        entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
         key="HeatIndex",
@@ -91,13 +91,13 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         key="HumIn",
         name="Humidity (Inside)",
         device_class=SensorDeviceClass.HUMIDITY,
-        state_class="measurement",
         native_unit_of_measurement=PERCENTAGE,
-        suggested_display_precision=0
+        suggested_display_precision=0,
+        entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
         key="HumOut",
-        name="Humidity (Outside)",
+        name="Humidity",
         device_class=SensorDeviceClass.HUMIDITY,
         state_class="measurement",
         native_unit_of_measurement=PERCENTAGE,
@@ -146,7 +146,7 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         name="Rain (Day)",
         icon="mdi:water",
         device_class=SensorDeviceClass.PRECIPITATION,
-        state_class="total_increasing",
+        state_class="measurement",
         native_unit_of_measurement=UnitOfLength.INCHES,
         suggested_display_precision=1
     ),
@@ -154,6 +154,7 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         key="RainMonth",
         name="Rain (Month)",
         icon="mdi:water",
+        state_class="measurement",
         device_class=SensorDeviceClass.PRECIPITATION,
         native_unit_of_measurement=UnitOfLength.INCHES,
         suggested_display_precision=1
@@ -162,6 +163,7 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         key="RainYear",
         name="Rain (Year)",
         icon="mdi:water",
+        state_class="measurement",
         device_class=SensorDeviceClass.PRECIPITATION,
         native_unit_of_measurement=UnitOfLength.INCHES,
         suggested_display_precision=1

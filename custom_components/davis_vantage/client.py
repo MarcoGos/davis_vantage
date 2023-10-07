@@ -4,6 +4,7 @@ import logging
 from time import sleep
 from pyvantagepro import VantagePro2
 from pyvantagepro.parser import LoopDataParserRevB
+import asyncio
 
 from homeassistant.core import HomeAssistant
 
@@ -61,12 +62,25 @@ class DavisVantageClient:
                 return data
             except Exception as e:
                 last_error = e
-                pass
-            # sleep(0.2)
+            asyncio.sleep(1)
             tries -=1
         _LOGGER.error(f"Couldn't acquire data from {self.get_link()}: {last_error}")
         return None
     
+    async def async_set_davis_time(self) -> None:
+        tries = 3
+        last_error: Exception = None
+        while tries > 0:
+            try:
+                vantagepro2 = VantagePro2.from_url(self.get_link())
+                vantagepro2.settime(datetime.now())
+                return
+            except Exception as e:
+                last_error = e
+            asyncio.sleep(1)
+            tries -= 1
+        _LOGGER.error(f"Couldn't acquire data from {self.get_link()}: {last_error}")
+
     def add_additional_info(self, data: dict[str, Any]) -> None:
         data['HeatIndex'] = calc_heat_index(data['TempOut'], data['HumOut'])
         data['WindChill'] = calc_wind_chill(data['TempOut'], data['WindSpeed'])

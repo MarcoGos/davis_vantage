@@ -4,14 +4,15 @@ from typing import Any
 import logging
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.device_registry import DeviceEntryType
+from homeassistant.core import HomeAssistant, ServiceCall, SupportsResponse
 from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.const import Platform
+from homeassistant.const import Platform, CONF_NAME, CONF_URL
+from zoneinfo import ZoneInfo
 
 from .client import DavisVantageClient
-from .const import DOMAIN, NAME, VERSION, MANUFACTURER
+from .const import DOMAIN, NAME, VERSION, MANUFACTURER, SERVICE_SET_DAVIS_TIME, SERVICE_GET_DAVIS_TIME
 from .coordinator import DavisVantageDataUpdateCoordinator
+from .utils import convert_to_iso_datetime
 
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
@@ -53,6 +54,23 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
+
+    async def set_davis_time(call: ServiceCall) -> None:
+        await client.async_set_davis_time()
+
+    async def get_davis_time(call: ServiceCall) -> SupportsResponse:
+        davis_time = await client.async_get_davis_time()
+        if davis_time is not None:
+            return { "davis_time": convert_to_iso_datetime(davis_time, ZoneInfo(hass.config.time_zone)) }
+        else:
+            return { "error": "Couldn't get davis time, please try again later"}
+
+    hass.services.async_register(
+        DOMAIN, SERVICE_SET_DAVIS_TIME, set_davis_time
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_GET_DAVIS_TIME, get_davis_time, supports_response=SupportsResponse.ONLY
+    )
 
     return True
 

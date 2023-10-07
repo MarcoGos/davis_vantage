@@ -1,10 +1,8 @@
 from typing import Any
 from datetime import datetime
 import logging
-from time import sleep
 from pyvantagepro import VantagePro2
 from pyvantagepro.parser import LoopDataParserRevB
-import asyncio
 
 from homeassistant.core import HomeAssistant
 
@@ -62,7 +60,6 @@ class DavisVantageClient:
                 return data
             except Exception as e:
                 last_error = e
-            asyncio.sleep(1)
             tries -=1
         _LOGGER.error(f"Couldn't acquire data from {self.get_link()}: {last_error}")
         return None
@@ -77,7 +74,6 @@ class DavisVantageClient:
                 return
             except Exception as e:
                 last_error = e
-            asyncio.sleep(1)
             tries -= 1
         _LOGGER.error(f"Couldn't acquire data from {self.get_link()}: {last_error}")
 

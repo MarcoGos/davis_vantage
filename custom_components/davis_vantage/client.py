@@ -25,14 +25,16 @@ class DavisVantageClient:
         self._link = link
         self._windrose8 = windrose8
         self._rain_collector = rain_collector
-        self._last_data = {}
+        self._last_data: LoopDataParserRevB = {} # type: ignore
+        self._vantagepro2 = VantagePro2.from_url(self.get_link())
+        self._vantagepro2.link.close()
 
     async def async_get_current_data(self) -> LoopDataParserRevB | None:
         """Get current date from weather station."""
         data = self._last_data
         try:
-            vantagepro2 = VantagePro2.from_url(self.get_link()) # type: ignore
-            new_data = vantagepro2.get_current_data()
+            self._vantagepro2.link.open()
+            new_data = self._vantagepro2.get_current_data()
             if new_data:
                 if contains_correct_data(new_data):
                     self.add_additional_info(new_data)
@@ -45,36 +47,37 @@ class DavisVantageClient:
                 data['LastError'] = "Couldn't acquire data, no data received"
         except Exception as e:
             _LOGGER.warning(f"Couldn't acquire data from {self.get_link()}")
-            data['LastError'] = f"Couldn't acquire data: {e}" # type: ignore
+            data['LastError'] = f"Couldn't acquire data: {e}"
+        finally:
+            self._vantagepro2.link.close()
         self._last_data = data
-        return data # type: ignore
+        return data
 
     async def async_get_davis_time(self) -> datetime | None:
         """Get time from weather station."""
-        tries = 3
-        last_error: Exception = None
-        while tries > 0:
-            try:
-                vantagepro2 = VantagePro2.from_url(self.get_link()) # type: ignore
-                data = vantagepro2.gettime()
-                return data
-            except Exception as e:
-                last_error = e
-            tries -=1
+        try:
+            self._vantagepro2.link.open()
+            data = self._vantagepro2.gettime()
+            self._vantagepro2.link.close()
+            return data
+        except Exception as e:
+            last_error = e
+        finally:
+            self._vantagepro2.link.close()
         _LOGGER.error(f"Couldn't acquire data from {self.get_link()}: {last_error}")
         return None
     
     async def async_set_davis_time(self) -> None:
-        tries = 3
-        last_error: Exception = None
-        while tries > 0:
-            try:
-                vantagepro2 = VantagePro2.from_url(self.get_link())
-                vantagepro2.settime(datetime.now())
-                return
-            except Exception as e:
-                last_error = e
-            tries -= 1
+        """Set time of weather station."""
+        try:
+            self._vantagepro2.link.open()
+            self._vantagepro2.settime(datetime.now())
+            self._vantagepro2.link.close()
+            return
+        except Exception as e:
+            last_error = e
+        finally:
+            self._vantagepro2.link.close()
         _LOGGER.error(f"Couldn't acquire data from {self.get_link()}: {last_error}")
 
     def add_additional_info(self, data: dict[str, Any]) -> None:

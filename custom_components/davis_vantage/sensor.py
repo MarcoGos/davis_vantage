@@ -18,7 +18,7 @@ from .coordinator import DavisVantageDataUpdateCoordinator
 DESCRIPTIONS: list[SensorEntityDescription] = [
     SensorEntityDescription(
         key="Datetime",
-        name="Davis Time",
+        name="Last Updated",
         icon="mdi:clock",
         device_class=SensorDeviceClass.TIMESTAMP,
         entity_category=EntityCategory.DIAGNOSTIC

@@ -365,15 +365,15 @@ def get_forecast_string(wrule: int) -> str:
         wrule = 194
     return ForecastStrings[wrule]
 
-def get_uv(value: int) -> float|bool:
+def get_uv(value: int) -> float:
     if value == 255:
-        return False
+        return None
     else:
         return round(value / 10, 1)
 
-def get_solar_rad(value: int) -> float|bool:
+def get_solar_rad(value: int) -> float:
     if value == 32767:
-        return False
+        return None
     else:
         return value
 

@@ -1,6 +1,7 @@
 from typing import Any
 from datetime import datetime
 import logging
+import asyncio
 from pyvantagepro import VantagePro2
 from pyvantagepro.parser import LoopDataParserRevB
 
@@ -34,7 +35,8 @@ class DavisVantageClient:
         data = self._last_data
         try:
             self._vantagepro2.link.open()
-            new_data = self._vantagepro2.get_current_data()
+            loop = asyncio.get_event_loop()
+            new_data = await loop.run_in_executor(None, self._vantagepro2.get_current_data)
             if new_data:
                 if contains_correct_data(new_data):
                     self.add_additional_info(new_data)
@@ -55,30 +57,27 @@ class DavisVantageClient:
 
     async def async_get_davis_time(self) -> datetime | None:
         """Get time from weather station."""
+        data = None
         try:
             self._vantagepro2.link.open()
-            data = self._vantagepro2.gettime()
-            self._vantagepro2.link.close()
-            return data
+            loop = asyncio.get_event_loop()
+            data = await loop.run_in_executor(None, self._vantagepro2.gettime)
         except Exception as e:
-            last_error = e
+            _LOGGER.error(f"Couldn't get davis time: {e}")
         finally:
             self._vantagepro2.link.close()
-        _LOGGER.error(f"Couldn't acquire data from {self.get_link()}: {last_error}")
-        return None
+        return data
     
     async def async_set_davis_time(self) -> None:
         """Set time of weather station."""
         try:
             self._vantagepro2.link.open()
-            self._vantagepro2.settime(datetime.now())
-            self._vantagepro2.link.close()
-            return
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, self._vantagepro2.settime, datetime.now())
         except Exception as e:
-            last_error = e
+            _LOGGER.error(f"Couldn't set davis time: {e}")
         finally:
             self._vantagepro2.link.close()
-        _LOGGER.error(f"Couldn't acquire data from {self.get_link()}: {last_error}")
 
     def add_additional_info(self, data: dict[str, Any]) -> None:
         data['HeatIndex'] = calc_heat_index(data['TempOut'], data['HumOut'])
@@ -93,6 +92,7 @@ class DavisVantageClient:
         data['Datetime'] = convert_to_iso_datetime(data['Datetime'], ZoneInfo(self._hass.config.time_zone))
         data['BarTrend'] = get_baro_trend(data['BarTrend'])
         data['UV'] = get_uv(data['UV'])
+        data['SolarRad'] = get_solar_rad(data['SolarRad'])
         data['ForecastRuleNo'] = get_forecast_string(data['ForecastRuleNo'])
         data['RainCollector'] = self._rain_collector
         data['WindRoseSetup'] = 8 if self._windrose8 else 16

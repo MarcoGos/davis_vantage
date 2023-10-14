@@ -4,7 +4,7 @@ NAME = "Davis Vantage"
 DOMAIN = "davis_vantage"
 MANUFACTURER = "Davis"
 MODEL = "Vantage Pro2/Vue"
-VERSION = "1.0.8"
+VERSION = "1.0.9"
 
 DEFAULT_SYNC_INTERVAL = 30  # seconds
 DEFAULT_NAME = NAME

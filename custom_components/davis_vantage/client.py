@@ -30,13 +30,22 @@ class DavisVantageClient:
         self._vantagepro2 = VantagePro2.from_url(self.get_link())
         self._vantagepro2.link.close()
 
+    def get_current_data(self) -> LoopDataParserRevB | None:
+        try:
+            self._vantagepro2.link.open()
+            data = self._vantagepro2.get_current_data()
+        except Exception as e:
+            raise e
+        finally:
+            self._vantagepro2.link.close()
+        return data
+
     async def async_get_current_data(self) -> LoopDataParserRevB | None:
         """Get current date from weather station."""
         data = self._last_data
         try:
-            self._vantagepro2.link.open()
             loop = asyncio.get_event_loop()
-            new_data = await loop.run_in_executor(None, self._vantagepro2.get_current_data)
+            new_data = await loop.run_in_executor(None, self.get_current_data)
             if new_data:
                 if contains_correct_data(new_data):
                     self.add_additional_info(new_data)
@@ -50,34 +59,46 @@ class DavisVantageClient:
         except Exception as e:
             _LOGGER.warning(f"Couldn't acquire data from {self.get_link()}")
             data['LastError'] = f"Couldn't acquire data: {e}"
+        self._last_data = data
+        return data
+    
+    def get_davis_time(self) -> datetime | None:
+        data = None
+        try:
+            self._vantagepro2.link.open()
+            data = self._vantagepro2.gettime()
+        except Exception as e:
+            raise e
         finally:
             self._vantagepro2.link.close()
-        self._last_data = data
         return data
 
     async def async_get_davis_time(self) -> datetime | None:
         """Get time from weather station."""
         data = None
         try:
-            self._vantagepro2.link.open()
             loop = asyncio.get_event_loop()
-            data = await loop.run_in_executor(None, self._vantagepro2.gettime)
+            data = await loop.run_in_executor(None, self.get_davis_time)
         except Exception as e:
             _LOGGER.error(f"Couldn't get davis time: {e}")
+        return data
+    
+    def set_davis_time(self, dtime: datetime) -> None:
+        try:
+            self._vantagepro2.link.open()
+            self._vantagepro2.settime(dtime)
+        except Exception as e:
+            raise e
         finally:
             self._vantagepro2.link.close()
-        return data
     
     async def async_set_davis_time(self) -> None:
         """Set time of weather station."""
         try:
-            self._vantagepro2.link.open()
             loop = asyncio.get_event_loop()
-            await loop.run_in_executor(None, self._vantagepro2.settime, datetime.now())
+            await loop.run_in_executor(None, self.set_davis_time, datetime.now())
         except Exception as e:
             _LOGGER.error(f"Couldn't set davis time: {e}")
-        finally:
-            self._vantagepro2.link.close()
 
     def add_additional_info(self, data: dict[str, Any]) -> None:
         data['HeatIndex'] = calc_heat_index(data['TempOut'], data['HumOut'])

@@ -5,7 +5,7 @@ from homeassistant.components.sensor import (
     SensorDeviceClass
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE, DEGREE, UnitOfSpeed, UnitOfLength, UnitOfVolumetricFlux, UnitOfElectricPotential, UnitOfTemperature, UnitOfPressure
+from homeassistant.const import PERCENTAGE, DEGREE, UnitOfSpeed, UnitOfLength, UnitOfVolumetricFlux, UnitOfElectricPotential, UnitOfTemperature, UnitOfPressure, UnitOfIrradiance
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -189,7 +189,8 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         name="Solar Radiation",
         icon="mdi:sun-wireless-outline",
         state_class="measurement",
-        entity_registry_enabled_default=False
+        entity_registry_enabled_default=False,
+        native_unit_of_measurement=UnitOfIrradiance.WATTS_PER_SQUARE_METER
     ),
     SensorEntityDescription(
         key="BatteryVolts",

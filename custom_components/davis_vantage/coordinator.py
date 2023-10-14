@@ -14,17 +14,21 @@ from .const import (
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
+
 class DavisVantageDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the weather station."""
+
     data: LoopDataParserRevB
 
-    def __init__(self, hass: HomeAssistant, client: DavisVantageClient, device_info: DeviceInfo) -> None:
+    def __init__(
+        self, hass: HomeAssistant, client: DavisVantageClient, device_info: DeviceInfo
+    ) -> None:
         """Initialize."""
         self.client: DavisVantageClient = client
         self.platforms: list[str] = []
         self.last_updated = None
         self.device_info = device_info
-        interval = hass.data[DOMAIN].get('interval', 30)
+        interval = hass.data[DOMAIN].get("interval", 30)
 
         super().__init__(
             hass,
@@ -36,8 +40,10 @@ class DavisVantageDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
         try:
-            data: LoopDataParserRevB = await self.client.async_get_current_data() # type: ignore
+            data: LoopDataParserRevB = await self.client.async_get_current_data()  # type: ignore
             return data
         except Exception as exception:
-            _LOGGER.error(f"Error DavisVantageDataUpdateCoordinator _async_update_data: {exception}")
+            _LOGGER.error(
+                "Error DavisVantageDataUpdateCoordinator _async_update_data: %s", exception
+            )
             raise UpdateFailed() from exception

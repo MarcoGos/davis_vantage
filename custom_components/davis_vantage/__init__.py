@@ -2,15 +2,22 @@
 from __future__ import annotations
 from typing import Any
 import logging
+from zoneinfo import ZoneInfo
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall, SupportsResponse
 from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.const import Platform, CONF_NAME, CONF_URL
-from zoneinfo import ZoneInfo
+from homeassistant.const import Platform
 
 from .client import DavisVantageClient
-from .const import DOMAIN, NAME, VERSION, MANUFACTURER, SERVICE_SET_DAVIS_TIME, SERVICE_GET_DAVIS_TIME
+from .const import (
+    DOMAIN,
+    NAME,
+    VERSION,
+    MANUFACTURER,
+    SERVICE_SET_DAVIS_TIME,
+    SERVICE_GET_DAVIS_TIME
+)
 from .coordinator import DavisVantageDataUpdateCoordinator
 from .utils import convert_to_iso_datetime
 
@@ -29,7 +36,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if hass.data.get(DOMAIN) is None:
         hass.data.setdefault(DOMAIN, {})
 
-    _LOGGER.debug(f"entry.data: {entry.data}")
+    _LOGGER.debug("entry.data: %s", entry.data)
 
     protocol = entry.data.get("protocol", "")
     link = entry.data.get("link", "")
@@ -58,12 +65,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     async def set_davis_time(call: ServiceCall) -> None:
         await client.async_set_davis_time()
 
-    async def get_davis_time(call: ServiceCall) -> SupportsResponse:
+    async def get_davis_time(call: ServiceCall) -> dict[str, Any]:
         davis_time = await client.async_get_davis_time()
         if davis_time is not None:
-            return { "davis_time": convert_to_iso_datetime(davis_time, ZoneInfo(hass.config.time_zone)) }
+            return {
+                "davis_time": convert_to_iso_datetime(davis_time, ZoneInfo(hass.config.time_zone)) 
+            }
         else:
-            return { "error": "Couldn't get davis time, please try again later"}
+            return {
+                "error": "Couldn't get davis time, please try again later"
+            }
 
     hass.services.async_register(
         DOMAIN, SERVICE_SET_DAVIS_TIME, set_davis_time

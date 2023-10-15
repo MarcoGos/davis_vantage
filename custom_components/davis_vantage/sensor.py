@@ -18,8 +18,28 @@ from .coordinator import DavisVantageDataUpdateCoordinator
 DESCRIPTIONS: list[SensorEntityDescription] = [
     SensorEntityDescription(
         key="Datetime",
-        name="Last Updated",
+        name="Last Try",
         icon="mdi:clock",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC
+    ),
+    SensorEntityDescription(
+        key="LastSuccessTime",
+        name="Last Success Time",
+        icon="mdi:clock-outline",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC
+    ),
+    SensorEntityDescription(
+        key="LastError",
+        name="Last Error Message",
+        icon="mdi:message-alert-outline",
+        entity_category=EntityCategory.DIAGNOSTIC
+    ),
+    SensorEntityDescription(
+        key="LastErrorTime",
+        name="Last Error Time",
+        icon="mdi:clock-outline",
         device_class=SensorDeviceClass.TIMESTAMP,
         entity_category=EntityCategory.DIAGNOSTIC
     ),
@@ -209,12 +229,6 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         key="ForecastRuleNo",
         name="Forecast Rule",
         icon="mdi:binoculars"
-    ),
-    SensorEntityDescription(
-        key="LastError",
-        name="Last Error",
-        icon="mdi:message-alert-outline",
-        entity_category=EntityCategory.DIAGNOSTIC
     ),
     SensorEntityDescription(
         key="RainCollector",

@@ -2,15 +2,23 @@
 from __future__ import annotations
 from typing import Any
 import logging
+import json
+from zoneinfo import ZoneInfo
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall, SupportsResponse
 from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.const import Platform, CONF_NAME, CONF_URL
-from zoneinfo import ZoneInfo
-
+from homeassistant.const import Platform
 from .client import DavisVantageClient
-from .const import DOMAIN, NAME, VERSION, MANUFACTURER, SERVICE_SET_DAVIS_TIME, SERVICE_GET_DAVIS_TIME
+from .const import (
+    DOMAIN,
+    NAME,
+    VERSION,
+    MANUFACTURER,
+    SERVICE_SET_DAVIS_TIME,
+    SERVICE_GET_DAVIS_TIME,
+    SERVICE_GET_RAW_DATA
+)
 from .coordinator import DavisVantageDataUpdateCoordinator
 from .utils import convert_to_iso_datetime
 
@@ -35,7 +43,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     link = entry.data.get("link", "")
     rain_collector = entry.data.get("rain_collector", "0.01""")
     windrose8 = entry.data.get("windrose8", False)
-    
+
     hass.data[DOMAIN]['interval'] = entry.data.get("interval", 30)
 
     client = DavisVantageClient(hass, protocol, link, rain_collector, windrose8)
@@ -61,9 +69,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     async def get_davis_time(call: ServiceCall) -> SupportsResponse:
         davis_time = await client.async_get_davis_time()
         if davis_time is not None:
-            return { "davis_time": convert_to_iso_datetime(davis_time, ZoneInfo(hass.config.time_zone)) }
+            return { 
+                "davis_time": convert_to_iso_datetime(davis_time, ZoneInfo(hass.config.time_zone)) 
+            }
         else:
             return { "error": "Couldn't get davis time, please try again later"}
+
+    def safe_serialize(obj: Any):
+        default = lambda o: f"<<non-serializable: {type(o).__qualname__}>>"
+        return json.dumps(obj, default=default)
+
+    async def get_raw_data(call: ServiceCall) -> SupportsResponse:
+        raw_data = client.get_raw_data()
+        json_data = safe_serialize(raw_data)
+        return json.loads(json_data)
 
     hass.services.async_register(
         DOMAIN, SERVICE_SET_DAVIS_TIME, set_davis_time
@@ -72,8 +91,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         DOMAIN, SERVICE_GET_DAVIS_TIME, get_davis_time, supports_response=SupportsResponse.ONLY
     )
 
-    return True
+    hass.services.async_register(
+        DOMAIN, SERVICE_GET_RAW_DATA, get_raw_data, supports_response=SupportsResponse.ONLY
+    )
 
+    return True
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""

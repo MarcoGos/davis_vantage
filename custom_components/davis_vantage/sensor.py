@@ -5,7 +5,17 @@ from homeassistant.components.sensor import (
     SensorDeviceClass
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE, DEGREE, UnitOfSpeed, UnitOfLength, UnitOfVolumetricFlux, UnitOfElectricPotential, UnitOfTemperature, UnitOfPressure, UnitOfIrradiance
+from homeassistant.const import (
+    PERCENTAGE,
+    DEGREE,
+    UnitOfSpeed,
+    UnitOfLength,
+    UnitOfVolumetricFlux,
+    UnitOfElectricPotential,
+    UnitOfTemperature,
+    UnitOfPressure,
+    UnitOfIrradiance
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -359,7 +369,7 @@ class DavisVantageSensor(CoordinatorEntity[DavisVantageDataUpdateCoordinator], S
         data = self.coordinator.data
         if key not in data:
             return None
-        if self.entity_description.native_unit_of_measurement != None:
+        if self.entity_description.native_unit_of_measurement is not None:
             default_value = 0
         else:
             default_value = '-'

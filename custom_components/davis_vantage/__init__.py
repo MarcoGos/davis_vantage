@@ -37,7 +37,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if hass.data.get(DOMAIN) is None:
         hass.data.setdefault(DOMAIN, {})
 
-    _LOGGER.debug(f"entry.data: {entry.data}")
+    _LOGGER.debug("entry.data: %s", entry.data)
 
     protocol = entry.data.get("protocol", "")
     link = entry.data.get("link", "")
@@ -66,14 +66,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     async def set_davis_time(call: ServiceCall) -> None:
         await client.async_set_davis_time()
 
-    async def get_davis_time(call: ServiceCall) -> SupportsResponse:
+    async def get_davis_time(call: ServiceCall) -> dict[str, Any]:
         davis_time = await client.async_get_davis_time()
         if davis_time is not None:
-            return { 
+            return {
                 "davis_time": convert_to_iso_datetime(davis_time, ZoneInfo(hass.config.time_zone)) 
             }
         else:
-            return { "error": "Couldn't get davis time, please try again later"}
+            return {
+                "error": "Couldn't get davis time, please try again later"
+            }
 
     def safe_serialize(obj: Any):
         default = lambda o: f"<<non-serializable: {type(o).__qualname__}>>"

@@ -1,5 +1,7 @@
+"""All client function"""
 from typing import Any
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import logging
 import asyncio
 import struct
@@ -8,19 +10,35 @@ from pyvantagepro import VantagePro2
 from pyvantagepro.parser import LoopDataParserRevB, DataParser
 from homeassistant.core import HomeAssistant
 
-from .utils import *
-from .const import RAIN_COLLECTOR_METRIC, PROTOCOL_NETWORK, PROTOCOL_SERIAL
+from .utils import (
+    calc_dew_point,
+    calc_feels_like,
+    calc_wind_chill,
+    contains_correct_raw_data,
+    calc_heat_index,
+    convert_kmh_to_bft,
+    convert_to_iso_datetime,
+    convert_to_kmh,
+    get_baro_trend,
+    get_forecast_string,
+    get_solar_rad,
+    get_uv,
+    get_wind_rose,
+)
+from .const import RAIN_COLLECTOR_METRIC, PROTOCOL_NETWORK
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
+
 class DavisVantageClient:
+    """Davis Vantage Client class"""
     def __init__(
         self,
         hass: HomeAssistant,
         protocol: str,
         link: str,
         rain_collector: str,
-        windrose8: bool
+        windrose8: bool,
     ) -> None:
         self._hass = hass
         self._protocol = protocol
@@ -33,6 +51,7 @@ class DavisVantageClient:
         self._vantagepro2.link.close()
 
     def get_current_data(self) -> LoopDataParserRevB | None:
+        """Get current date from weather station."""
         try:
             self._vantagepro2.link.open()
             data = self._vantagepro2.get_current_data()
@@ -43,7 +62,7 @@ class DavisVantageClient:
         return data
 
     async def async_get_current_data(self) -> LoopDataParserRevB | None:
-        """Get current date from weather station."""
+        """Get current date from weather station async."""
         data = self._last_data
         try:
             loop = asyncio.get_event_loop()
@@ -62,7 +81,7 @@ class DavisVantageClient:
                 else:
                     data['LastError'] = "Received partly incorrect data"
             else:
-                data['LastError'] = "Couldn't acquire data, no data received"
+                data["LastError"] = "Couldn't acquire data, no data received"
         except Exception as e:
             _LOGGER.warning(f"Couldn't acquire data from {self.get_link()}")
             data['LastError'] = f"Couldn't acquire data: {e}"
@@ -91,6 +110,7 @@ class DavisVantageClient:
         return raw_data
 
     def get_davis_time(self) -> datetime | None:
+        """Get time from weather station."""
         data = None
         try:
             self._vantagepro2.link.open()
@@ -102,16 +122,17 @@ class DavisVantageClient:
         return data
 
     async def async_get_davis_time(self) -> datetime | None:
-        """Get time from weather station."""
+        """Get time from weather station async."""
         data = None
         try:
             loop = asyncio.get_event_loop()
             data = await loop.run_in_executor(None, self.get_davis_time)
         except Exception as e:
-            _LOGGER.error(f"Couldn't get davis time: {e}")
+            _LOGGER.error("Couldn't get davis time: %s", e)
         return data
 
     def set_davis_time(self, dtime: datetime) -> None:
+        """Set time of weather station."""
         try:
             self._vantagepro2.link.open()
             self._vantagepro2.settime(dtime)
@@ -121,12 +142,12 @@ class DavisVantageClient:
             self._vantagepro2.link.close()
 
     async def async_set_davis_time(self) -> None:
-        """Set time of weather station."""
+        """Set time of weather station async."""
         try:
             loop = asyncio.get_event_loop()
             await loop.run_in_executor(None, self.set_davis_time, datetime.now())
         except Exception as e:
-            _LOGGER.error(f"Couldn't set davis time: {e}")
+            _LOGGER.error("Couldn't set davis time: %s", e)
 
     def add_additional_info(self, data: dict[str, Any]) -> None:
         if data['TempOut'] and data['HumOut']:
@@ -181,10 +202,10 @@ class DavisVantageClient:
                     data[key] = None
 
     def get_link(self) -> str | None:
+        """Get device link for use with vproweather."""
         if self._protocol == PROTOCOL_NETWORK:
             return f"tcp:{self._link}"
-        if self._protocol == PROTOCOL_SERIAL:
-            return f"serial:{self._link}:19200:8N1"
+        return f"serial:{self._link}:19200:8N1"
 
     def get_raw_data(self) -> DataParser:
         return self._last_raw_data

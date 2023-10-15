@@ -1,7 +1,7 @@
 from homeassistant.components.binary_sensor import (
     DOMAIN as BINARY_SENSOR_DOMAIN,
     BinarySensorEntity,
-    BinarySensorEntityDescription
+    BinarySensorEntityDescription,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -12,11 +12,9 @@ from .const import DEFAULT_NAME, DOMAIN
 from .coordinator import DavisVantageDataUpdateCoordinator
 
 DESCRIPTIONS: list[BinarySensorEntityDescription] = [
-    BinarySensorEntityDescription(
-        key="IsRaining",
-        name="Is Raining"
-    )
+    BinarySensorEntityDescription(key="IsRaining", name="Is Raining")
 ]
+
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -41,7 +39,9 @@ async def async_setup_entry(
     async_add_entities(entities)
 
 
-class DavisVantageBinarySensor(CoordinatorEntity[DavisVantageDataUpdateCoordinator], BinarySensorEntity):
+class DavisVantageBinarySensor(
+    CoordinatorEntity[DavisVantageDataUpdateCoordinator], BinarySensorEntity
+):
     """Defines a Davis Vantage sensor."""
 
     _attr_has_entity_name = True
@@ -59,7 +59,7 @@ class DavisVantageBinarySensor(CoordinatorEntity[DavisVantageDataUpdateCoordinat
             f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME}_{description.name}".lower()
         )
         self.entity_description = description
-        self._attr_name = description.name # type: ignore
+        self._attr_name = description.name  # type: ignore
         self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {self.name}"
         self._attr_device_info = coordinator.device_info
 
@@ -70,4 +70,4 @@ class DavisVantageBinarySensor(CoordinatorEntity[DavisVantageDataUpdateCoordinat
         data = self.coordinator.data
         if key not in data:
             return None
-        return data.get(key, False) # type: ignore
+        return data.get(key, False)  # type: ignore

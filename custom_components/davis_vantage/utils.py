@@ -366,16 +366,10 @@ def get_forecast_string(wrule: int) -> str:
     return ForecastStrings[wrule]
 
 def get_uv(value: int) -> float:
-    if value == 255:
-        return None
-    else:
-        return round(value / 10, 1)
+    return round(value / 10, 1)
 
 def get_solar_rad(value: int) -> float:
-    if value == 32767:
-        return None
-    else:
-        return value
+    return value
 
 def calc_dew_point(temperature_f: float, humidity: float) -> float:
     temperature_c = convert_to_celcius(temperature_f)

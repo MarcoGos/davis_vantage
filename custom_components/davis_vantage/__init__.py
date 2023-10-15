@@ -77,11 +77,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 "error": "Couldn't get davis time, please try again later"
             }
 
-    def safe_serialize(obj: Any):
-        default = lambda o: f"<<non-serializable: {type(o).__qualname__}>>"
-        return json.dumps(obj, default=default)
-
-    async def get_raw_data(call: ServiceCall) -> SupportsResponse:
+    async def get_raw_data(call: ServiceCall) -> dict[str, Any]:
         raw_data = client.get_raw_data()
         json_data = safe_serialize(raw_data)
         return json.loads(json_data)
@@ -96,6 +92,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.services.async_register(
         DOMAIN, SERVICE_GET_RAW_DATA, get_raw_data, supports_response=SupportsResponse.ONLY
     )
+
+    def safe_serialize(obj: Any):
+        default = lambda o: f"<<non-serializable: {type(o).__qualname__}>>" # type: ignore
+        return json.dumps(obj, default=default) # type: ignore
 
     return True
 

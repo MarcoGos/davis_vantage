@@ -28,30 +28,34 @@ from .coordinator import DavisVantageDataUpdateCoordinator
 DESCRIPTIONS: list[SensorEntityDescription] = [
     SensorEntityDescription(
         key="Datetime",
-        name="Last Try",
-        icon="mdi:clock",
+        name="Last Fetch Time",
+        icon="mdi:clock-outline",
         device_class=SensorDeviceClass.TIMESTAMP,
-        entity_category=EntityCategory.DIAGNOSTIC
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
         key="LastSuccessTime",
         name="Last Success Time",
         icon="mdi:clock-outline",
         device_class=SensorDeviceClass.TIMESTAMP,
-        entity_category=EntityCategory.DIAGNOSTIC
-    ),
-    SensorEntityDescription(
-        key="LastError",
-        name="Last Error Message",
-        icon="mdi:message-alert-outline",
-        entity_category=EntityCategory.DIAGNOSTIC
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
         key="LastErrorTime",
         name="Last Error Time",
         icon="mdi:clock-outline",
         device_class=SensorDeviceClass.TIMESTAMP,
-        entity_category=EntityCategory.DIAGNOSTIC
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="LastError",
+        name="Last Error Message",
+        icon="mdi:message-alert-outline",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
         key="TempOut",
@@ -115,7 +119,8 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
     ),
     SensorEntityDescription(
         key="BarTrend",
-        name="Barometric Trend"
+        name="Barometric Trend",
+        icon="mdi:trending-up"
     ),
     SensorEntityDescription(
         key="HumIn",
@@ -174,7 +179,7 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
     SensorEntityDescription(
         key="RainDay",
         name="Rain (Day)",
-        icon="mdi:water",
+        icon="mdi:water-outline",
         device_class=SensorDeviceClass.PRECIPITATION,
         state_class="measurement",
         native_unit_of_measurement=UnitOfLength.INCHES,
@@ -183,7 +188,7 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
     SensorEntityDescription(
         key="RainMonth",
         name="Rain (Month)",
-        icon="mdi:water",
+        icon="mdi:water-outline",
         state_class="measurement",
         device_class=SensorDeviceClass.PRECIPITATION,
         native_unit_of_measurement=UnitOfLength.INCHES,
@@ -192,7 +197,7 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
     SensorEntityDescription(
         key="RainYear",
         name="Rain (Year)",
-        icon="mdi:water",
+        icon="mdi:water-outline",
         state_class="measurement",
         device_class=SensorDeviceClass.PRECIPITATION,
         native_unit_of_measurement=UnitOfLength.INCHES,
@@ -201,7 +206,7 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
     SensorEntityDescription(
         key="RainRate",
         name="Rain Rate",
-        icon="mdi:water",
+        icon="mdi:water-outline",
         device_class=SensorDeviceClass.PRECIPITATION_INTENSITY,
         state_class="measurement",
         native_unit_of_measurement=UnitOfVolumetricFlux.INCHES_PER_HOUR,
@@ -228,7 +233,8 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
-        suggested_display_precision=1
+        suggested_display_precision=1,
+        entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
         key="ForecastIcon",
@@ -244,13 +250,15 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         key="RainCollector",
         name="Rain Collector",
         icon="mdi:bucket-outline",
-        entity_category=EntityCategory.DIAGNOSTIC
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
         key="WindRoseSetup",
         name="Cardinal Directions",
         icon="mdi:compass-rose",
-        entity_category=EntityCategory.DIAGNOSTIC
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
         key="ExtraTemps01",
@@ -314,6 +322,62 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         state_class="measurement",
         entity_registry_enabled_default=False,
         suggested_display_precision=1
+    ),
+    SensorEntityDescription(
+        key="HumExtra01",
+        name="Extra Humidity 1",
+        device_class=SensorDeviceClass.HUMIDITY,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_display_precision=0,
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="HumExtra02",
+        name="Extra Humidity 2",
+        device_class=SensorDeviceClass.HUMIDITY,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_display_precision=0,
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="HumExtra03",
+        name="Extra Humidity 3",
+        device_class=SensorDeviceClass.HUMIDITY,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_display_precision=0,
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="HumExtra04",
+        name="Extra Humidity 4",
+        device_class=SensorDeviceClass.HUMIDITY,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_display_precision=0,
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="HumExtra05",
+        name="Extra Humidity 5",
+        device_class=SensorDeviceClass.HUMIDITY,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_display_precision=0,
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="HumExtra06",
+        name="Extra Humidity 6",
+        device_class=SensorDeviceClass.HUMIDITY,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_display_precision=0,
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="HumExtra07",
+        name="Extra Humidity 7",
+        device_class=SensorDeviceClass.HUMIDITY,
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_display_precision=0,
+        entity_registry_enabled_default=False
     )
 ]
 

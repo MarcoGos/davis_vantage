@@ -26,6 +26,7 @@
             },
             "setup_other_info": {
                 "data": {
+                    "station_model": "Davis weather station model",
                     "interval": "Interval",
                     "rain_collector": "Rain collector",
                     "windrose8": "Wind rose with 8 cardinal directions"

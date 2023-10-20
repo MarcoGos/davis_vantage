@@ -1,3 +1,4 @@
+import logging
 from homeassistant.components.sensor import (
     DOMAIN as SENSOR_DOMAIN,
     SensorEntity,
@@ -22,7 +23,13 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DEFAULT_NAME, DOMAIN
+from .const import (
+    DEFAULT_NAME,
+    DOMAIN,
+    CONFIG_STATION_MODEL,
+    MODEL_VANTAGE_PRO2PLUS
+)
+
 from .coordinator import DavisVantageDataUpdateCoordinator
 
 DESCRIPTIONS: list[SensorEntityDescription] = [
@@ -381,6 +388,8 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
     )
 ]
 
+_LOGGER: logging.Logger = logging.getLogger(__package__)
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: ConfigEntry,
@@ -393,6 +402,9 @@ async def async_setup_entry(
 
     # Add all meter sensors described above.
     for description in DESCRIPTIONS:
+        if entry.data.get(CONFIG_STATION_MODEL, '') == MODEL_VANTAGE_PRO2PLUS:
+            if description.key in ["SolarRad", "UV"]:
+                description.entity_registry_enabled_default = True
         entities.append(
             DavisVantageSensor(
                 coordinator=coordinator,

@@ -32,6 +32,7 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 class DavisVantageClient:
     """Davis Vantage Client class"""
+    _vantagepro2: VantagePro2 = None
     def __init__(
         self,
         hass: HomeAssistant,
@@ -47,8 +48,29 @@ class DavisVantageClient:
         self._rain_collector = rain_collector
         self._last_data: LoopDataParserRevB = {} # type: ignore
         self._last_raw_data: DataParser = {} # type: ignore
-        self._vantagepro2 = VantagePro2.from_url(self.get_link())
-        self._vantagepro2.link.close()
+
+    def get_vantagepro2fromurl(self, url: str) -> VantagePro2 | None:
+        vp = None
+        try:
+            vp = VantagePro2.from_url(url)
+        except Exception as e:
+            raise e
+        finally:
+            vp.link.close()
+        return vp
+
+    async def async_get_vantagepro2fromurl(self, url: str) -> VantagePro2 | None:
+        _LOGGER.debug('async_get_vantagepro2fromurl with url=%s', url)
+        vp = None
+        try:
+            loop = asyncio.get_event_loop()
+            vp = await loop.run_in_executor(None, self.get_vantagepro2fromurl, url)
+        except Exception as e:
+            _LOGGER.error('Error on opening device from url: %s: %s', url, e)
+        return vp
+
+    async def connect_to_station(self):
+        self._vantagepro2 = await self.async_get_vantagepro2fromurl(self.get_link())
 
     def get_current_data(self) -> LoopDataParserRevB | None:
         """Get current date from weather station."""

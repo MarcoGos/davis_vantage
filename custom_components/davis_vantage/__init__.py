@@ -13,12 +13,18 @@ from .client import DavisVantageClient
 from .const import (
     DOMAIN,
     NAME,
-    VERSION,
     MANUFACTURER,
+    RAIN_COLLECTOR_IMPERIAL,
     SERVICE_SET_DAVIS_TIME,
     SERVICE_GET_DAVIS_TIME,
     SERVICE_GET_RAW_DATA,
-    SERVICE_GET_INFO
+    SERVICE_GET_INFO,
+    CONFIG_RAIN_COLLECTOR,
+    CONFIG_STATION_MODEL,
+    CONFIG_INTERVAL,
+    CONFIG_WINDROSE8,
+    CONFIG_PROTOCOL,
+    CONFIG_LINK
 )
 from .coordinator import DavisVantageDataUpdateCoordinator
 from .utils import convert_to_iso_datetime
@@ -40,14 +46,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     _LOGGER.debug("entry.data: %s", entry.data)
 
-    protocol = entry.data.get("protocol", "")
-    link = entry.data.get("link", "")
-    rain_collector = entry.data.get("rain_collector", "0.01""")
-    windrose8 = entry.data.get("windrose8", False)
+    protocol = entry.data.get(CONFIG_PROTOCOL, "")
+    link = entry.data.get(CONFIG_LINK, "")
+    rain_collector = entry.data.get(CONFIG_RAIN_COLLECTOR, RAIN_COLLECTOR_IMPERIAL)
+    windrose8 = entry.data.get(CONFIG_WINDROSE8, False)
 
-    hass.data[DOMAIN]['interval'] = entry.data.get("interval", 30)
+    hass.data[DOMAIN]['interval'] = entry.data.get(CONFIG_INTERVAL, 30)
 
     client = DavisVantageClient(hass, protocol, link, rain_collector, windrose8)
+    await client.connect_to_station()
     info = await client.async_get_info()
     firmware_version = info.get('version', None) if info is not None else None
 
@@ -55,7 +62,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         identifiers={(DOMAIN, entry.entry_id)},
         manufacturer=MANUFACTURER,
         name=NAME,
-        model=VERSION,
+        model=entry.data.get(CONFIG_STATION_MODEL, "Unknown"),
         sw_version=firmware_version,
         hw_version=None
     )
@@ -86,7 +93,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         raw_data = client.get_raw_data()
         json_data = safe_serialize(raw_data)
         return json.loads(json_data)
-    
+
     async def get_info(call: ServiceCall) -> dict[str, Any]:
         info = await client.async_get_info()
         if info is not None:

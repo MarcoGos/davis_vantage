@@ -18,6 +18,7 @@
       },
       "setup_other_info": {
         "data": {
+          "station_model": "[%key:common::config_flow::data::station_model%]",
           "interval": "[%key:common::config_flow::data::interval%]",
           "rain_collector": "[%key:common::config_flow::data::rain_collector%]",
           "windrose8": "[%key:common::config_flow::data::windrose8%]"

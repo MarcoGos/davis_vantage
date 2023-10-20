@@ -20,6 +20,15 @@ from .const import (
     RAIN_COLLECTOR_METRIC,
     PROTOCOL_NETWORK,
     PROTOCOL_SERIAL,
+    MODEL_VANTAGE_PRO2,
+    MODEL_VANTAGE_PRO2PLUS,
+    MODEL_VANTAGE_VUE,
+    CONFIG_RAIN_COLLECTOR,
+    CONFIG_STATION_MODEL,
+    CONFIG_INTERVAL,
+    CONFIG_WINDROSE8,
+    CONFIG_PROTOCOL,
+    CONFIG_LINK
 )
 from .client import DavisVantageClient
 
@@ -37,6 +46,7 @@ class PlaceholderHub:
         """Test if we can find data for the given link."""
         _LOGGER.info(f"authenticate called")
         client = DavisVantageClient(self._hass, protocol, link, "", False)
+        await client.connect_to_station()
         return await client.async_get_davis_time() != None
 
 
@@ -46,7 +56,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
     """
     hub = PlaceholderHub(hass)
-    if not await hub.authenticate(data["protocol"], data["link"]):
+    if not await hub.authenticate(data[CONFIG_PROTOCOL], data[CONFIG_LINK]):
         raise InvalidAuth
 
     # Return info that you want to store in the config entry.
@@ -65,21 +75,24 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     ) -> FlowResult:
         """Handle the initial step."""
         if user_input is not None:
-            self.protocol = user_input["protocol"]
+            self.protocol = user_input[CONFIG_PROTOCOL]
             if self.protocol == PROTOCOL_SERIAL:
                 return await self.async_step_setup_serial()
 
             return await self.async_step_setup_network()
 
-        list_of_types = [PROTOCOL_SERIAL, PROTOCOL_NETWORK]
-        schema = vol.Schema({vol.Required("protocol"): vol.In(list_of_types)})
+        list_of_types = [
+            PROTOCOL_SERIAL,
+            PROTOCOL_NETWORK
+        ]
+        schema = vol.Schema({vol.Required(CONFIG_PROTOCOL): vol.In(list_of_types)})
         return self.async_show_form(step_id="user", data_schema=schema)
 
     async def async_step_setup_serial(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         if user_input is not None:
-            self.link = user_input["link"]
+            self.link = user_input[CONFIG_LINK]
             return await self.async_step_setup_other_info()
 
         ports = await self.hass.async_add_executor_job(serial.tools.list_ports.comports)
@@ -90,7 +103,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         }
 
         STEP_USER_DATA_SCHEMA = vol.Schema(
-            {vol.Required("link"): vol.In(list_of_ports)}
+            {vol.Required(CONFIG_LINK): vol.In(list_of_ports)}
         )
 
         return self.async_show_form(
@@ -101,10 +114,10 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         if user_input is not None:
-            self.link = user_input["link"]
+            self.link = user_input[CONFIG_LINK]
             return await self.async_step_setup_other_info()
 
-        STEP_USER_DATA_SCHEMA = vol.Schema({vol.Required("link"): str})
+        STEP_USER_DATA_SCHEMA = vol.Schema({vol.Required(CONFIG_LINK): str})
 
         return self.async_show_form(
             step_id="setup_network", data_schema=STEP_USER_DATA_SCHEMA
@@ -117,8 +130,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             await self.async_set_unique_id(DOMAIN)
             self._abort_if_unique_id_configured()
-            user_input["protocol"] = self.protocol
-            user_input["link"] = self.link
+            user_input[CONFIG_PROTOCOL] = self.protocol
+            user_input[CONFIG_LINK] = self.link
             try:
                 info = await validate_input(self.hass, user_input)
             except CannotConnect:
@@ -131,15 +144,24 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 return self.async_create_entry(title=info["title"], data=user_input)
 
-        list_of_rain_collector = [RAIN_COLLECTOR_IMPERIAL, RAIN_COLLECTOR_METRIC]
+        list_of_rain_collector = [
+            RAIN_COLLECTOR_IMPERIAL,
+            RAIN_COLLECTOR_METRIC
+        ]
+        list_of_station_models = [
+            MODEL_VANTAGE_PRO2,
+            MODEL_VANTAGE_PRO2PLUS,
+            MODEL_VANTAGE_VUE
+        ]
         STEP_USER_DATA_SCHEMA = vol.Schema(
             {
+                vol.Required(CONFIG_STATION_MODEL): vol.In(list_of_station_models),
                 vol.Required(
-                    "interval", 
+                    CONFIG_INTERVAL, 
                     default=DEFAULT_SYNC_INTERVAL): vol.All(int, vol.Range(min=5) # type: ignore
                 ),
-                vol.Required("rain_collector"): vol.In(list_of_rain_collector),
-                vol.Required("windrose8"): bool,
+                vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(list_of_rain_collector),
+                vol.Required(CONFIG_WINDROSE8): bool,
             }
         )
 

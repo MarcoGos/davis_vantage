@@ -26,6 +26,7 @@
             },
             "setup_other_info": {
                 "data": {
+                    "station_model": "Davis weerstation model",
                     "interval": "Interval",
                     "rain_collector": "Regenmeter",
                     "windrose8": "Windroos met 8 cardinale richtingen"

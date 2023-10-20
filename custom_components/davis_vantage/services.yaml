@@ -4,3 +4,5 @@ get_davis_time:
   description: Get the time of the Davis weather station
 get_raw_data:
   description: Get the raw, unprocessed data from the last fetch
+get_firmware_info:
+  description: Get the firmware version and date information

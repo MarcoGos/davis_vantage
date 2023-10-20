@@ -17,7 +17,8 @@ from .const import (
     MANUFACTURER,
     SERVICE_SET_DAVIS_TIME,
     SERVICE_GET_DAVIS_TIME,
-    SERVICE_GET_RAW_DATA
+    SERVICE_GET_RAW_DATA,
+    SERVICE_GET_INFO
 )
 from .coordinator import DavisVantageDataUpdateCoordinator
 from .utils import convert_to_iso_datetime
@@ -47,12 +48,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN]['interval'] = entry.data.get("interval", 30)
 
     client = DavisVantageClient(hass, protocol, link, rain_collector, windrose8)
+    info = await client.async_get_info()
+    firmware_version = info.get('version', None) if info is not None else None
 
     device_info = DeviceInfo(
         identifiers={(DOMAIN, entry.entry_id)},
         manufacturer=MANUFACTURER,
         name=NAME,
-        model=VERSION
+        model=VERSION,
+        sw_version=firmware_version,
+        hw_version=None
     )
 
     hass.data[DOMAIN][entry.entry_id] = coordinator = DavisVantageDataUpdateCoordinator(
@@ -81,6 +86,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         raw_data = client.get_raw_data()
         json_data = safe_serialize(raw_data)
         return json.loads(json_data)
+    
+    async def get_info(call: ServiceCall) -> dict[str, Any]:
+        info = await client.async_get_info()
+        if info is not None:
+            return info
+        else:
+            return {
+                "error": "Couldn't get firmware information from Davis weather station"
+            }
 
     hass.services.async_register(
         DOMAIN, SERVICE_SET_DAVIS_TIME, set_davis_time
@@ -91,6 +105,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.services.async_register(
         DOMAIN, SERVICE_GET_RAW_DATA, get_raw_data, supports_response=SupportsResponse.ONLY
+    )
+
+    hass.services.async_register(
+        DOMAIN, SERVICE_GET_INFO, get_info, supports_response=SupportsResponse.ONLY
     )
 
     def safe_serialize(obj: Any):

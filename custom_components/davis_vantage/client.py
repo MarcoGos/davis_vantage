@@ -149,6 +149,27 @@ class DavisVantageClient:
         except Exception as e:
             _LOGGER.error("Couldn't set davis time: %s", e)
 
+    def get_info(self) -> dict[str, Any] | None:
+        try:
+            self._vantagepro2.link.open()
+            firmware_version = self._vantagepro2.firmware_version # type: ignore
+            firmware_date = self._vantagepro2.firmware_date # type: ignore
+            diagnostics = self._vantagepro2.diagnostics # type: ignore
+        except Exception as e:
+            raise e
+        finally:
+            self._vantagepro2.link.close()
+        return { "version": firmware_version, "date": firmware_date, "diagnostics": diagnostics }
+
+    async def async_get_info(self) -> dict[str, Any] | None:
+        info = None
+        try:
+            loop = asyncio.get_event_loop()
+            info = await loop.run_in_executor(None, self.get_info)
+        except Exception as e:
+            _LOGGER.error("Couldn't get firmware info: %s", e)
+        return info
+
     def add_additional_info(self, data: dict[str, Any]) -> None:
         if data['TempOut'] is not None:
             if data['HumOut'] is not None:

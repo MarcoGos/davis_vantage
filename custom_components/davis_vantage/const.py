@@ -4,7 +4,7 @@ NAME = "Davis Vantage"
 DOMAIN = "davis_vantage"
 MANUFACTURER = "Davis"
 MODEL = "Vantage Pro2/Vue"
-VERSION = "1.0.10"
+VERSION = "1.0.11"
 
 DEFAULT_SYNC_INTERVAL = 30  # seconds
 DEFAULT_NAME = NAME
@@ -18,3 +18,4 @@ PROTOCOL_SERIAL = 'Serial'
 SERVICE_SET_DAVIS_TIME = 'set_davis_time'
 SERVICE_GET_DAVIS_TIME = 'get_davis_time'
 SERVICE_GET_RAW_DATA = 'get_raw_data'
+SERVICE_GET_INFO = 'get_info'

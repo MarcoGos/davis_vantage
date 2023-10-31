@@ -366,7 +366,7 @@ def get_forecast_string(wrule: int) -> str:
     return ForecastStrings[wrule]
 
 def get_uv(value: int) -> float:
-    return round(value / 10, 1)
+    return round(value, 1)
 
 def get_solar_rad(value: int) -> float:
     return value

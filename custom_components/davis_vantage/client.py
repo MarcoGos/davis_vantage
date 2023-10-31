@@ -50,14 +50,12 @@ class DavisVantageClient:
         self._last_raw_data: DataParser = {} # type: ignore
 
     def get_vantagepro2fromurl(self, url: str) -> VantagePro2 | None:
-        vp = None
         try:
             vp = VantagePro2.from_url(url)
+            vp.link.close()
+            return vp
         except Exception as e:
             raise e
-        finally:
-            vp.link.close()
-        return vp
 
     async def async_get_vantagepro2fromurl(self, url: str) -> VantagePro2 | None:
         _LOGGER.debug('async_get_vantagepro2fromurl with url=%s', url)

@@ -15,7 +15,8 @@ from homeassistant.const import (
     UnitOfElectricPotential,
     UnitOfTemperature,
     UnitOfPressure,
-    UnitOfIrradiance
+    UnitOfIrradiance,
+    UnitOfTime
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
@@ -65,12 +66,38 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
+        key="ArchiveInterval",
+        name="Archive Interval",
+        icon="mdi:archive-clock-outline",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        native_unit_of_measurement=UnitOfTime.MINUTES
+    ),
+    SensorEntityDescription(
         key="TempOut",
         name="Temperature",
         device_class=SensorDeviceClass.TEMPERATURE,
         state_class="measurement",
         native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
         suggested_display_precision=1
+    ),
+    SensorEntityDescription(
+        key="TempOutHiDay",
+        name="Temperature High (Day)",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
+        suggested_display_precision=1,
+        icon="mdi:thermometer-chevron-up"
+    ),
+    SensorEntityDescription(
+        key="TempOutLowDay",
+        name="Temperature Low (Day)",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
+        suggested_display_precision=1,
+        icon="mdi:thermometer-chevron-down"
     ),
     SensorEntityDescription(
         key="TempIn",
@@ -125,6 +152,22 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         suggested_display_precision=2
     ),
     SensorEntityDescription(
+        key="BarometerHiDay",
+        name="Barometric Pressure High (Day)",
+        device_class=SensorDeviceClass.PRESSURE,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfPressure.INHG,
+        suggested_display_precision=2
+    ),
+    SensorEntityDescription(
+        key="BarometerLowDay",
+        name="Barometric Pressure Low (Day)",
+        device_class=SensorDeviceClass.PRESSURE,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfPressure.INHG,
+        suggested_display_precision=2
+    ),
+    SensorEntityDescription(
         key="BarTrend",
         name="Barometric Trend",
         icon="mdi:trending-up"
@@ -146,6 +189,22 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         suggested_display_precision=0
     ),
     SensorEntityDescription(
+        key="HumOutHiDay",
+        name="Humidity High (Day)",
+        device_class=SensorDeviceClass.HUMIDITY,
+        state_class="measurement",
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_display_precision=0
+    ),
+    SensorEntityDescription(
+        key="HumOutLowDay",
+        name="Humidity Low (Day)",
+        device_class=SensorDeviceClass.HUMIDITY,
+        state_class="measurement",
+        native_unit_of_measurement=PERCENTAGE,
+        suggested_display_precision=0
+    ),
+    SensorEntityDescription(
         key="WindSpeed",
         name="Wind Speed",
         icon="mdi:weather-windy",
@@ -158,6 +217,24 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         key="WindSpeed10Min",
         name="Wind Speed (Average)",
         icon="mdi:weather-windy",
+        device_class=SensorDeviceClass.WIND_SPEED,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfSpeed.MILES_PER_HOUR,
+        suggested_display_precision=1
+    ),
+    SensorEntityDescription(
+        key="WindGust",
+        name="Wind Gust",
+        icon="mdi:windsock",
+        device_class=SensorDeviceClass.WIND_SPEED,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfSpeed.MILES_PER_HOUR,
+        suggested_display_precision=1
+    ),
+    SensorEntityDescription(
+        key="WindGustDay",
+        name="Wind Gust (Day)",
+        icon="mdi:windsock",
         device_class=SensorDeviceClass.WIND_SPEED,
         state_class="measurement",
         native_unit_of_measurement=UnitOfSpeed.MILES_PER_HOUR,
@@ -220,6 +297,15 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         suggested_display_precision=1
     ),
     SensorEntityDescription(
+        key="RainRateDay",
+        name="Rain Rate (Day)",
+        icon="mdi:water-outline",
+        device_class=SensorDeviceClass.PRECIPITATION_INTENSITY,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfVolumetricFlux.INCHES_PER_HOUR,
+        suggested_display_precision=1
+    ),
+    SensorEntityDescription(
         key="UV",
         name="UV Level",
         icon="mdi:sun-wireless-outline",
@@ -227,8 +313,23 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
+        key="UVDay",
+        name="UV Level (Day)",
+        icon="mdi:sun-wireless-outline",
+        state_class="measurement",
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
         key="SolarRad",
         name="Solar Radiation",
+        icon="mdi:sun-wireless-outline",
+        state_class="measurement",
+        entity_registry_enabled_default=False,
+        native_unit_of_measurement=UnitOfIrradiance.WATTS_PER_SQUARE_METER
+    ),
+    SensorEntityDescription(
+        key="SolarRadDay",
+        name="Solar Radiation (Day)",
         icon="mdi:sun-wireless-outline",
         state_class="measurement",
         entity_registry_enabled_default=False,

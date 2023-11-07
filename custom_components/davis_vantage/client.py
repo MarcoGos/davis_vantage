@@ -7,7 +7,11 @@ import asyncio
 import struct
 import re
 from pyvantagepro import VantagePro2
-from pyvantagepro.parser import ArchiveDataParserRevB, LoopDataParserRevB, DataParser
+from pyvantagepro.parser import (
+    HighLowParserRevB,
+    LoopDataParserRevB, 
+    DataParser
+)
 from pyvantagepro.utils import ListDict
 from homeassistant.core import HomeAssistant
 
@@ -73,10 +77,12 @@ class DavisVantageClient:
     async def connect_to_station(self):
         self._vantagepro2 = await self.async_get_vantagepro2fromurl(self.get_link())
 
-    def get_current_data(self) -> tuple[LoopDataParserRevB | None, ListDict | None]:
+    def get_current_data(self) -> tuple[LoopDataParserRevB | None, ListDict | None, HighLowParserRevB|None]:
         """Get current date from weather station."""
         data = None
         archives = None
+        hilows = None
+
         try:
             self._vantagepro2.link.open()
             data = self._vantagepro2.get_current_data()
@@ -85,15 +91,22 @@ class DavisVantageClient:
             raise e
 
         try:
+            hilows = self._vantagepro2.get_hilows()
+        except Exception:
+            pass
+
+        try:
             end_datetime = datetime.now()
-            start_datetime = end_datetime - timedelta(hours=24)
+            start_datetime = end_datetime - timedelta(minutes=(self._vantagepro2.archive_period * 2))  # type: ignore
+            # start_datetime = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+            # end_datetime = start_datetime + timedelta(hours=24)
             archives = self._vantagepro2.get_archives(start_datetime, end_datetime)
         except Exception:
             pass
         finally:
             self._vantagepro2.link.close()
 
-        return data, archives
+        return data, archives, hilows
 
     async def async_get_current_data(self) -> LoopDataParserRevB | None:
         """Get current date from weather station async."""
@@ -103,13 +116,14 @@ class DavisVantageClient:
         )
         try:
             loop = asyncio.get_event_loop()
-            new_data, archives = await loop.run_in_executor(None, self.get_current_data)
+            new_data, archives, hilows = await loop.run_in_executor(None, self.get_current_data)
             if new_data:
                 new_raw_data = self.__get_full_raw_data(new_data)
                 self._last_raw_data = new_raw_data
                 self.remove_all_incorrect_data(new_raw_data, new_data)
                 self.add_additional_info(new_data)
-                self.add_archive_data(archives, new_data, self._last_data)
+                self.add_wind_gust(archives, new_data)
+                self.add_hilows(hilows, new_data)
                 self.convert_values(new_data)
                 data = new_data
                 data["Datetime"] = now
@@ -230,6 +244,7 @@ class DavisVantageClient:
             )
         if data["RainRate"] is not None:
             data["IsRaining"] = data["RainRate"] > 0
+        data["ArchiveInterval"] = self._vantagepro2.archive_period
 
     def convert_values(self, data: dict[str, Any]) -> None:
         del data["Datetime"]
@@ -270,68 +285,38 @@ class DavisVantageClient:
                 if raw_data.get(key, "") == 32767 or raw_data.get(key, "") == 65535:  # type: ignore
                     data[key] = None  # type: ignore
 
-    def add_archive_data(
-        self, archives: ListDict | None, data: dict[str, Any], last_data: dict[str, Any]
-    ):
-        data["HiLowUptoDate"] = False
+    def add_wind_gust(self, archives: ListDict | None, data: dict[str, Any]):
         if not archives:
-            for key in [
-                "ArchiveInterval",
-                "WindGust",
-                "WindGustDay",
-                "TempOutHiDay",
-                "TempOutLowDay",
-                "RainRateDay",
-                "BarometerHiDay",
-                "BarometerLowDay",
-                "SolarRadDay",
-                "UVDay",
-                "HumOutHiDay",
-                "HumOutLowDay",
-            ]:
-                data[key] = last_data.get(key, None)
+            data['WindGustUpToDate'] = False
             return
-        data["HiLowUptoDate"] = True
-        if len(archives) >= 2:
-            span = archives[-1]["Datetime"] - archives[-2]["Datetime"]
-            data["ArchiveInterval"] = int(span.total_seconds() / 60)
-        archive: ArchiveDataParserRevB = archives[-1]
-        data["WindGust"] = archive["WindHi"]
+        data['WindGustUpToDate'] = True
+        data["WindGust"] = archives[-1]["WindHi"]
 
-        today_archives = [
-            d for d in archives if d["Datetime"].date() == datetime.now().date()
-        ]
-        if today_archives:
-            data["TempOutHiDay"] = max(today_archives, key=lambda x: x["TempOutHi"])[
-                "TempOutHi"
-            ]
-            data["TempOutLowDay"] = min(today_archives, key=lambda x: x["TempOutLow"])[
-                "TempOutLow"
-            ]
-            data["WindGustDay"] = max(today_archives, key=lambda x: x["WindHi"])[
-                "WindHi"
-            ]
-            data["RainRateDay"] = max(today_archives, key=lambda x: x["RainRateHi"])[
-                "RainRateHi"
-            ]
-            data["BarometerHiDay"] = max(today_archives, key=lambda x: x["Barometer"])[
-                "Barometer"
-            ]
-            data["BarometerLowDay"] = min(today_archives, key=lambda x: x["Barometer"])[
-                "Barometer"
-            ]
-            data["SolarRadDay"] = max(today_archives, key=lambda x: x["SolarRadHi"])[
-                "SolarRadHi"
-            ]
-            data["UVDay"] = get_uv(max(today_archives, key=lambda x: x["UVHi"])[
-                "UVHi"
-            ])
-            data["HumOutHiDay"] = max(today_archives, key=lambda x: x["HumOut"])[
-                "HumOut"
-            ]
-            data["HumOutLowDay"] = min(today_archives, key=lambda x: x["HumOut"])[
-                "HumOut"
-            ]
+    def add_hilows(self, hilows: HighLowParserRevB | None, data: dict[str, Any]):
+        if not hilows:
+            return
+        data['TempOutHiDay'] = hilows['TempHiDay']
+        data['TempOutHiTime'] = hilows['TempHiTime']
+        data['TempOutLowDay'] = hilows['TempLoDay']
+        data['TempOutLowTime'] = hilows['TempLoTime']
+
+        data['DewPointHiDay'] = hilows['DewHiDay']
+        data['DewPointHiTime'] = hilows['DewHiTime']
+        data['DewPointLowDay'] = hilows['DewLoDay']
+        data['DewPointLowTime'] = hilows['DewLoTime']
+
+        data['RainRateDay'] = hilows['RainHiDay']
+
+        data['BarometerHiDay'] = hilows['BaroHiDay']
+        data['BarometerHiTime'] = hilows['BaroHiTime']
+        data['BarometerLowDay'] = hilows['BaroLoDay']
+        data['BarometerLoTime'] = hilows['BaroLoTime']
+
+        data['SolarRadDay'] = hilows['SolarHiDay']
+        data['UVDay'] = hilows['UVHiDay']
+
+        data['WindGustDay'] = hilows['WindHiDay']
+        data['WindGustTime'] = hilows['WindHiTime']
 
     def get_link(self) -> str | None:
         """Get device link for use with vproweather."""

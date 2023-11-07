@@ -1,5 +1,4 @@
-![Version](https: 
-    - //img.shields.io/github/v/release/MarcoGos/davis_vantage?include_prereleases)
+![Version](https://img.shields.io/github/v/release/MarcoGos/davis_vantage?include_prereleases)
 
 # Davis Vantage
 
@@ -79,7 +78,7 @@ The following entities will be created:
 - Wind Direction Rose: 
     -  Current wind direction in cardinal directions (N, NE, E, etc.)
 - Wind Gust: 
-    -  Current wind gust, based on the highest value within a Archive Interval
+    -  Current wind gust, based on the highest value within an Archive Interval
 - Wind Gust (Day): 
     -  Today's highest wind gust
 - Wind Speed: 

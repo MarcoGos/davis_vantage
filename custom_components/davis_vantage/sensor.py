@@ -91,6 +91,11 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         icon="mdi:thermometer-chevron-up"
     ),
     SensorEntityDescription(
+        key="TempOutHiTime",
+        name="Temperature High Time",
+        icon="mdi:clock-in"
+    ),
+    SensorEntityDescription(
         key="TempOutLowDay",
         name="Temperature Low (Day)",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -98,6 +103,11 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
         suggested_display_precision=1,
         icon="mdi:thermometer-chevron-down"
+    ),
+    SensorEntityDescription(
+        key="TempOutLowTime",
+        name="Temperature Low Time",
+        icon="mdi:clock-in"
     ),
     SensorEntityDescription(
         key="TempIn",
@@ -144,6 +154,34 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         suggested_display_precision=1
     ),
     SensorEntityDescription(
+        key="DewPointHiDay",
+        name="Dew Point High (Day)",
+        icon="mdi:water-thermometer-outline",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
+        suggested_display_precision=1
+    ),
+    SensorEntityDescription(
+        key="DewPointHiTime",
+        name="Dew Point High Time",
+        icon="mdi:clock-in"
+    ),
+    SensorEntityDescription(
+        key="DewPointLowDay",
+        name="Dew Point Low (Day)",
+        icon="mdi:water-thermometer-outline",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
+        suggested_display_precision=1
+    ),
+    SensorEntityDescription(
+        key="DewPointLowTime",
+        name="Dew Point Low Time",
+        icon="mdi:clock-in"
+    ),
+    SensorEntityDescription(
         key="Barometer",
         name="Barometric Pressure",
         device_class=SensorDeviceClass.PRESSURE,
@@ -160,12 +198,22 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         suggested_display_precision=2
     ),
     SensorEntityDescription(
+        key="BarometerHiTime",
+        name="Barometric Pressure High Time",
+        icon="mdi:clock-in"
+    ),
+    SensorEntityDescription(
         key="BarometerLowDay",
         name="Barometric Pressure Low (Day)",
         device_class=SensorDeviceClass.PRESSURE,
         state_class="measurement",
         native_unit_of_measurement=UnitOfPressure.INHG,
         suggested_display_precision=2
+    ),
+    SensorEntityDescription(
+        key="BarometerLoTime",
+        name="Barometric Pressure Low Time",
+        icon="mdi:clock-in"
     ),
     SensorEntityDescription(
         key="BarTrend",
@@ -183,22 +231,6 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
     SensorEntityDescription(
         key="HumOut",
         name="Humidity",
-        device_class=SensorDeviceClass.HUMIDITY,
-        state_class="measurement",
-        native_unit_of_measurement=PERCENTAGE,
-        suggested_display_precision=0
-    ),
-    SensorEntityDescription(
-        key="HumOutHiDay",
-        name="Humidity High (Day)",
-        device_class=SensorDeviceClass.HUMIDITY,
-        state_class="measurement",
-        native_unit_of_measurement=PERCENTAGE,
-        suggested_display_precision=0
-    ),
-    SensorEntityDescription(
-        key="HumOutLowDay",
-        name="Humidity Low (Day)",
         device_class=SensorDeviceClass.HUMIDITY,
         state_class="measurement",
         native_unit_of_measurement=PERCENTAGE,
@@ -239,6 +271,11 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         state_class="measurement",
         native_unit_of_measurement=UnitOfSpeed.MILES_PER_HOUR,
         suggested_display_precision=1
+    ),
+    SensorEntityDescription(
+        key="WindGustTime",
+        name="Wind Gust Time",
+        icon="mdi:clock-in"
     ),
     SensorEntityDescription(
         key="WindDir",

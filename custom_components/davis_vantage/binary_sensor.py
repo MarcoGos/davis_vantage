@@ -18,8 +18,8 @@ DESCRIPTIONS: list[BinarySensorEntityDescription] = [
         name="Is Raining"
     ),
     BinarySensorEntityDescription(
-        key="HiLowUptoDate",
-        name="High/Low Values Up-to-Date",
+        key="WindGustUpToDate",
+        name="Wind Gust Up-to-Date",
         entity_category=EntityCategory.DIAGNOSTIC
     )
 ]

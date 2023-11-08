@@ -343,6 +343,11 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         suggested_display_precision=1
     ),
     SensorEntityDescription(
+        key="RainRateTime",
+        name="Rain Rate Time",
+        icon="mdi:clock-in"
+    ),
+    SensorEntityDescription(
         key="UV",
         name="UV Level",
         icon="mdi:sun-wireless-outline",
@@ -354,6 +359,12 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         name="UV Level (Day)",
         icon="mdi:sun-wireless-outline",
         state_class="measurement",
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="UVTime",
+        name="UV Level Time",
+        icon="mdi:clock-in",
         entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
@@ -371,6 +382,12 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         state_class="measurement",
         entity_registry_enabled_default=False,
         native_unit_of_measurement=UnitOfIrradiance.WATTS_PER_SQUARE_METER
+    ),
+    SensorEntityDescription(
+        key="SolarRadTime",
+        name="Solar Radiation Time",
+        icon="mdi:clock-in",
+        entity_registry_enabled_default=False
     ),
     SensorEntityDescription(
         key="BatteryVolts",

@@ -287,9 +287,7 @@ class DavisVantageClient:
 
     def add_wind_gust(self, archives: ListDict | None, data: dict[str, Any]):
         if not archives:
-            data['WindGustUpToDate'] = False
             return
-        data['WindGustUpToDate'] = True
         data["WindGust"] = archives[-1]["WindHi"]
 
     def add_hilows(self, hilows: HighLowParserRevB | None, data: dict[str, Any]):
@@ -306,6 +304,7 @@ class DavisVantageClient:
         data['DewPointLowTime'] = hilows['DewLoTime']
 
         data['RainRateDay'] = hilows['RainHiDay']
+        data['RainRateTime'] = hilows['RainHiTime']
 
         data['BarometerHiDay'] = hilows['BaroHiDay']
         data['BarometerHiTime'] = hilows['BaroHiTime']
@@ -313,7 +312,10 @@ class DavisVantageClient:
         data['BarometerLoTime'] = hilows['BaroLoTime']
 
         data['SolarRadDay'] = hilows['SolarHiDay']
+        data['SolarRadTime'] = hilows['SolarHiTime']
+
         data['UVDay'] = hilows['UVHiDay']
+        data['UVTime'] = hilows['UVHiTime']
 
         data['WindGustDay'] = hilows['WindHiDay']
         data['WindGustTime'] = hilows['WindHiTime']

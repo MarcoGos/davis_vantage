@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "config_flow": true,
   "documentation": "https://github.com/MarcoGos/davis_vantage",
-  "requirements": ["git+https://github.com/MarcoGos/PyVantagePro.git#PyVantagePro==0.3.7"],
+  "requirements": ["git+https://github.com/MarcoGos/PyVantagePro.git@beta#PyVantagePro==0.3.8"],
   "ssdp": [],
   "zeroconf": [],
   "homekit": {},

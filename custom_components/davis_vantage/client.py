@@ -1,6 +1,6 @@
 """All client function"""
 from typing import Any
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from zoneinfo import ZoneInfo
 import logging
 import asyncio
@@ -294,31 +294,31 @@ class DavisVantageClient:
         if not hilows:
             return
         data['TempOutHiDay'] = hilows['TempHiDay']
-        data['TempOutHiTime'] = hilows['TempHiTime']
+        data['TempOutHiTime'] = self.strtotime(hilows['TempHiTime'])
         data['TempOutLowDay'] = hilows['TempLoDay']
-        data['TempOutLowTime'] = hilows['TempLoTime']
+        data['TempOutLowTime'] = self.strtotime(hilows['TempLoTime'])
 
         data['DewPointHiDay'] = hilows['DewHiDay']
-        data['DewPointHiTime'] = hilows['DewHiTime']
+        data['DewPointHiTime'] = self.strtotime(hilows['DewHiTime'])
         data['DewPointLowDay'] = hilows['DewLoDay']
-        data['DewPointLowTime'] = hilows['DewLoTime']
+        data['DewPointLowTime'] = self.strtotime(hilows['DewLoTime'])
 
         data['RainRateDay'] = hilows['RainHiDay']
-        data['RainRateTime'] = hilows['RainHiTime']
+        data['RainRateTime'] = self.strtotime(hilows['RainHiTime'])
 
         data['BarometerHiDay'] = hilows['BaroHiDay']
-        data['BarometerHiTime'] = hilows['BaroHiTime']
+        data['BarometerHiTime'] = self.strtotime(hilows['BaroHiTime'])
         data['BarometerLowDay'] = hilows['BaroLoDay']
-        data['BarometerLoTime'] = hilows['BaroLoTime']
+        data['BarometerLoTime'] = self.strtotime(hilows['BaroLoTime'])
 
         data['SolarRadDay'] = hilows['SolarHiDay']
-        data['SolarRadTime'] = hilows['SolarHiTime']
+        data['SolarRadTime'] = self.strtotime(hilows['SolarHiTime'])
 
         data['UVDay'] = hilows['UVHiDay']
-        data['UVTime'] = hilows['UVHiTime']
+        data['UVTime'] = self.strtotime(hilows['UVHiTime'])
 
         data['WindGustDay'] = hilows['WindHiDay']
-        data['WindGustTime'] = hilows['WindHiTime']
+        data['WindGustTime'] =self.strtotime( hilows['WindHiTime'])
 
     def get_link(self) -> str | None:
         """Get device link for use with vproweather."""
@@ -328,3 +328,9 @@ class DavisVantageClient:
 
     def get_raw_data(self) -> DataParser:
         return self._last_raw_data
+
+    def strtotime(self, time_str: str) -> time | None:
+        if time_str == '655:35':
+            return None
+        else:
+            return datetime.strptime(time_str, '%H:%M').time()

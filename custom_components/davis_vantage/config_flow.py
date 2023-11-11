@@ -158,7 +158,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Required(CONFIG_STATION_MODEL): vol.In(list_of_station_models),
                 vol.Required(
                     CONFIG_INTERVAL, 
-                    default=DEFAULT_SYNC_INTERVAL): vol.All(int, vol.Range(min=5) # type: ignore
+                    default=DEFAULT_SYNC_INTERVAL): vol.All(int, vol.Range(min=30) # type: ignore
                 ),
                 vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(list_of_rain_collector),
                 vol.Required(CONFIG_WINDROSE8): bool,

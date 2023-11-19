@@ -7,11 +7,7 @@ import asyncio
 import struct
 import re
 from pyvantagepro import VantagePro2
-from pyvantagepro.parser import (
-    HighLowParserRevB,
-    LoopDataParserRevB, 
-    DataParser
-)
+from pyvantagepro.parser import HighLowParserRevB, LoopDataParserRevB, DataParser
 from pyvantagepro.utils import ListDict
 from homeassistant.core import HomeAssistant
 
@@ -77,7 +73,9 @@ class DavisVantageClient:
     async def connect_to_station(self):
         self._vantagepro2 = await self.async_get_vantagepro2fromurl(self.get_link())
 
-    def get_current_data(self) -> tuple[LoopDataParserRevB | None, ListDict | None, HighLowParserRevB|None]:
+    def get_current_data(
+        self,
+    ) -> tuple[LoopDataParserRevB | None, ListDict | None, HighLowParserRevB | None]:
         """Get current date from weather station."""
         data = None
         archives = None
@@ -98,8 +96,6 @@ class DavisVantageClient:
         try:
             end_datetime = datetime.now()
             start_datetime = end_datetime - timedelta(minutes=(self._vantagepro2.archive_period * 2))  # type: ignore
-            # start_datetime = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-            # end_datetime = start_datetime + timedelta(hours=24)
             archives = self._vantagepro2.get_archives(start_datetime, end_datetime)
         except Exception:
             pass
@@ -116,15 +112,21 @@ class DavisVantageClient:
         )
         try:
             loop = asyncio.get_event_loop()
-            new_data, archives, hilows = await loop.run_in_executor(None, self.get_current_data)
+            new_data, archives, hilows = await loop.run_in_executor(
+                None, self.get_current_data
+            )
             if new_data:
                 new_raw_data = self.__get_full_raw_data(new_data)
                 self._last_raw_data = new_raw_data
                 self.remove_all_incorrect_data(new_raw_data, new_data)
                 self.add_additional_info(new_data)
-                self.add_wind_gust(archives, new_data)
-                self.add_hilows(hilows, new_data)
                 self.convert_values(new_data)
+                if archives:
+                    self.add_wind_gust(archives, new_data)
+                if hilows:
+                    new_raw_hilows = self.__get_full_raw_data_hilows(hilows)
+                    self.remove_all_incorrect_hilows(new_raw_hilows, hilows)
+                    self.add_hilows(hilows, new_data)
                 data = new_data
                 data["Datetime"] = now
                 if contains_correct_raw_data(new_raw_data):
@@ -134,6 +136,7 @@ class DavisVantageClient:
                     data["LastError"] = "Received partly incorrect data"
             else:
                 data["LastError"] = "Couldn't acquire data, no data received"
+
         except Exception as e:
             _LOGGER.warning(f"Couldn't acquire data from {self.get_link()}: {e}")
             data["LastError"] = f"Couldn't acquire data: {e}"
@@ -158,6 +161,10 @@ class DavisVantageClient:
         raw_data.tuple_to_dict("HumExtra")
         raw_data.tuple_to_dict("LeafWetness")
         raw_data.tuple_to_dict("SoilMoist")
+        return raw_data
+
+    def __get_full_raw_data_hilows(self, data: HighLowParserRevB) -> DataParser:
+        raw_data = DataParser(data.raw_bytes, HighLowParserRevB.HILOWS_FORMAT)
         return raw_data
 
     def get_davis_time(self) -> datetime | None:
@@ -276,14 +283,33 @@ class DavisVantageClient:
 
     def remove_all_incorrect_data(self, raw_data: DataParser, data: LoopDataParserRevB):
         data_info = {key: value for key, value in LoopDataParserRevB.LOOP_FORMAT}
+        self.remove_incorrect_data(raw_data, data_info, data)
+
+    def remove_all_incorrect_hilows(
+        self, raw_data: DataParser, data: HighLowParserRevB
+    ):
+        data_info = {key: value for key, value in HighLowParserRevB.HILOWS_FORMAT}
+        self.remove_incorrect_data(raw_data, data_info, data)
+
+    def remove_incorrect_data(
+        self, raw_data: DataParser, data_info: dict[str, str], data: dict[str, Any]
+    ):
         for key in data.keys():  # type: ignore
             info_key = re.sub(r"\d+$", "", key)  # type: ignore
-            if data_info.get(info_key, "") in ["B", "7s"]:
-                if raw_data.get(key, 0) == 255:  # type: ignore
-                    data[key] = None  # type: ignore
-            if data_info.get(key, "") == "H":  # type: ignore
-                if raw_data.get(key, "") == 32767 or raw_data.get(key, "") == 65535:  # type: ignore
-                    data[key] = None  # type: ignore
+            data_type = data_info.get(info_key, "")
+            raw_value = raw_data.get(info_key, 0)
+            if self.is_incorrect_value(raw_value, data_type):
+                data[key] = None  # type: ignore
+
+    def is_incorrect_value(self, raw_value: int, data_type: str) -> bool:
+        if (
+            ((data_type in ["B", "7s"]) and (raw_value == 255))
+            or ((data_type == "H") and (raw_value == 65535))
+            or ((data_type == "h") and (abs(raw_value) == 32767))
+        ):
+            return True
+        else:
+            return False
 
     def add_wind_gust(self, archives: ListDict | None, data: dict[str, Any]):
         if not archives:
@@ -293,32 +319,32 @@ class DavisVantageClient:
     def add_hilows(self, hilows: HighLowParserRevB | None, data: dict[str, Any]):
         if not hilows:
             return
-        data['TempOutHiDay'] = hilows['TempHiDay']
-        data['TempOutHiTime'] = self.strtotime(hilows['TempHiTime'])
-        data['TempOutLowDay'] = hilows['TempLoDay']
-        data['TempOutLowTime'] = self.strtotime(hilows['TempLoTime'])
+        data["TempOutHiDay"] = hilows["TempHiDay"]
+        data["TempOutHiTime"] = self.strtotime(hilows["TempHiTime"])
+        data["TempOutLowDay"] = hilows["TempLoDay"]
+        data["TempOutLowTime"] = self.strtotime(hilows["TempLoTime"])
 
-        data['DewPointHiDay'] = hilows['DewHiDay']
-        data['DewPointHiTime'] = self.strtotime(hilows['DewHiTime'])
-        data['DewPointLowDay'] = hilows['DewLoDay']
-        data['DewPointLowTime'] = self.strtotime(hilows['DewLoTime'])
+        data["DewPointHiDay"] = hilows["DewHiDay"]
+        data["DewPointHiTime"] = self.strtotime(hilows["DewHiTime"])
+        data["DewPointLowDay"] = hilows["DewLoDay"]
+        data["DewPointLowTime"] = self.strtotime(hilows["DewLoTime"])
 
-        data['RainRateDay'] = hilows['RainHiDay']
-        data['RainRateTime'] = self.strtotime(hilows['RainHiTime'])
+        data["RainRateDay"] = hilows["RainHiDay"]
+        data["RainRateTime"] = self.strtotime(hilows["RainHiTime"])
 
-        data['BarometerHiDay'] = hilows['BaroHiDay']
-        data['BarometerHiTime'] = self.strtotime(hilows['BaroHiTime'])
-        data['BarometerLowDay'] = hilows['BaroLoDay']
-        data['BarometerLoTime'] = self.strtotime(hilows['BaroLoTime'])
+        data["BarometerHiDay"] = hilows["BaroHiDay"]
+        data["BarometerHiTime"] = self.strtotime(hilows["BaroHiTime"])
+        data["BarometerLowDay"] = hilows["BaroLoDay"]
+        data["BarometerLoTime"] = self.strtotime(hilows["BaroLoTime"])
 
-        data['SolarRadDay'] = hilows['SolarHiDay']
-        data['SolarRadTime'] = self.strtotime(hilows['SolarHiTime'])
+        data["SolarRadDay"] = hilows["SolarHiDay"]
+        data["SolarRadTime"] = self.strtotime(hilows["SolarHiTime"])
 
-        data['UVDay'] = hilows['UVHiDay']
-        data['UVTime'] = self.strtotime(hilows['UVHiTime'])
+        data["UVDay"] = hilows["UVHiDay"]
+        data["UVTime"] = self.strtotime(hilows["UVHiTime"])
 
-        data['WindGustDay'] = hilows['WindHiDay']
-        data['WindGustTime'] =self.strtotime( hilows['WindHiTime'])
+        data["WindGustDay"] = hilows["WindHiDay"]
+        data["WindGustTime"] = self.strtotime(hilows["WindHiTime"])
 
     def get_link(self) -> str | None:
         """Get device link for use with vproweather."""
@@ -329,8 +355,8 @@ class DavisVantageClient:
     def get_raw_data(self) -> DataParser:
         return self._last_raw_data
 
-    def strtotime(self, time_str: str) -> time | None:
-        if time_str == '655:35':
+    def strtotime(self, time_str: str | None) -> time | None:
+        if time_str is None:
             return None
         else:
-            return datetime.strptime(time_str, '%H:%M').time()
+            return datetime.strptime(time_str, "%H:%M").time()

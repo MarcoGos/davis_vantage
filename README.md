@@ -94,7 +94,7 @@ The following entities will be created:
 - UV Level (Day): 
     - Today's highest UV level
 - UV Level Time: 
-    - Time of today's highest UV level
+    - Time of today's highest UV level (or Unknown if dark day)
 - Wind Chill: 
     - Current wind chill
 - Wind Direction: 

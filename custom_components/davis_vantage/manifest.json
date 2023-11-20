@@ -13,5 +13,6 @@
     "@MarcoGos"
   ],
   "iot_class": "local_polling",
-  "integration_type": "hub"
+  "integration_type": "hub",
+  "issue_tracker": "https://github.com/MarcoGos/davis_vantage/issues"
 }

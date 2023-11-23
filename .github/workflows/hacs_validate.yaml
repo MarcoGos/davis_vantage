@@ -1,4 +1,4 @@
-name: HValidate
+name: HACS Validation
 
 on:
   push:

@@ -7,6 +7,6 @@ get_davis_time:
 get_raw_data:
   name: Get Raw Data
   description: Get the raw, unprocessed data from the last fetch
-get_firmware_info:
-  name: Get Firmware Information
-  description: Get the firmware version and date information
+get_info:
+  name: Get Information
+  description: Get information about firmware and diagnostics

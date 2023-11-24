@@ -1,8 +1,12 @@
 set_davis_time:
+  name: Set Davis Time
   description: Set the time of the Davis weather station
 get_davis_time:
+  name: Get Davis Time
   description: Get the time of the Davis weather station
 get_raw_data:
+  name: Get Raw Data
   description: Get the raw, unprocessed data from the last fetch
 get_firmware_info:
+  name: Get Firmware Information
   description: Get the firmware version and date information

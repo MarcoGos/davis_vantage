@@ -11,7 +11,7 @@
   "integration_type": "hub",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/MarcoGos/davis_vantage/issues",
-  "requirements": ["git+https://github.com/MarcoGos/PyVantagePro.git#PyVantagePro==0.3.8"],
+  "requirements": ["PyVantagePro-MarcoGos==0.3.8"],
   "ssdp": [],
   "version": "1.0.0",
   "zeroconf": []

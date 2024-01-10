@@ -557,9 +557,6 @@ async def async_setup_entry(
 
     # Add all meter sensors described above.
     for description in DESCRIPTIONS:
-        if entry.data.get(CONFIG_STATION_MODEL, '') == MODEL_VANTAGE_PRO2PLUS:
-            if description.key in ["SolarRad", "UV"]:
-                description.entity_registry_enabled_default = True
         entities.append(
             DavisVantageSensor(
                 coordinator=coordinator,

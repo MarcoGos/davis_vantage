@@ -434,6 +434,7 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         key="StormStartDate",
         name="Rain Storm Start Date",
         icon="mdi:calendar-outline",
+        device_class=SensorDeviceClass.DATE,
         entity_registry_enabled_default=False
     ),
     SensorEntityDescription(

@@ -73,6 +73,10 @@ The following entities will be created:
     - Today's highest rain rate
 - Rain Rate Time:
     - Time of today's highest rain rate (or Unknown if no rain)
+- Rain Storm:
+    - Total rainfall during an extended period of rain
+- Rain Storm Start Date:
+    - Start date or current rain storm
 - Solar Radiation: 
     - Current solar radiation
 - Solar Radiation (Day): 
@@ -113,10 +117,6 @@ The following entities will be created:
     - 10 minutes average wind speed
 - Wind Speed (Bft): 
     - 10 minutes average wind speed in Beaufort
-- Rain Storm:
-    - Total rainfall during an extended period of rain
-- Storm Start Date:
-    - Start date or current rain storm
 - Extra Humidity 1-7: 
     - Current humidity extra sensor 1-7
 - Extra Temperature 1-7:
@@ -152,4 +152,4 @@ The entity information is updated every 30 seconds (default or other value is ch
 
 During first setup the communication to the weather station can be a bit tricky, resulting in an error saying the device didn't communicate. Please try again to set it up (can take up to 5 times).
 
-Determining Wind Gust value is done by reading archive data of the weather station. Unfortunately this part of the library function is a bit unstable.
+Determining Wind Gust value is done by reading archive data of the weather station.

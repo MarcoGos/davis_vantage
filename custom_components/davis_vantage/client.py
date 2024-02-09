@@ -1,6 +1,6 @@
 """All client function"""
 from typing import Any
-from datetime import datetime, timedelta, time
+from datetime import datetime, timedelta, time, date
 from zoneinfo import ZoneInfo
 import logging
 import asyncio
@@ -267,6 +267,7 @@ class DavisVantageClient:
         data["WindRoseSetup"] = 8 if self._windrose8 else 16
         if data["RainCollector"] != RAIN_COLLECTOR_IMPERIAL:
             self.correct_rain_values(data)
+        data['StormStartDate'] = self.strtodate(data['StormStartDate'])
 
     def correct_rain_values(self, data: dict[str, Any]):
         if data["RainDay"] is not None:
@@ -362,3 +363,9 @@ class DavisVantageClient:
             return None
         else:
             return datetime.strptime(time_str, "%H:%M").time()
+
+    def strtodate(self, date_str: str | None) -> date | None:
+        if date_str is None:
+            return None
+        else:
+            return datetime.strptime(date_str, "%Y-%m-%d").date()

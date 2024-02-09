@@ -113,6 +113,10 @@ The following entities will be created:
     - 10 minutes average wind speed
 - Wind Speed (Bft): 
     - 10 minutes average wind speed in Beaufort
+- Rain Storm:
+    - Total rainfall during an extended period of rain
+- Storm Start Date:
+    - Start date or current rain storm
 - Extra Humidity 1-7: 
     - Current humidity extra sensor 1-7
 - Extra Temperature 1-7:

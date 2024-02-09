@@ -277,6 +277,8 @@ class DavisVantageClient:
             data["RainYear"] *= 2 / 2.54
         if data["RainRate"] is not None:
             data["RainRate"] *= 2 / 2.54
+        if data["RainStorm"] is not None:
+            data["RainStorm"] *= 2 / 2.54
         if "RainRateDay" in data:
             if data["RainRateDay"] is not None:
                 data["RainRateDay"] *= 2 / 2.54

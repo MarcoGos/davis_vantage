@@ -26,9 +26,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
     DEFAULT_NAME,
-    DOMAIN,
-    CONFIG_STATION_MODEL,
-    MODEL_VANTAGE_PRO2PLUS
+    DOMAIN
 )
 
 from .coordinator import DavisVantageDataUpdateCoordinator
@@ -420,6 +418,22 @@ DESCRIPTIONS: list[SensorEntityDescription] = [
         name="Cardinal Directions",
         icon="mdi:compass-rose",
         entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="RainStorm",
+        name="Rain Storm",
+        icon="mdi:water-outline",
+        device_class=SensorDeviceClass.PRECIPITATION,
+        state_class="measurement",
+        native_unit_of_measurement=UnitOfLength.INCHES,
+        suggested_display_precision=1,
+        entity_registry_enabled_default=False
+    ),
+    SensorEntityDescription(
+        key="StormStartDate",
+        name="Rain Storm Start Date",
+        icon="mdi:calendar-outline",
         entity_registry_enabled_default=False
     ),
     SensorEntityDescription(

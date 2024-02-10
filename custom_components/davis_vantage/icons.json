@@ -1,0 +1,8 @@
+{
+    "services": {
+      "set_davis_time": "mdi:clock-edit-outline",
+      "get_davis_time": "mdi:clock-outline",
+      "get_raw_data": "mdi:export",
+      "get_info": "mdi:information-box-outline"
+    }
+  }

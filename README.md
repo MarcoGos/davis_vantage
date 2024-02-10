@@ -151,5 +151,3 @@ The entity information is updated every 30 seconds (default or other value is ch
 ## Known problems
 
 During first setup the communication to the weather station can be a bit tricky, resulting in an error saying the device didn't communicate. Please try again to set it up (can take up to 5 times).
-
-Determining Wind Gust value is done by reading archive data of the weather station.

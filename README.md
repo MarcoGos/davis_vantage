@@ -76,7 +76,7 @@ The following entities will be created:
 - Rain Storm:
     - Total rainfall during an extended period of rain
 - Rain Storm Start Date:
-    - Start date or current rain storm
+    - Start date of current rain storm
 - Solar Radiation: 
     - Current solar radiation
 - Solar Radiation (Day): 

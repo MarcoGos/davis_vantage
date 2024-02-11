@@ -2,7 +2,7 @@
 
 # Davis Vantage
 
-This is a custom integration for the Davis Vantage Pro2 and Vue. Either use a serial port or use an ip adress to connect to your device. Tested with the Vantage Pro 2 combined with a Davis WeatherLink 6510SER serial port data logger (connected via a ser2usb converter to the ha server), 6510USB logger and with a Vantage Vue combined with a WeatherLink IP.
+This is a custom integration for the Davis Vantage Pro2 and Vue. Either use a serial port or use an ip adress to connect to your device. Tested with the Vantage Pro 2 combined with a Davis WeatherLink 6510SER serial port data logger (connected via a ser2usb converter to the ha server), 6510USB logger and with a Vantage Vue combined with a WeatherLink IP (Davis 6555 IP logger).
 
 WeatherLink Live uses a different protocol and is not compatible with this integration. Other models unsure.
 
@@ -21,7 +21,9 @@ Via HACS:
 
 During the setup of the integration the serial port or the hostname of the weather station needs to be provided.
 
-Example network host: 192.168.0.18:1111
+Example network host: 192.168.0.18:22222
+
+If you're not sure about the port number (usually port 22222), then browse to the ip address of the IP logger and look at the port number on the configuration page.
 
 ## What to expect?
 
@@ -78,7 +80,7 @@ The following entities will be created:
 - Rain Storm:
     - Total rainfall during an extended period of rain
 - Rain Storm Start Date:
-    - Start date of current rain storm
+    - Start date of current rain storm. The rain period starts with a minimal of 2 ticks of the precipitation meter (0.4mm or 2/100") and ends after 24h of no rain.
 - Solar Radiation: 
     - Current solar radiation
 - Solar Radiation (Day): 

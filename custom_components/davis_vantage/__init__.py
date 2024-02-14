@@ -22,7 +22,6 @@ from .const import (
     CONFIG_RAIN_COLLECTOR,
     CONFIG_STATION_MODEL,
     CONFIG_INTERVAL,
-    CONFIG_WINDROSE8,
     CONFIG_PROTOCOL,
     CONFIG_LINK
 )
@@ -49,11 +48,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     protocol = entry.data.get(CONFIG_PROTOCOL, "")
     link = entry.data.get(CONFIG_LINK, "")
     rain_collector = entry.data.get(CONFIG_RAIN_COLLECTOR, RAIN_COLLECTOR_IMPERIAL)
-    windrose8 = entry.data.get(CONFIG_WINDROSE8, False)
 
     hass.data[DOMAIN]['interval'] = entry.data.get(CONFIG_INTERVAL, 30)
 
-    client = DavisVantageClient(hass, protocol, link, rain_collector, windrose8)
+    client = DavisVantageClient(hass, protocol, link, rain_collector)
     await client.connect_to_station()
     info = await client.async_get_info()
     firmware_version = info.get('version', None) if info is not None else None

@@ -1,8 +1,35 @@
 {
-    "services": {
-      "set_davis_time": "mdi:clock-edit-outline",
-      "get_davis_time": "mdi:clock-outline",
-      "get_raw_data": "mdi:export",
-      "get_info": "mdi:information-box-outline"
+  "services": {
+    "set_davis_time": "mdi:clock-edit-outline",
+    "get_davis_time": "mdi:clock-outline",
+    "get_raw_data": "mdi:export",
+    "get_info": "mdi:information-box-outline"
+  },
+  "entity": {
+    "sensor": {
+      "davis_vantage_barometric_trend": {
+        "default": "mdi:trending-neutral",
+        "state": {
+          "falling_rapidly": "mdi:trending-down",
+          "falling_slowly": "mdi:trending-down",
+          "steady": "mdi:trending-neutral",
+          "rising_slowly": "mdi:trending-up",
+          "rising_rapidly": "mdi:trending-up"
+        }
+      },
+      "wind_direction_rose": {
+        "default": "mdi:compass-outline",
+        "state": {
+          "N": "mdi:arrow-down-bold-outline",
+          "NE": "mdi:arrow-bottom-left-bold-outline",
+          "E": "mdi:arrow-left-bold-outline",
+          "SE": "mdi:arrow-top-left-bold-outline",
+          "S": "mdi:arrow-up-bold-outline",
+          "SW": "mdi:arrow-top-right-bold-outline",
+          "W": "mdi:arrow-right-bold-outline",
+          "NW": "mdi:arrow-bottom-right-bold-outline"
+        }
+      }
     }
   }
+}

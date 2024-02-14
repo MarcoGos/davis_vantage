@@ -28,8 +28,41 @@
                 "data": {
                     "station_model": "Davis weather station model",
                     "interval": "Interval",
-                    "rain_collector": "Rain collector",
-                    "windrose8": "Wind rose with 8 cardinal directions"
+                    "rain_collector": "Rain collector"
+                }
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "davis_vantage_barometric_trend": {
+                "state": {
+                    "falling_rapidly": "Falling Rapidly",
+                    "falling_slowly": "Falling Slowly",
+                    "steady": "Steady",
+                    "rising_slowly": "Rising Slowly",
+                    "rising_rapidly": "Rising Rapidly",
+                    "not_available": "Not Available"
+                }
+            },
+            "wind_direction_rose": {
+                "state": {
+                    "N": "N",
+                    "NNE": "NNE",
+                    "NE": "NE",
+                    "ENE": "ENE",
+                    "E": "E",
+                    "ESE": "ESE",
+                    "SE": "SE",
+                    "SSE": "SSE",
+                    "S": "S",
+                    "SSW": "SSW",
+                    "SW": "SW",
+                    "WSW": "WSW",
+                    "W": "W",
+                    "WNW": "WNW",
+                    "NW": "NW",
+                    "NNW": "NNW"
                 }
             }
         }

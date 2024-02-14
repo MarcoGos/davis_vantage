@@ -141,8 +141,6 @@ Diagnostic entities:
     - Last fetch time
 - Battery Voltage: 
     - Current battery voltage
-- Cardinal Directions: 
-    - Number of cardinal direction 8 or 16 (set during setup)
 - Last Error Time: 
     - Last error time
 - Last Success Time: 

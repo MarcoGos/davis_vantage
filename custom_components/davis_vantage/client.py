@@ -41,13 +41,11 @@ class DavisVantageClient:
         hass: HomeAssistant,
         protocol: str,
         link: str,
-        rain_collector: str,
-        windrose8: bool,
+        rain_collector: str
     ) -> None:
         self._hass = hass
         self._protocol = protocol
         self._link = link
-        self._windrose8 = windrose8
         self._rain_collector = rain_collector
         self._last_data: LoopDataParserRevB = {}  # type: ignore
         self._last_raw_data: DataParser = {}  # type: ignore
@@ -244,7 +242,7 @@ class DavisVantageClient:
                         data["TempOut"], data["HumOut"], data["WindSpeed"]
                     )
         if data["WindDir"] is not None:
-            data["WindDirRose"] = get_wind_rose(data["WindDir"], self._windrose8)
+            data["WindDirRose"] = get_wind_rose(data["WindDir"])
         if data["WindSpeed10Min"] is not None:
             data["WindSpeedBft"] = convert_kmh_to_bft(
                 convert_to_kmh(data["WindSpeed10Min"])
@@ -264,7 +262,6 @@ class DavisVantageClient:
         if data["ForecastRuleNo"] is not None:
             data["ForecastRuleNo"] = get_forecast_string(data["ForecastRuleNo"])
         data["RainCollector"] = self._rain_collector
-        data["WindRoseSetup"] = 8 if self._windrose8 else 16
         if data["RainCollector"] != RAIN_COLLECTOR_IMPERIAL:
             self.correct_rain_values(data)
         data['StormStartDate'] = self.strtodate(data['StormStartDate'])

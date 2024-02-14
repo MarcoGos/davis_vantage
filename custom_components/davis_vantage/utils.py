@@ -200,6 +200,163 @@ ForecastStrings = ["Mostly clear and cooler.",
 "FORECAST REQUIRES 3 HRS. OF RECENT DATA",
 "Mostly clear and cooler." ]
 
+ForecastStringsNL = ["Meestal helder en koeler.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal helder gedurende 12 uur met weinig temperatuursverandering.",
+"Meestal helder gedurende 12 tot 24 uur en koeler.",
+"Meestal helder met weinig temperatuursverandering.",
+"Gedeeltelijk bewolkt en koeler.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder en warmer.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 24 tot 48 uur.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking met weinig temperatuursverandering. Neerslag mogelijk binnen 24 uur.",
+"Meestal helder met weinig temperatuursverandering.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking met weinig temperatuursverandering. Neerslag mogelijk binnen 12 uur.",
+"Meestal helder met weinig temperatuursverandering.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 24 uur. Toenemende wind.",
+"Meestal helder en warmer. Toenemende wind.",
+"Toenemende bewolking en warmer.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 12 tot 24 uur. Toenemende wind.",
+"Meestal helder en warmer. Toenemende wind.",
+"Toenemende bewolking en warmer.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 12 tot 24 uur. Toenemende wind.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal helder en warmer. Neerslag mogelijk binnen 48 uur.",
+"Meestal helder en warmer.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking met weinig temperatuursverandering. Neerslag mogelijk binnen 24 tot 48 uur.",
+"Toenemende bewolking met weinig temperatuursverandering.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 12 tot 24 uur.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 12 tot 24 uur. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 12 tot 24 uur. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 6 tot 12 uur.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 6 tot 12 uur. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 12 tot 24 uur. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag mogelijk binnen 12 uur.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en warmer. Neerslag waarschijnlijk.",
+"opklarend en koeler. Neerslag eindigt binnen 6 uur.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"opklarend en koeler. Neerslag eindigt binnen 6 uur.",
+"Meestal helder met weinig temperatuursverandering.",
+"Opklarend en koeler. Neerslag eindigt binnen 6 uur.",
+"Gedeeltelijk bewolkt en koeler.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder en koeler.",
+"opklarend en koeler. Neerslag eindigt binnen 6 uur.",
+"Meestal helder met weinig temperatuursverandering.",
+"Opklarend en koeler. Neerslag eindigt binnen 6 uur.",
+"Meestal helder en koeler.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking met weinig temperatuursverandering. Neerslag mogelijk binnen 24 uur.",
+"Meestal bewolkt en koeler. Neerslag aanhoudend.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal bewolkt en koeler. Neerslag waarschijnlijk.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag aanhoudend.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag waarschijnlijk.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en koeler. Neerslag mogelijk en winderig binnen 6 uur.",
+"Toenemende bewolking met weinig temperatuursverandering. Neerslag mogelijk en winderig binnen 6 uur.",
+"Meestal bewolkt en koeler. Neerslag aanhoudend. Toenemende wind.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal bewolkt en koeler. Neerslag waarschijnlijk. Toenemende wind.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag aanhoudend. Toenemende wind.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag waarschijnlijk. Toenemende wind.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en koeler. Neerslag mogelijk binnen 12 tot 24 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"Toenemende bewolking met weinig temperatuursverandering. Neerslag mogelijk binnen 12 tot 24 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en koeler. Neerslag mogelijk binnen 6 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"Toenemende bewolking met weinig temperatuursverandering. Neerslag mogelijk binnen 6 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"Meestal bewolkt en koeler. Neerslag eindigt binnen 12 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"Meestal bewolkt en koeler. Mogelijke winddraaiing naar het W, NW, of N.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag eindigt binnen 12 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"Meestal bewolkt met weinig temperatuursverandering. Mogelijke winddraaiing naar het W, NW, of N.",
+"Meestal bewolkt en koeler. Neerslag eindigt binnen 12 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal bewolkt en koeler. Neerslag mogelijk binnen 24 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag eindigt binnen 12 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag mogelijk binnen 24 uur. Mogelijke winddraaiing naar het W, NW, of N.",
+"opklarend, koeler en winderig. Neerslag eindigt binnen 6 uur.",
+"opklarend, koeler en winderig.",
+"Meestal bewolkt en koeler. Neerslag eindigt binnen 6 uur. Winderig met mogelijke winddraaiing naar het W, NW, of N.",
+"Meestal bewolkt en koeler. Winderig met mogelijke winddraaiing naar het W, NW, of N.",
+"Opklarend, koeler en winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag mogelijk binnen 12 uur. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking en koeler. Neerslag mogelijk binnen 12 uur, mogelijk zwaar. Winderig.",
+"Meestal bewolkt en koeler. Neerslag eindigt binnen 6 uur. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal bewolkt en koeler. Neerslag mogelijk binnen 12 uur. Winderig.",
+"Meestal bewolkt en koeler. Neerslag eindigend in 12 tot 24 uur.",
+"Meestal bewolkt en koeler.",
+"Meestal bewolkt en koeler. Neerslag aanhoudend, mogelijk zwaar. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal bewolkt en koeler. Neerslag mogelijk binnen 6 tot 12 uur. Winderig.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag aanhoudend, mogelijk zwaar. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag mogelijk binnen 6 tot 12 uur. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Toenemende bewolking met weinig temperatuursverandering. Neerslag mogelijk binnen 12 uur, mogelijk zwaar. Winderig.",
+"Meestal bewolkt en koeler. Winderig.",
+"Meestal bewolkt en koeler. Neerslag aanhoudend, mogelijk zwaar. Winderig.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal bewolkt en koeler. Neerslag waarschijnlijk, winderig met mogelijke winddraaiing naar het W, NW, of N.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag aanhoudend.",
+"Meestal bewolkt met weinig temperatuursverandering. Neerslag waarschijnlijk.",
+"Gedeeltelijk bewolkt met weinig temperatuursverandering.",
+"Meestal helder met weinig temperatuursverandering.",
+"Meestal bewolkt en koeler. Neerslag mogelijk binnen 12 uur, mogelijk zwaar. Winderig.",
+"VOORSPELLING VEREIST 3 UUR RECENTE GEGEVENS",
+"Meestal helder en koeler."]
+
+
 def convert_to_celcius(value: float) -> float:
     return round((value - 32.0) * (5.0/9.0), 1)
 
@@ -331,13 +488,9 @@ def calc_feels_like(temperature_f: float, humidity: float, windspeed_mph: float)
 def convert_to_iso_datetime(value: datetime, tzinfo: ZoneInfo) -> datetime:
     return value.replace(tzinfo=tzinfo)
 
-def get_wind_rose(bearing: int, windrose8: bool) -> str:
-    directions = [ 'N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
-               'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW' ]
-    if windrose8:
-        index = (round(bearing / 45) % 8) * 2
-    else:
-        index = round(bearing / 22.5) % 16
+def get_wind_rose(bearing: int) -> str:
+    directions = [ 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW' ]
+    index = round(bearing / 45) % 8
     return directions[index]
 
 def has_correct_value(value: float) -> bool:
@@ -346,19 +499,19 @@ def has_correct_value(value: float) -> bool:
 def round_to_one_decimal(value: float) -> float:
     return round(value, 1)
 
-def get_baro_trend(trend: int) -> str:
+def get_baro_trend(trend: int) -> str | None:
     if trend in [-60,196]:
-        return "Falling Rapidly"
+        return "falling_rapidly"
     elif trend in [-20,236]:
-        return "Falling Slowly"
+        return "falling_slowly"
     elif trend == 0:
-        return "Steady"
+        return "steady"
     elif trend == 20:
-        return "Rising Slowly"
+        return "rising_slowly"
     elif trend == 60:
-        return "Rising Rapidly"
+        return "rising_rapidly"
     else:
-        return f"n/a ({trend})"
+        return None
 
 def get_forecast_string(wrule: int) -> str:
     if wrule > 194:

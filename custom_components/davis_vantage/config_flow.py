@@ -26,7 +26,6 @@ from .const import (
     CONFIG_RAIN_COLLECTOR,
     CONFIG_STATION_MODEL,
     CONFIG_INTERVAL,
-    CONFIG_WINDROSE8,
     CONFIG_PROTOCOL,
     CONFIG_LINK
 )
@@ -45,7 +44,7 @@ class PlaceholderHub:
     async def authenticate(self, protocol: str, link: str) -> bool:
         """Test if we can find data for the given link."""
         _LOGGER.info(f"authenticate called")
-        client = DavisVantageClient(self._hass, protocol, link, "", False)
+        client = DavisVantageClient(self._hass, protocol, link, "")
         await client.connect_to_station()
         return await client.async_get_davis_time() != None
 
@@ -160,8 +159,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     CONFIG_INTERVAL, 
                     default=DEFAULT_SYNC_INTERVAL): vol.All(int, vol.Range(min=30) # type: ignore
                 ),
-                vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(list_of_rain_collector),
-                vol.Required(CONFIG_WINDROSE8): bool,
+                vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(list_of_rain_collector)
             }
         )
 

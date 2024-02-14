@@ -4,7 +4,7 @@ NAME = "Davis Vantage"
 DOMAIN = "davis_vantage"
 MANUFACTURER = "Davis"
 MODEL = "Vantage Pro2/Vue"
-VERSION = "1.1.8"
+VERSION = "1.1.9"
 
 DEFAULT_SYNC_INTERVAL = 30  # seconds
 DEFAULT_NAME = NAME
@@ -27,6 +27,5 @@ MODEL_VANTAGE_VUE = 'Vantage Vue'
 CONFIG_RAIN_COLLECTOR = "rain_collector"
 CONFIG_STATION_MODEL = "station_model"
 CONFIG_INTERVAL = "interval"
-CONFIG_WINDROSE8 = "windrose8"
 CONFIG_PROTOCOL = "protocol"
 CONFIG_LINK = "link"

@@ -41,8 +41,7 @@
                     "falling_slowly": "Langzaam dalend",
                     "steady": "Stabiel",
                     "rising_slowly": "Langzaam stijgend",
-                    "rising_rapidly": "Snel stijgend",
-                    "not_available": "Niet beschikbaar"
+                    "rising_rapidly": "Snel stijgend"
                 }
             },
             "wind_direction_rose": {

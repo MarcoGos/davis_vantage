@@ -41,8 +41,7 @@
                     "falling_slowly": "Falling Slowly",
                     "steady": "Steady",
                     "rising_slowly": "Rising Slowly",
-                    "rising_rapidly": "Rising Rapidly",
-                    "not_available": "Not Available"
+                    "rising_rapidly": "Rising Rapidly"
                 }
             },
             "wind_direction_rose": {

@@ -47,22 +47,14 @@
             },
             "wind_direction_rose": {
                 "state": {
-                    "N": "N",
-                    "NNE": "NNO",
-                    "NE": "NO",
-                    "ENE": "ONO",
-                    "E": "O",
-                    "ESE": "OZO",
-                    "SE": "ZO",
-                    "SSE": "ZZO",
-                    "S": "Z",
-                    "SSW": "ZZW",
-                    "SW": "ZW",
-                    "WSW": "WZW",
-                    "W": "W",
-                    "WNW": "WNW",
-                    "NW": "NW",
-                    "NNW": "NNW"
+                    "n": "N",
+                    "ne": "NO",
+                    "e": "O",
+                    "se": "ZO",
+                    "s": "Z",
+                    "sw": "ZW",
+                    "w": "W",
+                    "nw": "NW"
                 }
             }
         }

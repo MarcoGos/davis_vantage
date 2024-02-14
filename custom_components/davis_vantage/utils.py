@@ -489,7 +489,7 @@ def convert_to_iso_datetime(value: datetime, tzinfo: ZoneInfo) -> datetime:
     return value.replace(tzinfo=tzinfo)
 
 def get_wind_rose(bearing: int) -> str:
-    directions = [ 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW' ]
+    directions = [ 'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw' ]
     index = round(bearing / 45) % 8
     return directions[index]
 

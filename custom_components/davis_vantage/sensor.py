@@ -304,14 +304,14 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             device_class=SensorDeviceClass.ENUM,
             translation_key="wind_direction_rose",
             options=[
-                "N",
-                "NE",
-                "E",
-                "SE",
-                "S",
-                "SW",
-                "W",
-                "NW"
+                "n",
+                "ne",
+                "e",
+                "se",
+                "s",
+                "sw",
+                "w",
+                "nw"
             ]
         ),
         SensorEntityDescription(

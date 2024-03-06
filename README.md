@@ -2,7 +2,7 @@
 
 # Davis Vantage
 
-This is a custom integration for the Davis Vantage Pro2 and Vue. Either use a serial port or use an ip adress to connect to your device.
+This is a custom integration for the Davis Vantage Pro2. Either use a serial port or use an ip adress to connect to your device.
 
 Model | Compatible
 ---|:---:

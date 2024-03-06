@@ -23,7 +23,8 @@ from .const import (
     CONFIG_STATION_MODEL,
     CONFIG_INTERVAL,
     CONFIG_PROTOCOL,
-    CONFIG_LINK
+    CONFIG_LINK,
+    DATA_ARCHIVE_PERIOD
 )
 from .coordinator import DavisVantageDataUpdateCoordinator
 from .utils import convert_to_iso_datetime
@@ -55,6 +56,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await client.connect_to_station()
     info = await client.async_get_info()
     firmware_version = info.get('version', None) if info is not None else None
+    hass.data.setdefault(DATA_ARCHIVE_PERIOD, info.get('archive_period', None) if info is not None else None)
 
     device_info = DeviceInfo(
         identifiers={(DOMAIN, entry.entry_id)},

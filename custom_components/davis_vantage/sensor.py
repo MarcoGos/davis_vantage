@@ -328,7 +328,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             device_class=SensorDeviceClass.PRECIPITATION,
             state_class="measurement",
             native_unit_of_measurement=UnitOfLength.INCHES,
-            suggested_display_precision=1
+            suggested_display_precision=2
         ),
         SensorEntityDescription(
             key="RainMonth",
@@ -337,7 +337,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             state_class="measurement",
             device_class=SensorDeviceClass.PRECIPITATION,
             native_unit_of_measurement=UnitOfLength.INCHES,
-            suggested_display_precision=1
+            suggested_display_precision=2
         ),
         SensorEntityDescription(
             key="RainYear",
@@ -346,7 +346,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             state_class="measurement",
             device_class=SensorDeviceClass.PRECIPITATION,
             native_unit_of_measurement=UnitOfLength.INCHES,
-            suggested_display_precision=1
+            suggested_display_precision=2
         ),
         SensorEntityDescription(
             key="RainRate",
@@ -355,7 +355,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             device_class=SensorDeviceClass.PRECIPITATION_INTENSITY,
             state_class="measurement",
             native_unit_of_measurement=UnitOfVolumetricFlux.INCHES_PER_HOUR,
-            suggested_display_precision=1
+            suggested_display_precision=2
         ),
         SensorEntityDescription(
             key="RainRateDay",
@@ -364,7 +364,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             device_class=SensorDeviceClass.PRECIPITATION_INTENSITY,
             state_class="measurement",
             native_unit_of_measurement=UnitOfVolumetricFlux.INCHES_PER_HOUR,
-            suggested_display_precision=1
+            suggested_display_precision=2
         ),
         SensorEntityDescription(
             key="RainRateTime",

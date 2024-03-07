@@ -150,7 +150,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         list_of_station_models = [
             MODEL_VANTAGE_PRO2,
             MODEL_VANTAGE_PRO2PLUS,
-            MODEL_VANTAGE_VUE
+            # MODEL_VANTAGE_VUE
         ]
         STEP_USER_DATA_SCHEMA = vol.Schema(
             {

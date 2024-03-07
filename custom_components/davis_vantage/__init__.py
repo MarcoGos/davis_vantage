@@ -54,9 +54,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     client = DavisVantageClient(hass, protocol, link, rain_collector)
     await client.connect_to_station()
-    info = await client.async_get_info()
-    firmware_version = info.get('version', None) if info is not None else None
-    hass.data.setdefault(DATA_ARCHIVE_PERIOD, info.get('archive_period', None) if info is not None else None)
+    static_info = await client.async_get_static_info()
+    firmware_version = static_info.get('version', None) if static_info is not None else None
+    hass.data.setdefault(DATA_ARCHIVE_PERIOD, static_info.get('archive_period', None) if static_info is not None else None)
 
     device_info = DeviceInfo(
         identifiers={(DOMAIN, entry.entry_id)},

@@ -93,7 +93,7 @@ class DavisVantageClient:
 
         try:
             end_datetime = datetime.now()
-            start_datetime = end_datetime - timedelta(minutes=(self._vantagepro2.archive_period * 2))  # type: ignore
+            start_datetime = end_datetime - timedelta(minutes=(self._hass.data.get(DATA_ARCHIVE_PERIOD) * 2))  # type: ignore
             archives = self._vantagepro2.get_archives(start_datetime, end_datetime)
         except Exception:
             pass
@@ -209,9 +209,9 @@ class DavisVantageClient:
         try:
             self._vantagepro2.link.open()
             firmware_version = self._vantagepro2.firmware_version  # type: ignore
+            archive_period = self._vantagepro2.archive_period # type: ignore
             firmware_date = self._vantagepro2.firmware_date  # type: ignore
             diagnostics = self._vantagepro2.diagnostics  # type: ignore
-            archive_period = self._vantagepro2.archive_period # type: ignore
         except Exception as e:
             raise e
         finally:
@@ -230,6 +230,29 @@ class DavisVantageClient:
             info = await loop.run_in_executor(None, self.get_info)
         except Exception as e:
             _LOGGER.error("Couldn't get firmware info: %s", e)
+        return info
+
+    def get_static_info(self) -> dict[str, Any] | None:
+        try:
+            self._vantagepro2.link.open()
+            firmware_version = self._vantagepro2.firmware_version  # type: ignore
+            archive_period = self._vantagepro2.archive_period # type: ignore
+        except Exception as e:
+            raise e
+        finally:
+            self._vantagepro2.link.close()
+        return {
+            "version": firmware_version,
+            "archive_period": archive_period
+        }
+
+    async def async_get_static_info(self) -> dict[str, Any] | None:
+        info = None
+        try:
+            loop = asyncio.get_event_loop()
+            info = await loop.run_in_executor(None, self.get_static_info)
+        except Exception as e:
+            _LOGGER.error("Couldn't get static info: %s", e)
         return info
 
     def add_additional_info(self, data: dict[str, Any]) -> None:

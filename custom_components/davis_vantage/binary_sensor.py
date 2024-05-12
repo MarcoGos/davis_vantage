@@ -8,13 +8,13 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DEFAULT_NAME, DOMAIN
+from .const import DEFAULT_NAME, DOMAIN, KEY_TO_NAME
 from .coordinator import DavisVantageDataUpdateCoordinator
 
 DESCRIPTIONS: list[BinarySensorEntityDescription] = [
     BinarySensorEntityDescription(
         key="IsRaining",
-        translation_key="Is Raining"
+        translation_key="is_raining"
     )
 ]
 
@@ -57,8 +57,8 @@ class DavisVantageBinarySensor(
         """Initialize Davis Vantage sensor."""
         super().__init__(coordinator=coordinator)
         self.entity_description = description
-        self.entity_id = f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME} {description.translation_key}".lower()
-        self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {description.translation_key}"
+        self.entity_id = f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME} {KEY_TO_NAME[description.key]}".lower()
+        self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {KEY_TO_NAME[description.key]}"
         self._attr_device_info = coordinator.device_info
 
     @property

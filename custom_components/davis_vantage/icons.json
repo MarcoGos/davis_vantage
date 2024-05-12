@@ -7,7 +7,7 @@
   },
   "entity": {
     "sensor": {
-      "davis_vantage_barometric_trend": {
+      "Barometric Trend": {
         "default": "mdi:trending-neutral",
         "state": {
           "falling_rapidly": "mdi:trending-down",
@@ -17,7 +17,7 @@
           "rising_rapidly": "mdi:trending-up"
         }
       },
-      "wind_direction_rose": {
+      "Wind Direction Rose": {
         "default": "mdi:compass-outline",
         "state": {
           "n": "mdi:arrow-down-bold-outline",
@@ -28,6 +28,14 @@
           "sw": "mdi:arrow-top-right-bold-outline",
           "w": "mdi:arrow-right-bold-outline",
           "nw": "mdi:arrow-bottom-right-bold-outline"
+        }
+      }
+    },
+    "binary_sensor": {
+      "Is Raining": {
+        "state": {
+          "on": "mdi:weather-pouring",
+          "off": "mdi:weather-partly-cloudy"
         }
       }
     }

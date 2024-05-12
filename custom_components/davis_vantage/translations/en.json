@@ -35,7 +35,80 @@
     },
     "entity": {
         "sensor": {
-            "davis_vantage_barometric_trend": {
+            "Last Fetch Time": {
+                "name": "Last Fetch Time"
+            },
+            "Last Success Time": {
+                "name": "Last Success Time"
+            },
+            "Last Error Time": {
+                "name": "Last Error Time"
+            },
+            "Last Error Message": {
+                "name": "Last Error Message"
+            },
+            "Archive Internal": {
+                "name": "Archive Interval"
+            },
+            "Temperature": {
+                "name": "Temperature"
+            },
+            "Temperature High (Day)": {
+                "name": "Temperature High (Day)"
+            },
+            "Temperature High Time": {
+                "name": "Temperature High Time"
+            },
+            "Temperature Low (Day)": {
+                "name": "Temperature Low (Day)"
+            },
+            "Temperature Low Time": {
+                "name": "Temperature Low Time"
+            },
+            "Temperature (Inside)": {
+                "name": "Temperatuur (Inside)"
+            },
+            "heat_index": {
+                "name": "Heat Index"
+            },
+            "Wind Chill": {
+                "name": "Wind Chill"
+            },
+            "Feels Like": {
+                "name": "Feels Like"
+            },
+            "Dew Point": {
+                "name": "Dew Point"
+            },
+            "Dew Point High (Day)": {
+                "name": "Dew Point High (Day)"
+            },
+            "Dew Point High Time": {
+                "name": "Dew Point High Time"
+            },
+            "Dew Point Low (Day)": {
+                "name": "Dew Point Low (Day)"
+            },
+            "Dew Point Low Time": {
+                "name": "Dew Point Low Time"
+            },
+            "Barometric Pressure": {
+                "name": "Barometric Pressure"
+            },
+            "Barometric Pressure High (Day)": {
+                "name": "Barometric Pressure High (Day)"
+            },
+            "Barometric Pressure High Time": {
+                "name": "Barometric Pressure High Time"
+            },
+            "Barometric Pressure Low (Day)": {
+                "name": "Barometric Pressure Low (Day)"
+            },
+            "Barometric Pressure Low Time": {
+                "name": "Barometric Pressure Low Time"
+            },
+            "Barometric Trend": {
+                "name": "Barometric Trend",
                 "state": {
                     "falling_rapidly": "Falling Rapidly",
                     "falling_slowly": "Falling Slowly",
@@ -44,7 +117,32 @@
                     "rising_rapidly": "Rising Rapidly"
                 }
             },
-            "wind_direction_rose": {
+            "Humidity (Inside)": {
+                "name": "Humidity (Inside)"
+            },
+            "Humidity": {
+                "name": "Humidity"
+            },
+            "Wind Speed": {
+                "name": "Wind Speed"
+            },
+            "Wind Speed (Average)": {
+                "name": "Wind Speed (Average)"
+            },
+            "Wind Gust": {
+                "name": "Wind Gust"
+            },
+            "Wind Gust (Day)": {
+                "name": "Wind Gust (Day)"
+            },
+            "Wind Gust Time": {
+                "name": "Wind Gust Time"
+            },
+            "Wind Direction": {
+                "name": "Wind Direction"
+            },
+            "Wind Direction Rose": {
+                "name": "Wind Direction (Rose)",
                 "state": {
                     "n": "N",
                     "ne": "NE",
@@ -55,6 +153,110 @@
                     "w": "W",
                     "nw": "NW"
                 }
+            },
+            "Wind Speed (Bft)": {
+                "name": "Wind Speed (Bft)"
+            },
+            "Rain (Day)": {
+                "name": "Rain (Day)"
+            },
+            "Rain (Month)": {
+                "name": "Rain (Month)"
+            },
+            "Rain (Year)": {
+                "name": "Rain (Year)"
+            },
+            "Rain Rate": {
+                "name": "Rain Rate"
+            },
+            "Rain Rate (Day)": {
+                "name": "Rain Rate (Day)"
+            },
+            "Rain Rate Time": {
+                "name": "Rain Rate Time"
+            },
+            "UV Level": {
+                "name": "UV Level"
+            },
+            "UV Level (Day)": {
+                "name": "UV Level (Day)"
+            },
+            "UV Level Time": {
+                "name": "UV Level Time"
+            },
+            "Solar Radiation": {
+                "name": "Solar Radiation"
+            },
+            "Solar Radiation (Day)": {
+                "name": "Solar Radiation (Day)"
+            },
+            "Solar Radiation Time": {
+                "name": "Solar Radiation Time"
+            },
+            "Battery Voltage": {
+                "name": "Battery Voltage"
+            },
+            "Forecast Icon": {
+                "name": "Forecast Icon"
+            },
+            "Forecast Rule": {
+                "name": "Forecast Rule"
+            },
+            "Rain Collector": {
+                "name": "Rain Collector"
+            },
+            "Rain Storm": {
+                "name": "Rain Storm"
+            },
+            "Rain Storm Start Date": {
+                "name": "Rain Storm Start Date"
+            },
+            "Extra Temperature 1": {
+                "name": "Extra Temperature 1"
+            },
+            "Extra Temperature 2": {
+                "name": "Extra Temperature 2"
+            },
+            "Extra Temperature 3": {
+                "name": "Extra Temperature 3"
+            },
+            "Extra Temperature 4": {
+                "name": "Extra Temperature 4"
+            },
+            "Extra Temperature 5": {
+                "name": "Extra Temperature 5"
+            },
+            "Extra Temperature 6": {
+                "name": "Extra Temperature 6"
+            },
+            "Extra Temperature 7": {
+                "name": "Extra Temperature 7"
+            },
+            "Extra Humidity 1": {
+                "name": "Extra Humidity 1"
+            },
+            "Extra Humidity 2": {
+                "name": "Extra Humidity 2"
+            },
+            "Extra Humidity 3": {
+                "name": "Extra Humidity 3"
+            },
+            "Extra Humidity 4": {
+                "name": "Extra Humidity 4"
+            },
+            "Extra Humidity 5": {
+                "name": "Extra Humidity 5"
+            },
+            "Extra Humidity 6": {
+                "name": "Extra Humidity 6"
+            },
+            "Extra Humidity 7": {
+                "name": "Extra Humidity 7"
+            }
+        },
+        "binary_sensor": {
+            "Is Raining": {
+                "name": "Is Raining"
             }
         }
     }

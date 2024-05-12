@@ -35,7 +35,80 @@
     },
     "entity": {
         "sensor": {
-            "davis_vantage_barometric_trend": {
+            "Last Fetch Time": {
+                "name": "Laatst opgehaald"
+            },
+            "Last Success Time": {
+                "name": "Laatst geslaagd"
+            },
+            "Last Error Time": {
+                "name": "Laatste fout om"
+            },
+            "Last Error Message": {
+                "name": "Laatste foutmelding"
+            },
+            "Archive Interval": {
+                "name": "Archief interval"
+            },
+            "Temperature": {
+                "name": "Temperatuur"
+            },
+            "Temperature High (Day)": {
+                "name": "Max. temperatuur"
+            },
+            "Temperature High Time": {
+                "name": "Max. temperatuur om"
+            },
+            "Temperature Low (Day)": {
+                "name": "Min. temperatuur"
+            },
+            "Temperature Low Time": {
+                "name": "Min. temperatuur om"
+            },
+            "Temperature (Inside)": {
+                "name": "Temperatuur (binnen)"
+            },
+            "Heat Index": {
+                "name": "Hitte index"
+            },
+            "Wind Chill": {
+                "name": "Gevoelstemperatuur"
+            },
+            "Feels Like": {
+                "name": "Voelt als"
+            },
+            "Dew Point": {
+                "name": "Dauwpunt"
+            },
+            "Dew Point High (Day)": {
+                "name": "Max. dauwpunt"
+            },
+            "Dew Point High Time": {
+                "name": "Max. dauwpunt om"
+            },
+            "Dew Point Low (Day)": {
+                "name": "Min. dauwpunt"
+            },
+            "Dew Point Low Time": {
+                "name": "Min. dauwpunt om"
+            },
+            "Barometric Pressure": {
+                "name": "Luchtdruk"
+            },
+            "Barometric Pressure High (Day)": {
+                "name": "Max. luchtdruk"
+            },
+            "Barometric Pressure High Time": {
+                "name": "Max. luchtdruk om"
+            },
+            "Barometric Pressure Low (Day)": {
+                "name": "Min. luchtdruk"
+            },
+            "Barometric Pressure Low Time": {
+                "name": "Min. luchtdruk om"
+            },
+            "Barometric Trend": {
+                "name": "Luchtdruk trend",
                 "state": {
                     "falling_rapidly": "Snel dalend",
                     "falling_slowly": "Langzaam dalend",
@@ -44,7 +117,32 @@
                     "rising_rapidly": "Snel stijgend"
                 }
             },
-            "wind_direction_rose": {
+            "Humidity (Inside)": {
+                "name": "Luchtvochtigheid (binnen)"
+            },
+            "Humidity": {
+                "name": "Luchtvochtigheid"
+            },
+            "Wind Speed": {
+                "name": "Windsnelheid"
+            },
+            "Wind Speed (Average)": {
+                "name": "Gem. windsnelheid"
+            },
+            "Wind Gust": {
+                "name": "Windstoot"
+            },
+            "Wind Gust (Day)": {
+                "name": "Max. windstoot"
+            },
+            "Wind Gust Time": {
+                "name": "Max. windstoot om"
+            },
+            "Wind Direction": {
+                "name": "Windrichting"
+            },
+            "Wind Direction Rose": {
+                "name": "Windrichting (roos)",
                 "state": {
                     "n": "N",
                     "ne": "NO",
@@ -55,6 +153,110 @@
                     "w": "W",
                     "nw": "NW"
                 }
+            },
+            "Wind Speed (Bft)": {
+                "name": "Windsnelheid (Bft)"
+            },
+            "Rain (Day)": {
+                "name": "Regen (dag)"
+            },
+            "Rain (Month)": {
+                "name": "Regen (maand)"
+            },
+            "Rain (Year)": {
+                "name": "Regen (jaar)"
+            },
+            "Rain Rate": {
+                "name": "Regenintensiteit"
+            },
+            "Rain Rate (Day)": {
+                "name": "Max. regenintensiteit"
+            },
+            "Rain Rate Time": {
+                "name": "Max. regenintensiteit om"
+            },
+            "UV Level": {
+                "name": "UV index"
+            },
+            "UV Level (Day)": {
+                "name": "Max. UV index"
+            },
+            "UV Level Time": {
+                "name": "Max. UV index om"
+            },
+            "Solar Radiation": {
+                "name": "Zonnestraling"
+            },
+            "Solar Radiation (Day)": {
+                "name": "Max. zonnestraling"
+            },
+            "Solar Radiation Time": {
+                "name": "Max. zonnestraling om"
+            },
+            "Battery Voltage": {
+                "name": "Batterij voltage"
+            },
+            "Forecast Icon": {
+                "name": "Verwachtingsicoon"
+            },
+            "Forecast Rule": {
+                "name": "Verwachting"
+            },
+            "Rain Collector": {
+                "name": "Regenvanger"
+            },
+            "Rain Storm": {
+                "name": "Regenstorm"
+            },
+            "Rain Storm Start Date": {
+                "name": "Regenstorm startdatum"
+            },
+            "Extra Temperature 1": {
+                "name": "Extra temperatuur 1"
+            },
+            "Extra Temperature 2": {
+                "name": "Extra temperatuur 2"
+            },
+            "Extra Temperature 3": {
+                "name": "Extra temperatuur 3"
+            },
+            "Extra Temperature 4": {
+                "name": "Extra temperatuur 4"
+            },
+            "Extra Temperature 5": {
+                "name": "Extra temperatuur 5"
+            },
+            "Extra Temperature 6": {
+                "name": "Extra temperatuur 6"
+            },
+            "Extra Temperature 7": {
+                "name": "Extra temperatuur 7"
+            },
+            "Extra Humidity 1": {
+                "name": "Extra luchtvochtigheid 1"
+            },
+            "Extra Humidity 2": {
+                "name": "Extra luchtvochtigheid 2"
+            },
+            "Extra Humidity 3": {
+                "name": "Extra luchtvochtigheid 3"
+            },
+            "Extra Humidity 4": {
+                "name": "Extra luchtvochtigheid 4"
+            },
+            "Extra Humidity 5": {
+                "name": "Extra luchtvochtigheid 5"
+            },
+            "Extra Humidity 6": {
+                "name": "Extra luchtvochtigheid 6"
+            },
+            "Extra Humidity 7": {
+                "name": "Extra luchtvochtigheid 7"
+            }
+        },
+        "binary_sensor": {
+            "Is Raining": {
+                "name": "Het regent"
             }
         }
     }

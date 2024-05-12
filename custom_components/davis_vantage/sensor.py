@@ -41,7 +41,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
     descriptions: list[SensorEntityDescription] = [
         SensorEntityDescription(
             key="Datetime",
-            name="Last Fetch Time",
+            translation_key="Last Fetch Time",
             icon="mdi:clock-outline",
             device_class=SensorDeviceClass.TIMESTAMP,
             entity_category=EntityCategory.DIAGNOSTIC,
@@ -49,7 +49,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="LastSuccessTime",
-            name="Last Success Time",
+            translation_key="Last Success Time",
             icon="mdi:clock-outline",
             device_class=SensorDeviceClass.TIMESTAMP,
             entity_category=EntityCategory.DIAGNOSTIC,
@@ -57,7 +57,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="LastErrorTime",
-            name="Last Error Time",
+            translation_key="Last Error Time",
             icon="mdi:clock-outline",
             device_class=SensorDeviceClass.TIMESTAMP,
             entity_category=EntityCategory.DIAGNOSTIC,
@@ -65,14 +65,14 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="LastError",
-            name="Last Error Message",
+            translation_key="Last Error Message",
             icon="mdi:message-alert-outline",
             entity_category=EntityCategory.DIAGNOSTIC,
             entity_registry_enabled_default=False
         ),
         SensorEntityDescription(
             key="ArchiveInterval",
-            name="Archive Interval",
+            translation_key="Archive Interval",
             icon="mdi:archive-clock-outline",
             entity_category=EntityCategory.DIAGNOSTIC,
             entity_registry_enabled_default=False,
@@ -80,7 +80,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="TempOut",
-            name="Temperature",
+            translation_key="Temperature",
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
@@ -88,7 +88,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="TempOutHiDay",
-            name="Temperature High (Day)",
+            translation_key="Temperature High (Day)",
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
@@ -97,12 +97,12 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="TempOutHiTime",
-            name="Temperature High Time",
+            translation_key="Temperature High Time",
             icon="mdi:clock-in"
         ),
         SensorEntityDescription(
             key="TempOutLowDay",
-            name="Temperature Low (Day)",
+            translation_key="Temperature Low (Day)",
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
@@ -111,12 +111,12 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="TempOutLowTime",
-            name="Temperature Low Time",
+            translation_key="Temperature Low Time",
             icon="mdi:clock-in"
         ),
         SensorEntityDescription(
             key="TempIn",
-            name="Temperature (Inside)",
+            translation_key="Temperature (Inside)",
             device_class=SensorDeviceClass.TEMPERATURE,
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
             suggested_display_precision=1,
@@ -124,7 +124,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HeatIndex",
-            name="Heat Index",
+            translation_key="Heat Index",
             icon="mdi:sun-thermometer-outline",
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -133,7 +133,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="WindChill",
-            name="Wind Chill",
+            translation_key="Wind Chill",
             icon="mdi:snowflake-thermometer",
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -142,7 +142,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="FeelsLike",
-            name="Feels Like",
+            translation_key="Feels Like",
             icon="mdi:download-circle-outline",
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -151,7 +151,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="DewPoint",
-            name="Dew Point",
+            translation_key="Dew Point",
             icon="mdi:water-thermometer-outline",
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -160,7 +160,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="DewPointHiDay",
-            name="Dew Point High (Day)",
+            translation_key="Dew Point High (Day)",
             icon="mdi:water-thermometer-outline",
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -169,12 +169,12 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="DewPointHiTime",
-            name="Dew Point High Time",
+            translation_key="Dew Point High Time",
             icon="mdi:clock-in"
         ),
         SensorEntityDescription(
             key="DewPointLowDay",
-            name="Dew Point Low (Day)",
+            translation_key="Dew Point Low (Day)",
             icon="mdi:water-thermometer-outline",
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -183,12 +183,12 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="DewPointLowTime",
-            name="Dew Point Low Time",
+            translation_key="Dew Point Low Time",
             icon="mdi:clock-in"
         ),
         SensorEntityDescription(
             key="Barometer",
-            name="Barometric Pressure",
+            translation_key="Barometric Pressure",
             device_class=SensorDeviceClass.PRESSURE,
             state_class="measurement",
             native_unit_of_measurement=UnitOfPressure.INHG,
@@ -196,7 +196,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="BarometerHiDay",
-            name="Barometric Pressure High (Day)",
+            translation_key="Barometric Pressure High (Day)",
             device_class=SensorDeviceClass.PRESSURE,
             state_class="measurement",
             native_unit_of_measurement=UnitOfPressure.INHG,
@@ -204,12 +204,12 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="BarometerHiTime",
-            name="Barometric Pressure High Time",
+            translation_key="Barometric Pressure High Time",
             icon="mdi:clock-in"
         ),
         SensorEntityDescription(
             key="BarometerLowDay",
-            name="Barometric Pressure Low (Day)",
+            translation_key="Barometric Pressure Low (Day)",
             device_class=SensorDeviceClass.PRESSURE,
             state_class="measurement",
             native_unit_of_measurement=UnitOfPressure.INHG,
@@ -217,14 +217,13 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="BarometerLoTime",
-            name="Barometric Pressure Low Time",
+            translation_key="Barometric Pressure Low Time",
             icon="mdi:clock-in"
         ),
         SensorEntityDescription(
             key="BarTrend",
-            name="Barometric Trend",
+            translation_key="Barometric Trend",
             device_class=SensorDeviceClass.ENUM,
-            translation_key="davis_vantage_barometric_trend",
             options=[
                 "falling_rapidly",
                 "falling_slowly",
@@ -235,7 +234,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HumIn",
-            name="Humidity (Inside)",
+            translation_key="Humidity (Inside)",
             device_class=SensorDeviceClass.HUMIDITY,
             native_unit_of_measurement=PERCENTAGE,
             suggested_display_precision=0,
@@ -243,7 +242,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HumOut",
-            name="Humidity",
+            translation_key="Humidity",
             device_class=SensorDeviceClass.HUMIDITY,
             state_class="measurement",
             native_unit_of_measurement=PERCENTAGE,
@@ -251,7 +250,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="WindSpeed",
-            name="Wind Speed",
+            translation_key="Wind Speed",
             icon="mdi:weather-windy",
             device_class=SensorDeviceClass.WIND_SPEED,
             state_class="measurement",
@@ -260,7 +259,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="WindSpeed10Min",
-            name="Wind Speed (Average)",
+            translation_key="Wind Speed (Average)",
             icon="mdi:weather-windy",
             device_class=SensorDeviceClass.WIND_SPEED,
             state_class="measurement",
@@ -269,7 +268,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="WindGust",
-            name="Wind Gust",
+            translation_key="Wind Gust",
             icon="mdi:windsock",
             device_class=SensorDeviceClass.WIND_SPEED,
             state_class="measurement",
@@ -278,7 +277,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="WindGustDay",
-            name="Wind Gust (Day)",
+            translation_key="Wind Gust (Day)",
             icon="mdi:windsock",
             device_class=SensorDeviceClass.WIND_SPEED,
             state_class="measurement",
@@ -287,12 +286,12 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="WindGustTime",
-            name="Wind Gust Time",
+            translation_key="Wind Gust Time",
             icon="mdi:clock-in"
         ),
         SensorEntityDescription(
             key="WindDir",
-            name="Wind Direction",
+            translation_key="Wind Direction",
             icon="mdi:compass-outline",
             state_class="measurement",
             native_unit_of_measurement=DEGREE,
@@ -300,9 +299,8 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="WindDirRose",
-            name="Wind Direction Rose",
+            translation_key="Wind Direction Rose",
             device_class=SensorDeviceClass.ENUM,
-            translation_key="wind_direction_rose",
             options=[
                 "n",
                 "ne",
@@ -316,14 +314,14 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="WindSpeedBft",
-            name="Wind Speed (Bft)",
+            translation_key="Wind Speed (Bft)",
             icon="mdi:weather-windy",
             state_class="measurement",
             entity_registry_enabled_default=False
         ),
         SensorEntityDescription(
             key="RainDay",
-            name="Rain (Day)",
+            translation_key="Rain (Day)",
             icon="mdi:water-outline",
             device_class=SensorDeviceClass.PRECIPITATION,
             state_class="measurement",
@@ -332,7 +330,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="RainMonth",
-            name="Rain (Month)",
+            translation_key="Rain (Month)",
             icon="mdi:water-outline",
             state_class="measurement",
             device_class=SensorDeviceClass.PRECIPITATION,
@@ -341,7 +339,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="RainYear",
-            name="Rain (Year)",
+            translation_key="Rain (Year)",
             icon="mdi:water-outline",
             state_class="measurement",
             device_class=SensorDeviceClass.PRECIPITATION,
@@ -350,7 +348,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="RainRate",
-            name="Rain Rate",
+            translation_key="Rain Rate",
             icon="mdi:water-outline",
             device_class=SensorDeviceClass.PRECIPITATION_INTENSITY,
             state_class="measurement",
@@ -359,7 +357,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="RainRateDay",
-            name="Rain Rate (Day)",
+            translation_key="Rain Rate (Day)",
             icon="mdi:water-outline",
             device_class=SensorDeviceClass.PRECIPITATION_INTENSITY,
             state_class="measurement",
@@ -368,32 +366,32 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="RainRateTime",
-            name="Rain Rate Time",
+            translation_key="Rain Rate Time",
             icon="mdi:clock-in"
         ),
         SensorEntityDescription(
             key="UV",
-            name="UV Level",
+            translation_key="UV Level",
             icon="mdi:sun-wireless-outline",
             state_class="measurement",
             entity_registry_enabled_default=model==MODEL_VANTAGE_PRO2PLUS
         ),
         SensorEntityDescription(
             key="UVDay",
-            name="UV Level (Day)",
+            translation_key="UV Level (Day)",
             icon="mdi:sun-wireless-outline",
             state_class="measurement",
             entity_registry_enabled_default=model==MODEL_VANTAGE_PRO2PLUS
         ),
         SensorEntityDescription(
             key="UVTime",
-            name="UV Level Time",
+            translation_key="UV Level Time",
             icon="mdi:clock-in",
             entity_registry_enabled_default=model==MODEL_VANTAGE_PRO2PLUS
         ),
         SensorEntityDescription(
             key="SolarRad",
-            name="Solar Radiation",
+            translation_key="Solar Radiation",
             icon="mdi:sun-wireless-outline",
             state_class="measurement",
             entity_registry_enabled_default=model==MODEL_VANTAGE_PRO2PLUS,
@@ -401,7 +399,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="SolarRadDay",
-            name="Solar Radiation (Day)",
+            translation_key="Solar Radiation (Day)",
             icon="mdi:sun-wireless-outline",
             state_class="measurement",
             entity_registry_enabled_default=model==MODEL_VANTAGE_PRO2PLUS,
@@ -409,13 +407,13 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="SolarRadTime",
-            name="Solar Radiation Time",
+            translation_key="Solar Radiation Time",
             icon="mdi:clock-in",
             entity_registry_enabled_default=model==MODEL_VANTAGE_PRO2PLUS
         ),
         SensorEntityDescription(
             key="BatteryVolts",
-            name="Battery Voltage",
+            translation_key="Battery Voltage",
             device_class=SensorDeviceClass.VOLTAGE,
             native_unit_of_measurement=UnitOfElectricPotential.VOLT,
             entity_category=EntityCategory.DIAGNOSTIC,
@@ -424,17 +422,17 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="ForecastIcon",
-            name="Forecast Icon",
+            translation_key="Forecast Icon",
             entity_registry_enabled_default=False
         ),
         SensorEntityDescription(
             key="ForecastRuleNo",
-            name="Forecast Rule",
+            translation_key="Forecast Rule",
             icon="mdi:binoculars"
         ),
         SensorEntityDescription(
             key="RainCollector",
-            name="Rain Collector",
+            translation_key="Rain Collector",
             icon="mdi:bucket-outline",
             entity_category=EntityCategory.DIAGNOSTIC,
             entity_registry_enabled_default=False,
@@ -446,7 +444,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="RainStorm",
-            name="Rain Storm",
+            translation_key="Rain Storm",
             icon="mdi:water-outline",
             device_class=SensorDeviceClass.PRECIPITATION,
             state_class="measurement",
@@ -455,13 +453,13 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="StormStartDate",
-            name="Rain Storm Start Date",
+            translation_key="Rain Storm Start Date",
             icon="mdi:calendar-outline",
             device_class=SensorDeviceClass.DATE
         ),
         SensorEntityDescription(
             key="ExtraTemps01",
-            name="Extra Temperature 1",
+            translation_key="Extra Temperature 1",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -470,7 +468,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="ExtraTemps02",
-            name="Extra Temperature 2",
+            translation_key="Extra Temperature 2",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -479,7 +477,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="ExtraTemps03",
-            name="Extra Temperature 3",
+            translation_key="Extra Temperature 3",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -488,7 +486,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="ExtraTemps04",
-            name="Extra Temperature 4",
+            translation_key="Extra Temperature 4",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -497,7 +495,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="ExtraTemps05",
-            name="Extra Temperature 5",
+            translation_key="Extra Temperature 5",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -506,7 +504,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="ExtraTemps06",
-            name="Extra Temperature 6",
+            translation_key="Extra Temperature 6",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -515,7 +513,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="ExtraTemps07",
-            name="Extra Temperature 7",
+            translation_key="Extra Temperature 7",
             native_unit_of_measurement=UnitOfTemperature.FAHRENHEIT,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class="measurement",
@@ -524,7 +522,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HumExtra01",
-            name="Extra Humidity 1",
+            translation_key="Extra Humidity 1",
             device_class=SensorDeviceClass.HUMIDITY,
             native_unit_of_measurement=PERCENTAGE,
             suggested_display_precision=0,
@@ -532,7 +530,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HumExtra02",
-            name="Extra Humidity 2",
+            translation_key="Extra Humidity 2",
             device_class=SensorDeviceClass.HUMIDITY,
             native_unit_of_measurement=PERCENTAGE,
             suggested_display_precision=0,
@@ -540,7 +538,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HumExtra03",
-            name="Extra Humidity 3",
+            translation_key="Extra Humidity 3",
             device_class=SensorDeviceClass.HUMIDITY,
             native_unit_of_measurement=PERCENTAGE,
             suggested_display_precision=0,
@@ -548,7 +546,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HumExtra04",
-            name="Extra Humidity 4",
+            translation_key="Extra Humidity 4",
             device_class=SensorDeviceClass.HUMIDITY,
             native_unit_of_measurement=PERCENTAGE,
             suggested_display_precision=0,
@@ -556,7 +554,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HumExtra05",
-            name="Extra Humidity 5",
+            translation_key="Extra Humidity 5",
             device_class=SensorDeviceClass.HUMIDITY,
             native_unit_of_measurement=PERCENTAGE,
             suggested_display_precision=0,
@@ -564,7 +562,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HumExtra06",
-            name="Extra Humidity 6",
+            translation_key="Extra Humidity 6",
             device_class=SensorDeviceClass.HUMIDITY,
             native_unit_of_measurement=PERCENTAGE,
             suggested_display_precision=0,
@@ -572,7 +570,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="HumExtra07",
-            name="Extra Humidity 7",
+            translation_key="Extra Humidity 7",
             device_class=SensorDeviceClass.HUMIDITY,
             native_unit_of_measurement=PERCENTAGE,
             suggested_display_precision=0,
@@ -617,13 +615,9 @@ class DavisVantageSensor(CoordinatorEntity[DavisVantageDataUpdateCoordinator], S
     ) -> None:
         """Initialize Davis Vantage sensor."""
         super().__init__(coordinator=coordinator)
-
-        self.entity_id = (
-            f"{SENSOR_DOMAIN}.{DEFAULT_NAME}_{description.name}".lower()
-        )
         self.entity_description = description
-        self._attr_name = description.name # type: ignore
-        self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {self.name}"
+        self.entity_id = f"{SENSOR_DOMAIN}.{DEFAULT_NAME} {description.translation_key}".lower()
+        self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {description.translation_key}"
         self._attr_device_info = coordinator.device_info
 
     @property

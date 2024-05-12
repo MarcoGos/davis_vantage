@@ -14,10 +14,9 @@ from .coordinator import DavisVantageDataUpdateCoordinator
 DESCRIPTIONS: list[BinarySensorEntityDescription] = [
     BinarySensorEntityDescription(
         key="IsRaining",
-        name="Is Raining"
+        translation_key="Is Raining"
     )
 ]
-
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -57,13 +56,9 @@ class DavisVantageBinarySensor(
     ) -> None:
         """Initialize Davis Vantage sensor."""
         super().__init__(coordinator=coordinator)
-
-        self.entity_id = (
-            f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME}_{description.name}".lower()
-        )
         self.entity_description = description
-        self._attr_name = description.name  # type: ignore
-        self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {self.name}"
+        self.entity_id = f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME} {description.translation_key}".lower()
+        self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {description.translation_key}"
         self._attr_device_info = coordinator.device_info
 
     @property

@@ -7,7 +7,7 @@
   },
   "entity": {
     "sensor": {
-      "Barometric Trend": {
+      "barometric_trend": {
         "default": "mdi:trending-neutral",
         "state": {
           "falling_rapidly": "mdi:trending-down",
@@ -17,7 +17,7 @@
           "rising_rapidly": "mdi:trending-up"
         }
       },
-      "Wind Direction Rose": {
+      "wind_direction_rose": {
         "default": "mdi:compass-outline",
         "state": {
           "n": "mdi:arrow-down-bold-outline",
@@ -32,7 +32,7 @@
       }
     },
     "binary_sensor": {
-      "Is Raining": {
+      "is_raining": {
         "state": {
           "on": "mdi:weather-pouring",
           "off": "mdi:weather-partly-cloudy"

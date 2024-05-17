@@ -21,7 +21,6 @@ from .utils import (
     convert_to_iso_datetime,
     convert_to_kmh,
     get_baro_trend,
-    get_forecast_string,
     get_solar_rad,
     get_uv,
     get_wind_rose,
@@ -285,7 +284,8 @@ class DavisVantageClient:
         if data["SolarRad"] is not None:
             data["SolarRad"] = get_solar_rad(data["SolarRad"])
         if data["ForecastRuleNo"] is not None:
-            data["ForecastRuleNo"] = get_forecast_string(data["ForecastRuleNo"])
+            # data["ForecastRuleNo"] = get_forecast_string(data["ForecastRuleNo"])
+            data["ForecastRuleNo"] = data["ForecastRuleNo"]
         data["RainCollector"] = self._rain_collector
         if data["RainCollector"] != RAIN_COLLECTOR_IMPERIAL:
             self.correct_rain_values(data)

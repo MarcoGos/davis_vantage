@@ -1,0 +1,460 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Gerät ist bereits konfiguriert"
+        },
+        "error": {
+            "cannot_connect": "Verbindung fehlgeschlagen",
+            "invalid_auth": "Sieht so aus, als ob die Wetterstation nicht reagiert, versuchen Sie es erneut",
+            "unknown": "Unerwarteter Fehler"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "protocol": "Protokoll"
+                }
+            },
+            "setup_serial": {
+                "data": {
+                    "link": "Gerät"
+                }
+            },
+            "setup_network": {
+                "data": {
+                    "link": "Hostname"
+                }
+            },
+            "setup_other_info": {
+                "data": {
+                    "station_model": "Davis-Wetterstationsmodell",
+                    "interval": "Intervall",
+                    "rain_collector": "Regensammler"
+                }
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "last_fetch_time": {
+                "name": "Zeitpunkt des letzte Abruf"
+            },
+            "last_success_time": {
+                "name": "Zeitpunkt des letzte Erfolg"
+            },
+            "last_error_time": {
+                "name": "Zeitpunkt des letzte Fehler"
+            },
+            "last_error_message": {
+                "name": "Letzte Fehlermeldung"
+            },
+            "archive_internal": {
+                "name": "Archiv-Intervall"
+            },
+            "temperature": {
+                "name": "Temperatur"
+            },
+            "temperature_high_day": {
+                "name": "Höchste Temperatur"
+            },
+            "temperature_high_time": {
+                "name": "Zeitpunkt höchste Temperatur"
+            },
+            "temperature_low_day": {
+                "name": "Niedrigste Temperatur"
+            },
+            "temperature_low_time": {
+                "name": "Zeitpunkt niedrigste temperatur"
+            },
+            "temperature_inside": {
+                "name": "Temperatur (innen)"
+            },
+            "heat_index": {
+                "name": "Hitzeindex"
+            },
+            "wind_chill": {
+                "name": "Windchill"
+            },
+            "feels_like": {
+                "name": "Fühlt sich an wie"
+            },
+            "dew_point": {
+                "name": "Taupunkt"
+            },
+            "dew_point_high_day": {
+                "name": "Höchste Taupunkt"
+            },
+            "dew_point_high_time": {
+                "name": "Zeitpunkt höchste Taupunkt"
+            },
+            "dew_point_low_day": {
+                "name": "Niedrigste Taupunkt"
+            },
+            "dew_point_low_time": {
+                "name": "Zeitpunkt niedrigste Taupunkt"
+            },
+            "barometric_pressure": {
+                "name": "Luftdruck"
+            },
+            "barometric_pressure_high_day": {
+                "name": "Höchste Luftdruck"
+            },
+            "barometric_pressure_high_time": {
+                "name": "Zeitpunkt höchste Luftdruck"
+            },
+            "barometric_pressure_low_day": {
+                "name": "Niedrigste Luftdruck"
+            },
+            "barometric_pressure_low_time": {
+                "name": "Zeitpunkt niedrigste Luftdruck"
+            },
+            "barometric_trend": {
+                "name": "Barometrischer Trend",
+                "state": {
+                    "falling_rapidly": "Schnelles Fallen",
+                    "falling_slowly": "Langsam fallen",
+                    "steady": "Stet",
+                    "rising_slowly": "Langsam aufsteigen",
+                    "rising_rapidly": "Schnelles steigend"
+                }
+            },
+            "humidity_inside": {
+                "name": "Luftfeuchtigkeit (innen)"
+            },
+            "humidity": {
+                "name": "Luftfeuchtigkeit"
+            },
+            "wind_speed": {
+                "name": "Windgeschwindigkeit"
+            },
+            "wind_speed_average": {
+                "name": "Windgeschwindigkeit (Durchschnitt)"
+            },
+            "wind_gust": {
+                "name": "Windböe"
+            },
+            "wind_gust_day": {
+                "name": "Höchste Windböe"
+            },
+            "wind_gust_time": {
+                "name": "Zeitpunkt höchste Windböe"
+            },
+            "wind_direction": {
+                "name": "Windrichtung"
+            },
+            "wind_direction_rose": {
+                "name": "Windrichtung (Rose)",
+                "state": {
+                    "n": "N",
+                    "ne": "NO",
+                    "e": "O",
+                    "se": "SO",
+                    "s": "S",
+                    "sw": "SW",
+                    "w": "W",
+                    "nw": "NW"
+                }
+            },
+            "wind_speed_bft": {
+                "name": "Windgeschwindigkeit (Bft)"
+            },
+            "rain_day": {
+                "name": "Regen (Tag)"
+            },
+            "rain_month": {
+                "name": "Regen (Monat)"
+            },
+            "rain_year": {
+                "name": "Regen (Jahr)"
+            },
+            "rain_rate": {
+                "name": "Regenintensität"
+            },
+            "rain_rate_day": {
+                "name": "Höchste Regenintensität"
+            },
+            "rain_date_time": {
+                "name": "Zeitpunkt höchste Regenintensität"
+            },
+            "uv_level": {
+                "name": "UV-Stufe"
+            },
+            "uv_level_day": {
+                "name": "Höchste UV-Stufe"
+            },
+            "uv_level_time": {
+                "name": "Zeitpunkt höchste UV-Stufe"
+            },
+            "solar_radiation": {
+                "name": "Sonnenstrahlung"
+            },
+            "solar_radiation_day": {
+                "name": "Höchste Sonnenstrahlung"
+            },
+            "solar_radiation_time": {
+                "name": "Zeitpunkt höchste Sonnenstrahlung"
+            },
+            "battery_voltage": {
+                "name": "Batteriespannung"
+            },
+            "forecast_icon": {
+                "name": "Symbol Prognose"
+            },
+            "forecast_rule": {
+                "name": "Prognose-Regel",
+                "state": {
+                    "0": "Überwiegend klar und kühler",
+                    "1": "Überwiegend klar mit wenig Temperaturänderung",
+                    "2": "Überwiegend klar für 12 Stunden mit wenig Temperaturänderung",
+                    "3": "Überwiegend klar für 12 bis 24 Stunden und kühler",
+                    "4": "Überwiegend klar mit wenig Temperaturänderung",
+                    "5": "Teilweise bewölkt und kühler",
+                    "6": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "7": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "8": "Überwiegend klar und wärmer",
+                    "9": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "10": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "11": "Überwiegend klar mit wenig Temperaturänderung",
+                    "12": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 24 bis 48 Stunden",
+                    "13": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "14": "Überwiegend klar mit wenig Temperaturänderung",
+                    "15": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 24 Stunden",
+                    "16": "Überwiegend klar mit wenig Temperaturänderung",
+                    "17": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "18": "Überwiegend klar mit wenig Temperaturänderung",
+                    "19": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 12 Stunden",
+                    "20": "Überwiegend klar mit wenig Temperaturänderung",
+                    "21": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "22": "Überwiegend klar mit wenig Temperaturänderung",
+                    "23": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 24 Stunden",
+                    "24": "Überwiegend klar und wärmer. Zunehmende Winde",
+                    "25": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "26": "Überwiegend klar mit wenig Temperaturänderung",
+                    "27": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 12 Stunden. Zunehmende Winde",
+                    "28": "Überwiegend klar und wärmer. Zunehmende Winde",
+                    "29": "Zunehmende Bewölkung und wärmer",
+                    "30": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "31": "Überwiegend klar mit wenig Temperaturänderung",
+                    "32": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 12 Stunden. Zunehmende Winde",
+                    "33": "Überwiegend klar und wärmer. Zunehmende Winde",
+                    "34": "Zunehmende Bewölkung und wärmer",
+                    "35": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "36": "Überwiegend klar mit wenig Temperaturänderung",
+                    "37": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 12 Stunden. Zunehmende Winde",
+                    "38": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "39": "Überwiegend klar mit wenig Temperaturänderung",
+                    "40": "Überwiegend klar und wärmer. Niederschlag möglich innerhalb von 48 Stunden",
+                    "41": "Überwiegend klar und wärmer",
+                    "42": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "43": "Überwiegend klar mit wenig Temperaturänderung",
+                    "44": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 24 bis 48 Stunden",
+                    "45": "Zunehmende Bewölkung mit wenig Temperaturänderung",
+                    "46": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "47": "Überwiegend klar mit wenig Temperaturänderung",
+                    "48": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 12 bis 24 Stunden",
+                    "49": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "50": "Überwiegend klar mit wenig Temperaturänderung",
+                    "51": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 12 bis 24 Stunden. Windig",
+                    "52": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "53": "Überwiegend klar mit wenig Temperaturänderung",
+                    "54": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 12 bis 24 Stunden. Windig",
+                    "55": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "56": "Überwiegend klar mit wenig Temperaturänderung",
+                    "57": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 6 bis 12 Stunden",
+                    "58": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "59": "Überwiegend klar mit wenig Temperaturänderung",
+                    "60": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 6 bis 12 Stunden. Windig",
+                    "61": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "62": "Überwiegend klar mit wenig Temperaturänderung",
+                    "63": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 12 bis 24 Stunden. Windig",
+                    "64": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "65": "Überwiegend klar mit wenig Temperaturänderung",
+                    "66": "Zunehmende Bewölkung und wärmer. Niederschlag möglich innerhalb von 12 Stunden",
+                    "67": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "68": "Überwiegend klar mit wenig Temperaturänderung",
+                    "69": "Zunehmende Bewölkung und wärmer. Niederschlag wahrscheinlich",
+                    "70": "Aufklarend und kühler. Niederschlag endet innerhalb von 6 Stunden",
+                    "71": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "72": "Aufklarend und kühler. Niederschlag endet innerhalb von 6 Stunden",
+                    "73": "Überwiegend klar mit wenig Temperaturänderung",
+                    "74": "Aufklarend und kühler. Niederschlag endet innerhalb von 6 Stunden",
+                    "75": "Teilweise bewölkt und kühler",
+                    "76": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "77": "Überwiegend klar und kühler",
+                    "78": "Aufklarend und kühler. Niederschlag endet innerhalb von 6 Stunden",
+                    "79": "Überwiegend klar mit wenig Temperaturänderung",
+                    "80": "Aufklarend und kühler. Niederschlag endet innerhalb von 6 Stunden",
+                    "81": "Überwiegend klar und kühler",
+                    "82": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "83": "Überwiegend klar mit wenig Temperaturänderung",
+                    "84": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 24 Stunden",
+                    "85": "Überwiegend bewölkt und kühler. Niederschlag hält an",
+                    "86": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "87": "Überwiegend klar mit wenig Temperaturänderung",
+                    "88": "Überwiegend bewölkt und kühler. Niederschlag wahrscheinlich",
+                    "89": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag hält an",
+                    "90": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag wahrscheinlich",
+                    "91": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "92": "Überwiegend klar mit wenig Temperaturänderung",
+                    "93": "Zunehmende Bewölkung und kühler. Niederschlag möglich und windig innerhalb von 6 Stunden",
+                    "94": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich und windig innerhalb von 6 Stunden",
+                    "95": "Überwiegend bewölkt und kühler. Niederschlag hält an. Zunehmende Winde",
+                    "96": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "97": "Überwiegend klar mit wenig Temperaturänderung",
+                    "98": "Überwiegend bewölkt und kühler. Niederschlag wahrscheinlich. Zunehmende Winde",
+                    "99": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag hält an. Zunehmende Winde",
+                    "100": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag wahrscheinlich. Zunehmende Winde",
+                    "101": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "102": "Überwiegend klar mit wenig Temperaturänderung",
+                    "103": "Zunehmende Bewölkung und kühler. Niederschlag möglich innerhalb von 12 bis 24 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "104": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 12 bis 24 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "105": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "106": "Überwiegend klar mit wenig Temperaturänderung",
+                    "107": "Zunehmende Bewölkung und kühler. Niederschlag möglich innerhalb von 6 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "108": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 6 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "109": "Überwiegend bewölkt und kühler. Niederschlag endet innerhalb von 12 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "110": "Überwiegend bewölkt und kühler. Mögliche Winddrehung nach W, NW oder N",
+                    "111": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag endet innerhalb von 12 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "112": "Überwiegend bewölkt mit wenig Temperaturänderung. Mögliche Winddrehung nach W, NW oder N",
+                    "113": "Überwiegend bewölkt und kühler. Niederschlag endet innerhalb von 12 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "114": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "115": "Überwiegend klar mit wenig Temperaturänderung",
+                    "116": "Überwiegend bewölkt und kühler. Niederschlag möglich innerhalb von 24 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "117": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag endet innerhalb von 12 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "118": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 24 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "119": "Aufklarend, kühler und windig. Niederschlag endet innerhalb von 6 Stunden",
+                    "120": "Aufklarend, kühler und windig",
+                    "121": "Überwiegend bewölkt und kühler. Niederschlag endet innerhalb von 6 Stunden. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "122": "Überwiegend bewölkt und kühler. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "123": "Aufklarend, kühler und windig",
+                    "124": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "125": "Überwiegend klar mit wenig Temperaturänderung",
+                    "126": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 12 Stunden. Windig",
+                    "127": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "128": "Überwiegend klar mit wenig Temperaturänderung",
+                    "129": "Zunehmende Bewölkung und kühler. Niederschlag möglich innerhalb von 12 Stunden, möglicherweise stark. Windig",
+                    "130": "Überwiegend bewölkt und kühler. Niederschlag endet innerhalb von 6 Stunden. Windig",
+                    "131": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "132": "Überwiegend klar mit wenig Temperaturänderung",
+                    "133": "Überwiegend bewölkt und kühler. Niederschlag möglich innerhalb von 12 Stunden. Windig",
+                    "134": "Überwiegend bewölkt und kühler. Niederschlag endet in 12 bis 24 Stunden",
+                    "135": "Überwiegend bewölkt und kühler",
+                    "136": "Überwiegend bewölkt und kühler. Niederschlag hält an, möglicherweise stark. Windig",
+                    "137": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "138": "Überwiegend klar mit wenig Temperaturänderung",
+                    "139": "Überwiegend bewölkt und kühler. Niederschlag möglich innerhalb von 6 bis 12 Stunden. Windig",
+                    "140": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag hält an, möglicherweise stark. Windig",
+                    "141": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "142": "Überwiegend klar mit wenig Temperaturänderung",
+                    "143": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 6 bis 12 Stunden. Windig",
+                    "144": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "145": "Überwiegend klar mit wenig Temperaturänderung",
+                    "146": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 12 Stunden, möglicherweise stark. Windig",
+                    "147": "Überwiegend bewölkt und kühler. Windig",
+                    "148": "Überwiegend bewölkt und kühler. Niederschlag hält an, möglicherweise stark. Windig",
+                    "150": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "151": "Überwiegend klar mit wenig Temperaturänderung",
+                    "152": "Überwiegend bewölkt und kühler. Niederschlag wahrscheinlich, möglicherweise stark. Windig",
+                    "153": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag hält an, möglicherweise stark. Windig",
+                    "154": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag wahrscheinlich, möglicherweise stark. Windig",
+                    "155": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "156": "Überwiegend klar mit wenig Temperaturänderung",
+                    "157": "Zunehmende Bewölkung und kühler. Niederschlag möglich innerhalb von 6 Stunden. Windig",
+                    "158": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 6 Stunden. Windig",
+                    "159": "Zunehmende Bewölkung und kühler. Niederschlag hält an. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "160": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "161": "Überwiegend klar mit wenig Temperaturänderung",
+                    "162": "Überwiegend bewölkt und kühler. Niederschlag wahrscheinlich. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "163": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag hält an. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "164": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag wahrscheinlich. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "165": "Zunehmende Bewölkung und kühler. Niederschlag möglich innerhalb von 6 Stunden. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "166": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "167": "Überwiegend klar mit wenig Temperaturänderung",
+                    "168": "Zunehmende Bewölkung und kühler. Niederschlag möglich innerhalb von 6 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "169": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 6 Stunden. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "170": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 6 Stunden. Mögliche Winddrehung nach W, NW oder N",
+                    "171": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "172": "Überwiegend klar mit wenig Temperaturänderung",
+                    "173": "Zunehmende Bewölkung und kühler. Niederschlag möglich innerhalb von 6 Stunden. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "174": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 6 Stunden. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "175": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "176": "Überwiegend klar mit wenig Temperaturänderung",
+                    "177": "Zunehmende Bewölkung und kühler. Niederschlag möglich innerhalb von 12 bis 24 Stunden. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "178": "Zunehmende Bewölkung mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 12 bis 24 Stunden. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "179": "Überwiegend bewölkt und kühler. Niederschlag möglicherweise stark und endet innerhalb von 12 Stunden. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "180": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "181": "Überwiegend klar mit wenig Temperaturänderung",
+                    "182": "Überwiegend bewölkt und kühler. Niederschlag möglich innerhalb von 6 bis 12 Stunden, möglicherweise stark. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "183": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag endet innerhalb von 12 Stunden. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "184": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag möglich innerhalb von 6 bis 12 Stunden, möglicherweise stark. Windig mit möglicher Winddrehung nach W, NW oder N",
+                    "185": "Überwiegend bewölkt und kühler. Niederschlag hält an",
+                    "186": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "187": "Überwiegend klar mit wenig Temperaturänderung",
+                    "188": "Überwiegend bewölkt und kühler. Niederschlag wahrscheinlich, windig mit möglicher Winddrehung nach W, NW oder N",
+                    "189": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag hält an",
+                    "190": "Überwiegend bewölkt mit wenig Temperaturänderung. Niederschlag wahrscheinlich",
+                    "191": "Teilweise bewölkt mit wenig Temperaturänderung",
+                    "192": "Überwiegend klar mit wenig Temperaturänderung",
+                    "193": "Überwiegend bewölkt und kühler. Niederschlag möglich innerhalb von 12 Stunden, möglicherweise stark. Windig",
+                    "194": "Vorhersage benötigt 3 Stunden aktuelle Daten",
+                    "195": "Überwiegend klar und kühler"
+                }                
+            },
+            "rain_collector": {
+                "name": "Regensammler"
+            },
+            "rain_storm": {
+                "name": "Regensturm"
+            },
+            "rain_storm_start_date": {
+                "name": "Startdatum des Regensturms"
+            },
+            "extra_temperature_1": {
+                "name": "Zusätzliche Temperatur 1"
+            },
+            "extra_temperature_2": {
+                "name": "Zusätzliche Temperatur 2"
+            },
+            "extra_temperature_3": {
+                "name": "Zusätzliche Temperatur 3"
+            },
+            "extra_temperature_4": {
+                "name": "Zusätzliche Temperatur 4"
+            },
+            "extra_temperature_5": {
+                "name": "Zusätzliche Temperatur 5"
+            },
+            "extra_temperature_6": {
+                "name": "Zusätzliche Temperatur 6"
+            },
+            "extra_temperature_7": {
+                "name": "Zusätzliche Temperatur 7"
+            },
+            "extra_humidity_1": {
+                "name": "Zusätzliche Luftfeuchtigkeit 1"
+            },
+            "extra_humidity_2": {
+                "name": "Zusätzliche Luftfeuchtigkeit 2"
+            },
+            "extra_humidity_3": {
+                "name": "Zusätzliche Luftfeuchtigkeit 3"
+            },
+            "extra_humidity_4": {
+                "name": "Zusätzliche Luftfeuchtigkeit 4"
+            },
+            "extra_humidity_5": {
+                "name": "Zusätzliche Luftfeuchtigkeit 5"
+            },
+            "extra_humidity_6": {
+                "name": "Zusätzliche Luftfeuchtigkeit 6"
+            },
+            "extra_humidity_7": {
+                "name": "Zusätzliche Luftfeuchtigkeit 7"
+            }
+        },
+        "binary_sensor": {
+            "is_raining": {
+                "name": "Regnet"
+            }
+        }
+    }
+}

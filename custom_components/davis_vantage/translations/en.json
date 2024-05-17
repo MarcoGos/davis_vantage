@@ -172,7 +172,7 @@
             "rain_rate_day": {
                 "name": "Rain Rate (Day)"
             },
-            "rain_date_time": {
+            "rain_rate_time": {
                 "name": "Rain Rate Time"
             },
             "uv_level": {

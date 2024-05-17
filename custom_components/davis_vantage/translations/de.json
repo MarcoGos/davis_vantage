@@ -63,7 +63,7 @@
                 "name": "Niedrigste Temperatur"
             },
             "temperature_low_time": {
-                "name": "Zeitpunkt niedrigste temperatur"
+                "name": "Zeitpunkt niedrigste Temperatur"
             },
             "temperature_inside": {
                 "name": "Temperatur (innen)"
@@ -172,7 +172,7 @@
             "rain_rate_day": {
                 "name": "Höchste Regenintensität"
             },
-            "rain_date_time": {
+            "rain_rate_time": {
                 "name": "Zeitpunkt höchste Regenintensität"
             },
             "uv_level": {

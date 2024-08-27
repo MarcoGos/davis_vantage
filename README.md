@@ -1,6 +1,8 @@
-![Version](https://img.shields.io/github/v/release/MarcoGos/davis_vantage?include_prereleases)
-
 # Davis Vantage
+
+[![hacs][hacs-badge]][hacs-url]
+[![release][release-badge]][release-url]
+![downloads][downloads-badge]
 
 This is a custom integration for the Davis Vantage Pro2. Either use a serial port or use an ip adress to connect to your device.
 
@@ -159,3 +161,12 @@ During first setup the communication to the weather station can be a bit tricky,
 If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using service "Davis Vantage: Get Davis Time" and, if necessary, correct it by using service "Davis Vantage: Set Davis Time".
 
 It's unsure if Vantage Vue is working. Please contact me if this integration is working so I can add it again.
+
+<!-- Badges -->
+
+[hacs-url]: https://github.com/hacs/integration
+[hacs-badge]: https://img.shields.io/badge/hacs-default-orange.svg?style=flat-square
+[release-badge]: https://img.shields.io/github/v/release/MarcoGos/davis_vantage?style=flat-square
+[downloads-badge]: https://img.shields.io/github/downloads/MarcoGos/davis_vantage/total?style=flat-square
+
+[release-url]: https://github.com/MarcoGos/davis_vantage/releases

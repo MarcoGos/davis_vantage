@@ -66,7 +66,7 @@ def calc_heat_index(temperature_f: float, humidity: float) -> float:
     if temperature_f < 80.0 or humidity < 40.0:
         return temperature_f
     else:
-        heat_index_f = \
+        heat_index_f: float = \
             -42.379 \
             + (2.04901523 * temperature_f) \
             + (10.14333127 * humidity) \
@@ -76,14 +76,10 @@ def calc_heat_index(temperature_f: float, humidity: float) -> float:
             + (0.00122874 * pow(temperature_f, 2) * humidity) \
             + (0.00085282 * temperature_f * pow(humidity, 2)) \
             - (0.00000199 * pow(temperature_f, 2) * pow(humidity, 2))
-
-    if (heat_index_f < temperature_f):
-        heat_index_f = temperature_f
-
-    return heat_index_f
+    return max(heat_index_f, temperature_f)
 
 def calc_wind_chill(temperature_f: float, windspeed: float) -> float:
-    if (windspeed == 0):
+    if windspeed == 0:
         wind_chill_f = temperature_f
     else:
         wind_chill_f = \
@@ -91,10 +87,7 @@ def calc_wind_chill(temperature_f: float, windspeed: float) -> float:
             + (0.6215 * temperature_f) \
             - (35.75 * pow(windspeed,0.16)) \
             + (0.4275 * temperature_f * pow(windspeed, 0.16))
-    if (wind_chill_f > temperature_f):
-        wind_chill_f = temperature_f
-
-    return wind_chill_f
+    return max(wind_chill_f, temperature_f)
 
 def calc_feels_like(temperature_f: float, humidity: float, windspeed_mph: float) -> float:
     if windspeed_mph == 0:
@@ -167,5 +160,5 @@ def get_solar_rad(value: int) -> float:
 
 def calc_dew_point(temperature_f: float, humidity: float) -> float:
     temperature_c = convert_to_celcius(temperature_f)
-    A = math.log(humidity / 100) + (17.62 * temperature_c / (243.12 + temperature_c))
-    return convert_celcius_to_fahrenheit(243.12 * A / (17.62 - A))
+    a = math.log(humidity / 100) + (17.62 * temperature_c / (243.12 + temperature_c))
+    return convert_celcius_to_fahrenheit(243.12 * a / (17.62 - a))

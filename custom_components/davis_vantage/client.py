@@ -80,20 +80,28 @@ class DavisVantageClient:
 
         try:
             self._vantagepro2.link.open()
-            data = self._vantagepro2.get_current_data()
+            data = self._vantagepro2.get_current_data() # type: ignore
         except Exception as e:
             self._vantagepro2.link.close()
             raise e
+        
+        if self._hass.data.get(DATA_ARCHIVE_PERIOD) is None:
+            _LOGGER.warning("Didn't get the archive period the first time, trying again")
+            try:
+                static_info = self.async_get_info()
+                self._hass.data.setdefault(DATA_ARCHIVE_PERIOD, static_info.get('archive_period', None))
+            except Exception as e:
+                raise e
 
         try:
-            hilows = self._vantagepro2.get_hilows()
+            hilows = self._vantagepro2.get_hilows() # type: ignore
         except Exception:
             pass
 
         try:
             end_datetime = datetime.now()
             start_datetime = end_datetime - timedelta(minutes=(self._hass.data.get(DATA_ARCHIVE_PERIOD) * 2))  # type: ignore
-            archives = self._vantagepro2.get_archives(start_datetime, end_datetime)
+            archives = self._vantagepro2.get_archives(start_datetime, end_datetime) # type: ignore
         except Exception:
             pass
         finally:

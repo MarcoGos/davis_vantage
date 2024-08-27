@@ -625,7 +625,7 @@ class DavisVantageSensor(CoordinatorEntity[DavisVantageDataUpdateCoordinator], S
     def native_value(self) -> StateType:
         """Return the state of the sensor."""
         key = self.entity_description.key
-        data = self.coordinator.data
+        data = self.coordinator.data # type: ignore
         if key not in data:
             return None
         if self.entity_description.native_unit_of_measurement is not None:

@@ -85,13 +85,13 @@ class DavisVantageClient:
             self._vantagepro2.link.close()
             raise e
         
-        if self._hass.data.get(DATA_ARCHIVE_PERIOD) is None:
-            _LOGGER.warning("Didn't get the archive period the first time, trying again")
-            try:
-                static_info = self.async_get_info()
-                self._hass.data.setdefault(DATA_ARCHIVE_PERIOD, static_info.get('archive_period', None))
-            except Exception as e:
-                raise e
+        #if self._hass.data.get(DATA_ARCHIVE_PERIOD) is None:
+        #    _LOGGER.warning("Didn't get the archive period the first time, trying again")
+        #    try:
+        #        static_info = self.async_get_info()
+        #        self._hass.data.setdefault(DATA_ARCHIVE_PERIOD, static_info.get('archive_period', None))
+        #    except Exception as e:
+        #        raise e
 
         try:
             hilows = self._vantagepro2.get_hilows() # type: ignore

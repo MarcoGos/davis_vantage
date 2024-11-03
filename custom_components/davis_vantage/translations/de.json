@@ -2,7 +2,7 @@
     "config": {
         "abort": {
             "already_configured": "Gerät ist bereits konfiguriert",
-            "reconfigure_successful": "Neu konfigurierung gelungen"
+            "reconfigure_successful": "Die Neukonfiguration war erfolgreich"
         },
         "error": {
             "cannot_connect": "Verbindung fehlgeschlagen",
@@ -33,7 +33,7 @@
                 }
             },
             "reconfigure_confirm": {
-                "description": "Neu konfigurierung für {name}.",
+                "description": "Neukonfiguration für {name}.",
                 "data": {
                     "link": "Hostname",
                     "interval": "Intervall",

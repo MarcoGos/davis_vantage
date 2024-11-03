@@ -1,7 +1,8 @@
 {
     "config": {
         "abort": {
-            "already_configured": "Apparaat is reeds geconfigureerd"
+            "already_configured": "Apparaat is reeds geconfigureerd",
+            "reconfigure_successful": "Herconfiguratie is gelukt"
         },
         "error": {
             "cannot_connect": "Kan geen verbinding maken",
@@ -27,6 +28,14 @@
             "setup_other_info": {
                 "data": {
                     "station_model": "Davis weerstation model",
+                    "interval": "Interval",
+                    "rain_collector": "Regenmeter"
+                }
+            },
+            "reconfigure_confirm": {
+                "description": "Bijwerken configuratie voor {name}.",
+                "data": {
+                    "link": "Hostnaam",
                     "interval": "Interval",
                     "rain_collector": "Regenmeter"
                 }

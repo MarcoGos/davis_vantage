@@ -1,4 +1,5 @@
 """Config flow for Davis Vantage integration."""
+
 from __future__ import annotations
 
 import logging
@@ -7,9 +8,8 @@ import voluptuous as vol
 import serial
 import serial.tools.list_ports
 
-from homeassistant import config_entries
+from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
 from .const import (
@@ -26,9 +26,21 @@ from .const import (
     CONFIG_STATION_MODEL,
     CONFIG_INTERVAL,
     CONFIG_PROTOCOL,
-    CONFIG_LINK
+    CONFIG_LINK,
 )
 from .client import DavisVantageClient
+
+RECONFIGURE_SCHEMA = vol.Schema(
+    {
+        vol.Required(CONFIG_LINK): str,
+        vol.Required(CONFIG_INTERVAL, default=DEFAULT_SYNC_INTERVAL): vol.All(
+            int, vol.Range(min=30)  # type: ignore
+        ),
+        vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(
+            [RAIN_COLLECTOR_IMPERIAL, RAIN_COLLECTOR_METRIC]
+        ),
+    }
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -61,7 +73,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     return {"title": NAME}
 
 
-class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Davis Vantage."""
 
     VERSION = 1
@@ -70,7 +82,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    ) -> ConfigFlowResult:
         """Handle the initial step."""
         if user_input is not None:
             self.protocol = user_input[CONFIG_PROTOCOL]
@@ -79,16 +91,13 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             return await self.async_step_setup_network()
 
-        list_of_types = [
-            PROTOCOL_SERIAL,
-            PROTOCOL_NETWORK
-        ]
+        list_of_types = [PROTOCOL_SERIAL, PROTOCOL_NETWORK]
         schema = vol.Schema({vol.Required(CONFIG_PROTOCOL): vol.In(list_of_types)})
         return self.async_show_form(step_id="user", data_schema=schema)
 
     async def async_step_setup_serial(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    ) -> ConfigFlowResult:
         if user_input is not None:
             self.link = user_input[CONFIG_LINK]
             return await self.async_step_setup_other_info()
@@ -110,7 +119,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_setup_network(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    ) -> ConfigFlowResult:
         if user_input is not None:
             self.link = user_input[CONFIG_LINK]
             return await self.async_step_setup_other_info()
@@ -123,8 +132,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_setup_other_info(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
-        errors = {}
+    ) -> ConfigFlowResult:
+        errors: dict[str, str] | None = {}
         if user_input is not None:
             await self.async_set_unique_id(DOMAIN)
             self._abort_if_unique_id_configured()
@@ -142,28 +151,70 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 return self.async_create_entry(title=info["title"], data=user_input)
 
-        list_of_rain_collector = [
-            RAIN_COLLECTOR_IMPERIAL,
-            RAIN_COLLECTOR_METRIC
-        ]
-        list_of_station_models = [
-            MODEL_VANTAGE_PRO2,
-            MODEL_VANTAGE_PRO2PLUS,
-            # MODEL_VANTAGE_VUE
-        ]
         STEP_USER_DATA_SCHEMA = vol.Schema(
             {
-                vol.Required(CONFIG_STATION_MODEL): vol.In(list_of_station_models),
-                vol.Required(
-                    CONFIG_INTERVAL, 
-                    default=DEFAULT_SYNC_INTERVAL): vol.All(int, vol.Range(min=30) # type: ignore
+                vol.Required(CONFIG_STATION_MODEL): vol.In(
+                    [MODEL_VANTAGE_PRO2, MODEL_VANTAGE_PRO2PLUS]
                 ),
-                vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(list_of_rain_collector)
+                vol.Required(CONFIG_INTERVAL, default=DEFAULT_SYNC_INTERVAL): vol.All(
+                    int, vol.Range(min=30)  # type: ignore
+                ),
+                vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(
+                    [RAIN_COLLECTOR_IMPERIAL, RAIN_COLLECTOR_METRIC]
+                ),
             }
         )
 
         return self.async_show_form(
             step_id="setup_other_info", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
+        )
+
+    async def async_step_reconfigure(
+        self, _: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Handle a reconfiguration flow initialized by the user."""
+        self.entry = self.hass.config_entries.async_get_entry(self.context["entry_id"])
+
+        return await self.async_step_reconfigure_confirm()
+
+    async def async_step_reconfigure_confirm(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Handle a reconfiguration flow initialized by the user."""
+        errors: dict[str, str] | None = {}
+
+        if user_input is not None:
+            self.hass.config_entries.async_update_entry(
+                self.entry, data=self.entry.data | user_input
+            )
+            await self.hass.config_entries.async_reload(self.entry.entry_id)
+            return self.async_abort(reason="reconfigure_successful")
+
+        step_user_data_schema = RECONFIGURE_SCHEMA
+        if self.entry.data.get(CONFIG_PROTOCOL) == PROTOCOL_SERIAL:
+            ports = await self.hass.async_add_executor_job(serial.tools.list_ports.comports)
+            list_of_ports = {
+                port.device: f"{port}, s/n: {port.serial_number or 'n/a'}"
+                + (f" - {port.manufacturer}" if port.manufacturer else "")
+                for port in ports
+            }
+            step_user_data_schema = RECONFIGURE_SCHEMA.extend(
+                {vol.Required(CONFIG_LINK): vol.In(list_of_ports)},
+                required=True
+            )
+        # else:
+        #     step_user_data_schema = RECONFIGURE_SCHEMA.extend(
+        #         {vol.Required(CONFIG_LINK): str}
+        #     )
+
+        return self.async_show_form(
+            step_id="reconfigure_confirm",
+            data_schema=self.add_suggested_values_to_schema(
+                data_schema=step_user_data_schema,
+                suggested_values=self.entry.data | (user_input or {}),
+            ),
+            description_placeholders={"name": self.entry.title},
+            errors=errors,
         )
 
 

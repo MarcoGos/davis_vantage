@@ -1,7 +1,8 @@
 {
     "config": {
         "abort": {
-            "already_configured": "Device is already configured"
+            "already_configured": "Device is already configured",
+            "reconfigure_successful": "Re-configuration was successful"
         },
         "error": {
             "cannot_connect": "Failed to connect",
@@ -27,6 +28,14 @@
             "setup_other_info": {
                 "data": {
                     "station_model": "Davis weather station model",
+                    "interval": "Interval",
+                    "rain_collector": "Rain collector"
+                }
+            },
+            "reconfigure_confirm": {
+                "description": "Update configuration for {name}.",
+                "data": {
+                    "link": "Host",
                     "interval": "Interval",
                     "rain_collector": "Rain collector"
                 }

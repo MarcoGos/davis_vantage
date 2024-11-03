@@ -185,13 +185,13 @@ class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             self.hass.config_entries.async_update_entry(
-                self.entry, data=self.entry.data | user_input
+                self.entry, data=self.entry.data | user_input # type: ignore
             )
-            await self.hass.config_entries.async_reload(self.entry.entry_id)
+            await self.hass.config_entries.async_reload(self.entry.entry_id) # type: ignore
             return self.async_abort(reason="reconfigure_successful")
 
         step_user_data_schema = RECONFIGURE_SCHEMA
-        if self.entry.data.get(CONFIG_PROTOCOL) == PROTOCOL_SERIAL:
+        if self.entry.data.get(CONFIG_PROTOCOL) == PROTOCOL_SERIAL: # type: ignore
             ports = await self.hass.async_add_executor_job(serial.tools.list_ports.comports)
             list_of_ports = {
                 port.device: f"{port}, s/n: {port.serial_number or 'n/a'}"
@@ -202,18 +202,14 @@ class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
                 {vol.Required(CONFIG_LINK): vol.In(list_of_ports)},
                 required=True
             )
-        # else:
-        #     step_user_data_schema = RECONFIGURE_SCHEMA.extend(
-        #         {vol.Required(CONFIG_LINK): str}
-        #     )
 
         return self.async_show_form(
             step_id="reconfigure_confirm",
             data_schema=self.add_suggested_values_to_schema(
                 data_schema=step_user_data_schema,
-                suggested_values=self.entry.data | (user_input or {}),
+                suggested_values=self.entry.data | (user_input or {}), # type: ignore
             ),
-            description_placeholders={"name": self.entry.title},
+            description_placeholders={"name": self.entry.title}, # type: ignore
             errors=errors,
         )
 

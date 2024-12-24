@@ -3,7 +3,7 @@ from typing import Any
 import logging
 
 from homeassistant.helpers.update_coordinator import UpdateFailed, DataUpdateCoordinator
-from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.core import HomeAssistant
 from pyvantagepro.parser import LoopDataParserRevB
 
@@ -17,8 +17,6 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 class DavisVantageDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the weather station."""
-
-    data: LoopDataParserRevB
 
     def __init__(
         self, hass: HomeAssistant, client: DavisVantageClient, device_info: DeviceInfo

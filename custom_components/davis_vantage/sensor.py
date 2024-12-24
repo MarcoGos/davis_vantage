@@ -1,10 +1,15 @@
 import logging
+from functools import cached_property
+
 from homeassistant.components.sensor import (
-    DOMAIN as SENSOR_DOMAIN,
     SensorEntity,
-    SensorEntityDescription,
+    SensorEntityDescription
+)
+from homeassistant.components.sensor.const import (
+    DOMAIN as SENSOR_DOMAIN,
     SensorDeviceClass
 )
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
@@ -16,10 +21,10 @@ from homeassistant.const import (
     UnitOfTemperature,
     UnitOfPressure,
     UnitOfIrradiance,
-    UnitOfTime
+    UnitOfTime,
+    EntityCategory
 )
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -33,7 +38,6 @@ from .const import (
     MODEL_VANTAGE_PRO2PLUS,
     KEY_TO_NAME
 )
-
 from .coordinator import DavisVantageDataUpdateCoordinator
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
@@ -621,7 +625,7 @@ class DavisVantageSensor(CoordinatorEntity[DavisVantageDataUpdateCoordinator], S
         self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {KEY_TO_NAME[description.key]}"
         self._attr_device_info = coordinator.device_info
 
-    @property
+    @cached_property
     def native_value(self) -> StateType:
         """Return the state of the sensor."""
         key = self.entity_description.key

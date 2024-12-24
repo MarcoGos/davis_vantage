@@ -54,10 +54,10 @@ class PlaceholderHub:
 
     async def authenticate(self, protocol: str, link: str) -> bool:
         """Test if we can find data for the given link."""
-        _LOGGER.info(f"authenticate called")
+        _LOGGER.info("authenticate called")
         client = DavisVantageClient(self._hass, protocol, link, "")
         await client.connect_to_station()
-        return await client.async_get_davis_time() != None
+        return (await client.async_get_davis_time()) is not None
 
 
 async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
@@ -109,12 +109,12 @@ class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
             for port in ports
         }
 
-        STEP_USER_DATA_SCHEMA = vol.Schema(
+        step_user_data_schema = vol.Schema(
             {vol.Required(CONFIG_LINK): vol.In(list_of_ports)}
         )
 
         return self.async_show_form(
-            step_id="setup_serial", data_schema=STEP_USER_DATA_SCHEMA
+            step_id="setup_serial", data_schema=step_user_data_schema
         )
 
     async def async_step_setup_network(
@@ -124,10 +124,10 @@ class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
             self.link = user_input[CONFIG_LINK]
             return await self.async_step_setup_other_info()
 
-        STEP_USER_DATA_SCHEMA = vol.Schema({vol.Required(CONFIG_LINK): str})
+        step_user_data_schema = vol.Schema({vol.Required(CONFIG_LINK): str})
 
         return self.async_show_form(
-            step_id="setup_network", data_schema=STEP_USER_DATA_SCHEMA
+            step_id="setup_network", data_schema=step_user_data_schema
         )
 
     async def async_step_setup_other_info(
@@ -151,7 +151,7 @@ class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
             else:
                 return self.async_create_entry(title=info["title"], data=user_input)
 
-        STEP_USER_DATA_SCHEMA = vol.Schema(
+        step_user_data_schema = vol.Schema(
             {
                 vol.Required(CONFIG_STATION_MODEL): vol.In(
                     [MODEL_VANTAGE_PRO2, MODEL_VANTAGE_PRO2PLUS]
@@ -166,7 +166,7 @@ class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
         )
 
         return self.async_show_form(
-            step_id="setup_other_info", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
+            step_id="setup_other_info", data_schema=step_user_data_schema, errors=errors
         )
 
     async def async_step_reconfigure(

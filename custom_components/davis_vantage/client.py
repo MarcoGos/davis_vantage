@@ -1,4 +1,5 @@
 """All client function"""
+
 from typing import Any
 from datetime import datetime, timedelta, time, date
 from zoneinfo import ZoneInfo
@@ -33,14 +34,10 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 class DavisVantageClient:
     """Davis Vantage Client class"""
 
-    _vantagepro2: VantagePro2 = None # type: ignore
+    _vantagepro2: VantagePro2 = None  # type: ignore
 
     def __init__(
-        self,
-        hass: HomeAssistant,
-        protocol: str,
-        link: str,
-        rain_collector: str
+        self, hass: HomeAssistant, protocol: str, link: str, rain_collector: str
     ) -> None:
         self._hass = hass
         self._protocol = protocol
@@ -68,7 +65,7 @@ class DavisVantageClient:
         return vp
 
     async def connect_to_station(self):
-        self._vantagepro2 = await self.async_get_vantagepro2fromurl(self.get_link()) # type: ignore
+        self._vantagepro2 = await self.async_get_vantagepro2fromurl(self.get_link())  # type: ignore
 
     def get_current_data(
         self,
@@ -78,30 +75,26 @@ class DavisVantageClient:
         archives = None
         hilows = None
 
+        if not self._vantagepro2:
+            self.get_vantagepro2fromurl(self.get_link())
+
         try:
             self._vantagepro2.link.open()
-            data = self._vantagepro2.get_current_data() # type: ignore
+            data = self._vantagepro2.get_current_data()
         except Exception as e:
             self._vantagepro2.link.close()
             raise e
-        
-        #if self._hass.data.get(DATA_ARCHIVE_PERIOD) is None:
-        #    _LOGGER.warning("Didn't get the archive period the first time, trying again")
-        #    try:
-        #        static_info = self.async_get_info()
-        #        self._hass.data.setdefault(DATA_ARCHIVE_PERIOD, static_info.get('archive_period', None))
-        #    except Exception as e:
-        #        raise e
 
         try:
-            hilows = self._vantagepro2.get_hilows() # type: ignore
+            hilows = self._vantagepro2.get_hilows()
         except Exception:
             pass
 
         try:
             end_datetime = datetime.now()
-            start_datetime = end_datetime - timedelta(minutes=(self._hass.data.get(DATA_ARCHIVE_PERIOD) * 2))  # type: ignore
-            archives = self._vantagepro2.get_archives(start_datetime, end_datetime) # type: ignore
+            start_datetime = end_datetime - \
+                timedelta(minutes=self._hass.data.get(DATA_ARCHIVE_PERIOD) * 2)  # type: ignore
+            archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
         except Exception:
             pass
         finally:
@@ -143,8 +136,8 @@ class DavisVantageClient:
                 data["LastError"] = "Couldn't acquire data, no data received"
 
         except Exception as e:
-            _LOGGER.warning(f"Couldn't acquire data from {self.get_link()}: {e}")
-            data["LastError"] = f"Couldn't acquire data: {e}"
+            _LOGGER.error("Couldn't acquire data from %s: %s", self.get_link(), e)
+            data["LastError"] = f"Couldn't acquire data on {self.get_link()}: {e}"
 
         if data["LastError"]:
             data["LastErrorTime"] = now
@@ -216,7 +209,7 @@ class DavisVantageClient:
         try:
             self._vantagepro2.link.open()
             firmware_version = self._vantagepro2.firmware_version  # type: ignore
-            archive_period = self._vantagepro2.archive_period # type: ignore
+            archive_period = self._vantagepro2.archive_period  # type: ignore
             firmware_date = self._vantagepro2.firmware_date  # type: ignore
             diagnostics = self._vantagepro2.diagnostics  # type: ignore
         except Exception as e:
@@ -227,7 +220,7 @@ class DavisVantageClient:
             "version": firmware_version,
             "date": firmware_date,
             "diagnostics": diagnostics,
-            "archive_period": archive_period
+            "archive_period": archive_period,
         }
 
     async def async_get_info(self) -> dict[str, Any] | None:
@@ -243,15 +236,12 @@ class DavisVantageClient:
         try:
             self._vantagepro2.link.open()
             firmware_version = self._vantagepro2.firmware_version  # type: ignore
-            archive_period = self._vantagepro2.archive_period # type: ignore
+            archive_period = self._vantagepro2.archive_period  # type: ignore
         except Exception as e:
             raise e
         finally:
             self._vantagepro2.link.close()
-        return {
-            "version": firmware_version,
-            "archive_period": archive_period
-        }
+        return {"version": firmware_version, "archive_period": archive_period}
 
     async def async_get_static_info(self) -> dict[str, Any] | None:
         info = None
@@ -297,7 +287,7 @@ class DavisVantageClient:
         data["RainCollector"] = self._rain_collector
         if data["RainCollector"] != RAIN_COLLECTOR_IMPERIAL:
             self.correct_rain_values(data)
-        data['StormStartDate'] = self.strtodate(data['StormStartDate'])
+        data["StormStartDate"] = self.strtodate(data["StormStartDate"])
 
     def correct_rain_values(self, data: dict[str, Any]):
         if data["RainDay"] is not None:
@@ -330,8 +320,8 @@ class DavisVantageClient:
         for key in data.keys():  # type: ignore
             info_key = re.sub(r"\d+$", "", key)  # type: ignore
             data_type = data_info.get(info_key, "")
-            raw_value = raw_data.get(info_key, 0) # type: ignore
-            if self.is_incorrect_value(raw_value, data_type): # type: ignore
+            raw_value = raw_data.get(info_key, 0)  # type: ignore
+            if self.is_incorrect_value(raw_value, data_type):  # type: ignore
                 data[key] = None  # type: ignore
 
     def is_incorrect_value(self, raw_value: int, data_type: str) -> bool:
@@ -353,33 +343,33 @@ class DavisVantageClient:
         if not hilows:
             return
         data["TempOutHiDay"] = hilows["TempHiDay"]
-        data["TempOutHiTime"] = self.strtotime(hilows["TempHiTime"]) # type: ignore
+        data["TempOutHiTime"] = self.strtotime(hilows["TempHiTime"])  # type: ignore
         data["TempOutLowDay"] = hilows["TempLoDay"]
-        data["TempOutLowTime"] = self.strtotime(hilows["TempLoTime"]) # type: ignore
+        data["TempOutLowTime"] = self.strtotime(hilows["TempLoTime"])  # type: ignore
 
         data["DewPointHiDay"] = hilows["DewHiDay"]
-        data["DewPointHiTime"] = self.strtotime(hilows["DewHiTime"]) # type: ignore
+        data["DewPointHiTime"] = self.strtotime(hilows["DewHiTime"])  # type: ignore
         data["DewPointLowDay"] = hilows["DewLoDay"]
-        data["DewPointLowTime"] = self.strtotime(hilows["DewLoTime"]) # type: ignore
+        data["DewPointLowTime"] = self.strtotime(hilows["DewLoTime"])  # type: ignore
 
         data["RainRateDay"] = hilows["RainHiDay"]
-        data["RainRateTime"] = self.strtotime(hilows["RainHiTime"]) # type: ignore
+        data["RainRateTime"] = self.strtotime(hilows["RainHiTime"])  # type: ignore
 
         data["BarometerHiDay"] = hilows["BaroHiDay"]
-        data["BarometerHiTime"] = self.strtotime(hilows["BaroHiTime"]) # type: ignore
+        data["BarometerHiTime"] = self.strtotime(hilows["BaroHiTime"])  # type: ignore
         data["BarometerLowDay"] = hilows["BaroLoDay"]
-        data["BarometerLoTime"] = self.strtotime(hilows["BaroLoTime"]) # type: ignore
+        data["BarometerLoTime"] = self.strtotime(hilows["BaroLoTime"])  # type: ignore
 
         data["SolarRadDay"] = hilows["SolarHiDay"]
-        data["SolarRadTime"] = self.strtotime(hilows["SolarHiTime"]) # type: ignore
+        data["SolarRadTime"] = self.strtotime(hilows["SolarHiTime"])  # type: ignore
 
         data["UVDay"] = hilows["UVHiDay"]
-        data["UVTime"] = self.strtotime(hilows["UVHiTime"]) # type: ignore
+        data["UVTime"] = self.strtotime(hilows["UVHiTime"])  # type: ignore
 
         data["WindGustDay"] = hilows["WindHiDay"]
-        data["WindGustTime"] = self.strtotime(hilows["WindHiTime"]) # type: ignore
+        data["WindGustTime"] = self.strtotime(hilows["WindHiTime"])  # type: ignore
 
-    def get_link(self) -> str | None:
+    def get_link(self) -> str:
         """Get device link for use with vproweather."""
         if self._protocol == PROTOCOL_NETWORK:
             return f"tcp:{self._link}"

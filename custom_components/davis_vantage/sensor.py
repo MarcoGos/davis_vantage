@@ -1,5 +1,4 @@
 import logging
-from functools import cached_property
 
 from homeassistant.components.sensor import (
     SensorEntity,
@@ -625,8 +624,8 @@ class DavisVantageSensor(CoordinatorEntity[DavisVantageDataUpdateCoordinator], S
         self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {KEY_TO_NAME[description.key]}"
         self._attr_device_info = coordinator.device_info
 
-    @cached_property
-    def native_value(self) -> StateType:
+    @property
+    def native_value(self) -> StateType: # type: ignore
         """Return the state of the sensor."""
         key = self.entity_description.key
         data = self.coordinator.data # type: ignore

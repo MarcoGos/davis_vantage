@@ -1,4 +1,3 @@
-from functools import cached_property
 from homeassistant.components.binary_sensor import (
     DOMAIN as BINARY_SENSOR_DOMAIN,
     BinarySensorEntity,
@@ -64,8 +63,8 @@ class DavisVantageBinarySensor(
         )
         self._attr_device_info = coordinator.device_info
 
-    @cached_property
-    def is_on(self) -> bool | None:
+    @property
+    def is_on(self) -> bool | None:  # type: ignore
         """Return the is_on of the sensor."""
         key = self.entity_description.key
         data = self.coordinator.data

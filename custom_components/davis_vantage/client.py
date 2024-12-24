@@ -90,10 +90,13 @@ class DavisVantageClient:
         except Exception:
             pass
 
+        if self._hass.data.get(DATA_ARCHIVE_PERIOD, None) is None:
+            self._hass.data.setdefault(DATA_ARCHIVE_PERIOD, self._vantagepro2.archive_period)
+
         try:
             end_datetime = datetime.now()
             start_datetime = end_datetime - \
-                timedelta(minutes=self._hass.data.get(DATA_ARCHIVE_PERIOD) * 2)  # type: ignore
+                timedelta(minutes=self._vantagepro2.archive_period * 2)  # type: ignore
             archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
         except Exception:
             pass
@@ -146,7 +149,7 @@ class DavisVantageClient:
         return data
 
     def __get_full_raw_data(self, data: LoopDataParserRevB) -> DataParser:
-        raw_data = DataParser(data.raw_bytes, LoopDataParserRevB.LOOP_FORMAT)
+        raw_data = DataParser(data.raw_bytes, LoopDataParserRevB.LOOP_FORMAT)  # type: ignore
         raw_data["HumExtra"] = struct.unpack(b"7B", raw_data["HumExtra"])  # type: ignore
         raw_data["ExtraTemps"] = struct.unpack(b"7B", raw_data["ExtraTemps"])  # type: ignore
         raw_data["SoilMoist"] = struct.unpack(b"4B", raw_data["SoilMoist"])  # type: ignore
@@ -162,7 +165,7 @@ class DavisVantageClient:
         return raw_data
 
     def __get_full_raw_data_hilows(self, data: HighLowParserRevB) -> DataParser:
-        raw_data = DataParser(data.raw_bytes, HighLowParserRevB.HILOWS_FORMAT)
+        raw_data = DataParser(data.raw_bytes, HighLowParserRevB.HILOWS_FORMAT)  # type: ignore
         return raw_data
 
     def get_davis_time(self) -> datetime | None:

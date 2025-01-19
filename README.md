@@ -11,6 +11,7 @@ Model | Compatible
 Davis WeatherLink SER (6510SER) | Yes
 Davis WeatherLink USB (6510USB) | Yes
 Davis Weatherlink IP (6555IP) | Yes 
+Vantage Vue | Yes
 WeatherLink Live | No
 Davis Weather Envoy8X (6318EU) | No
 Other models | Unsure
@@ -159,8 +160,6 @@ The entity information is updated every 30 seconds (default or other value is ch
 During first setup the communication to the weather station can be a bit tricky, resulting in an error saying the device didn't communicate. Please try again to set it up (can take up to 5 times).
 
 If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using service "Davis Vantage: Get Davis Time" and, if necessary, correct it by using service "Davis Vantage: Set Davis Time".
-
-It's unsure if Vantage Vue is working. Please contact me if this integration is working so I can add it again.
 
 <!-- Badges -->
 

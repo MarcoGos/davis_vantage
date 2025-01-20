@@ -139,7 +139,7 @@ The following entities will be created:
 
 Diagnostic entities:
 - Archive Interval: 
-    - Archive data interval (usual around 10 minutes)
+    - Archive data interval (usual around 10 minutes). [^1]
 - Last Error Message: 
     - Last error message, if no error then empty
 - Last Fetch Time: 
@@ -169,3 +169,6 @@ If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set c
 [downloads-badge]: https://img.shields.io/github/downloads/MarcoGos/davis_vantage/total?style=flat-square
 
 [release-url]: https://github.com/MarcoGos/davis_vantage/releases
+
+[^1]: This value can only be changed by using the original WeatherLink software.
+

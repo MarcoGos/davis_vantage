@@ -169,6 +169,6 @@ During first setup the communication to the weather station can be a bit tricky,
 [release-url]: https://github.com/MarcoGos/davis_vantage/releases
 
 [^1]: If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using action "Davis Vantage: Get Davis Time" and, if necessary, correct it by using action "Davis Vantage: Set Davis Time".
-[^2]: This value can only be changed by using the original WeatherLink software.
+[^2]: The Archive Interval value can only be changed by using the original WeatherLink software.
 
 

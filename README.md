@@ -115,7 +115,7 @@ The following entities will be created:
 - Wind Direction Rose: 
     - Current wind direction in cardinal directions (N, NE, E, etc.)
 - Wind Gust: 
-    - Current wind gust, based on the highest value within an Archive Interval
+    - Current wind gust, based on the highest value within an Archive Interval [^1]
 - Wind Gust (Day): 
     - Today's highest wind gust
 - Wind Gust Time: 
@@ -139,7 +139,7 @@ The following entities will be created:
 
 Diagnostic entities:
 - Archive Interval: 
-    - Archive data interval (usual around 10 minutes). [^1]
+    - Archive data interval (usual around 10 minutes). [^2]
 - Last Error Message: 
     - Last error message, if no error then empty
 - Last Fetch Time: 
@@ -159,8 +159,6 @@ The entity information is updated every 30 seconds (default or other value is ch
 
 During first setup the communication to the weather station can be a bit tricky, resulting in an error saying the device didn't communicate. Please try again to set it up (can take up to 5 times).
 
-If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using service "Davis Vantage: Get Davis Time" and, if necessary, correct it by using service "Davis Vantage: Set Davis Time".
-
 <!-- Badges -->
 
 [hacs-url]: https://github.com/hacs/integration
@@ -170,5 +168,7 @@ If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set c
 
 [release-url]: https://github.com/MarcoGos/davis_vantage/releases
 
-[^1]: This value can only be changed by using the original WeatherLink software.
+[^1]: If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using action "Davis Vantage: Get Davis Time" and, if necessary, correct it by using action "Davis Vantage: Set Davis Time".
+[^2]: This value can only be changed by using the original WeatherLink software.
+
 

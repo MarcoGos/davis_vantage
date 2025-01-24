@@ -159,6 +159,8 @@ The entity information is updated every 30 seconds (default or other value is ch
 
 During first setup the communication to the weather station can be a bit tricky, resulting in an error saying the device didn't communicate. Please try again to set it up (can take up to 5 times).
 
+Due to the somewhat unstable hardware interface some communication runs result in an error like "Check ACK: BAD ('\n\r' != '')". This is normal behavior.
+
 <!-- Badges -->
 
 [hacs-url]: https://github.com/hacs/integration

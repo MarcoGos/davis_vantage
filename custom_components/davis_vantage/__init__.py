@@ -152,7 +152,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         set_archive_period,
         schema=vol.Schema({
             vol.Required('archive_period'): vol.In(
-                [1, 5, 10, 15, 30, 60, 120]
+                ["1", "5", "10", "15", "30", "60", "120"]
             )
         })
     )

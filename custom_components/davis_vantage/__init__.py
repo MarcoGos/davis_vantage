@@ -170,8 +170,8 @@ async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
 
 class Serializer(object):
     @staticmethod
-    def serialize(obj):
-        def check(o):
+    def serialize(obj: Any):
+        def check(o: Any):
             for k, v in o.__dict__.items():
                 try:
                     _ = json.dumps(v)

@@ -170,7 +170,7 @@ The following actions are available:
 - Davis Vantage: Set Yearly Rain
     - Change yearly rain in clicks (depending on setup one click =  0.01" or 0.2mm)
 - Davis Vantage: Set Archive Period
-    - Change archive period in minutes (accepted values: 1, 5, 10, 15, 30, 60, 120). WARNING: This will erase all archived data.=
+    - Change archive period in minutes (accepted values: 1, 5, 10, 15, 30, 60, 120). WARNING: This will erase all archived data.
 
 
 ## Known problems

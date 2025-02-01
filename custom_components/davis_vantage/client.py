@@ -255,6 +255,24 @@ class DavisVantageClient:
             _LOGGER.error("Couldn't get static info: %s", e)
         return info
 
+    def set_yearly_rain(self, rain_clicks: int) -> None:
+        """Set yearly rain of weather station."""
+        try:
+            self._vantagepro2.link.open()
+            self._vantagepro2.set_yearly_rain(rain_clicks)
+        except Exception as e:
+            raise e
+        finally:
+            self._vantagepro2.link.close()
+
+    async def async_set_yearly_rain(self, rain_clicks: int) -> None:
+        """Set yearly rain of weather station async."""
+        try:
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, self.set_yearly_rain, rain_clicks)
+        except Exception as e:
+            _LOGGER.error("Couldn't set yearly rain: %s", e)
+
     def add_additional_info(self, data: dict[str, Any]) -> None:
         if data["TempOut"] is not None:
             if data["HumOut"] is not None:

@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any
 import logging
 import json
+import voluptuous as vol
 from zoneinfo import ZoneInfo
 
 from homeassistant.config_entries import ConfigEntry
@@ -20,6 +21,7 @@ from .const import (
     SERVICE_GET_DAVIS_TIME,
     SERVICE_GET_RAW_DATA,
     SERVICE_GET_INFO,
+    SERVICE_SET_YEARLY_RAIN,
     CONFIG_RAIN_COLLECTOR,
     CONFIG_STATION_MODEL,
     CONFIG_INTERVAL,
@@ -109,6 +111,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 "error": "Couldn't get firmware information from Davis weather station"
             }
 
+    async def set_yearly_rain(call: ServiceCall) -> None:
+        await client.async_set_yearly_rain(call.data["rain_clicks"])
+
     hass.services.async_register(DOMAIN, SERVICE_SET_DAVIS_TIME, set_davis_time)
     hass.services.async_register(
         DOMAIN,
@@ -126,6 +131,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.services.async_register(
         DOMAIN, SERVICE_GET_INFO, get_info, supports_response=SupportsResponse.ONLY
+    )
+
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_SET_YEARLY_RAIN,
+        set_yearly_rain,
+        schema=vol.Schema({
+            vol.Required('rain_clicks'): int
+        }),
+        supports_response=SupportsResponse.ONLY,
     )
 
     def safe_serialize(obj: Any):

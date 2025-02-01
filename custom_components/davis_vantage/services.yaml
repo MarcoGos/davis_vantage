@@ -10,3 +10,12 @@ get_raw_data:
 get_info:
   name: Get Information
   description: Get information about firmware and diagnostics
+set_yearly_rain:
+  name: Set Yearly Rain
+  description: Set yearly rain in clicks (depending in setup one click = 0.2mm of 0.01")
+  fields:
+    rain_clicks:
+      required: true
+      selector:
+        number:
+          min: 0

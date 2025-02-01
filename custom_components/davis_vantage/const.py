@@ -3,12 +3,10 @@
 NAME = "Davis Vantage"
 DOMAIN = "davis_vantage"
 MANUFACTURER = "Davis"
-VERSION = "1.3.2"
+VERSION = "1.3.3"
 
 DEFAULT_SYNC_INTERVAL = 30  # seconds
 DEFAULT_NAME = NAME
-
-DATA_ARCHIVE_PERIOD = 'archive_period'
 
 RAIN_COLLECTOR_IMPERIAL = '0.01"'
 RAIN_COLLECTOR_METRIC = '0.2 mm'

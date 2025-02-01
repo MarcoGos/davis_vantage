@@ -26,7 +26,10 @@ from .utils import (
     get_uv,
     get_wind_rose,
 )
-from .const import RAIN_COLLECTOR_IMPERIAL, PROTOCOL_NETWORK, DATA_ARCHIVE_PERIOD
+from .const import (
+    RAIN_COLLECTOR_IMPERIAL,
+    PROTOCOL_NETWORK,
+)
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -89,11 +92,6 @@ class DavisVantageClient:
             hilows = self._vantagepro2.get_hilows()
         except Exception:
             pass
-
-        if self._hass.data.get(DATA_ARCHIVE_PERIOD, None) is None:
-            self._hass.data.setdefault(
-                DATA_ARCHIVE_PERIOD, self._vantagepro2.archive_period
-            )
 
         try:
             end_datetime = datetime.now()
@@ -312,7 +310,7 @@ class DavisVantageClient:
             )
         if data["RainRate"] is not None:
             data["IsRaining"] = data["RainRate"] > 0
-        data["ArchiveInterval"] = self._hass.data.get(DATA_ARCHIVE_PERIOD)
+        data["ArchiveInterval"] = self._vantagepro2.archive_period
 
     def convert_values(self, data: dict[str, Any]) -> None:
         del data["Datetime"]
@@ -430,3 +428,6 @@ class DavisVantageClient:
             return None
         else:
             return datetime.strptime(date_str, "%Y-%m-%d").date()
+
+    def clear_cached_property(self, property_name: str):
+        del self._vantagepro2.__dict__[property_name]

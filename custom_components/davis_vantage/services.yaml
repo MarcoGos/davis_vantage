@@ -23,7 +23,7 @@ set_yearly_rain:
         number:
 set_archive_period:
   name: Set Archive Period
-  description: "Set the archive period in minutes. Please restart HA after change. WARNING: All stored archive data will be erased!!!"
+  description: "Set the archive period in minutes. WARNING: All stored archive data will be erased!!!"
   fields:
     archive_period:
       name: "Archive Period"

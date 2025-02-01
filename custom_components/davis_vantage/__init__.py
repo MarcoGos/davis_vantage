@@ -28,7 +28,6 @@ from .const import (
     CONFIG_INTERVAL,
     CONFIG_PROTOCOL,
     CONFIG_LINK,
-    DATA_ARCHIVE_PERIOD,
 )
 from .coordinator import DavisVantageDataUpdateCoordinator
 from .utils import convert_to_iso_datetime
@@ -60,10 +59,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     static_info = await client.async_get_static_info()
     firmware_version = (
         static_info.get("version", None) if static_info is not None else None
-    )
-    hass.data.setdefault(
-        DATA_ARCHIVE_PERIOD,
-        static_info.get("archive_period", None) if static_info is not None else None,
     )
 
     device_info = DeviceInfo(
@@ -117,6 +112,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def set_archive_period(call: ServiceCall) -> None:
         await client.async_set_archive_period(call.data["archive_period"])
+        client.clear_cached_property('archive_period')
 
     hass.services.async_register(DOMAIN, SERVICE_SET_DAVIS_TIME, set_davis_time)
     hass.services.async_register(

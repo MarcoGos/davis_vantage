@@ -57,7 +57,7 @@
                 "name": "Laatste foutmelding"
             },
             "archive_interval": {
-                "name": "Archief interval"
+                "name": "Archiefinterval"
             },
             "temperature": {
                 "name": "Temperatuur"
@@ -463,6 +463,44 @@
         "binary_sensor": {
             "is_raining": {
                 "name": "Het regent"
+            }
+        }
+    },
+    "services": {
+        "set_davis_time": {
+            "name": "Stel Davis tijd in",
+            "description": "Stel de tijd van het Davis weerstation in"
+        },
+        "get_davis_time": {
+            "name": "Haal Davis tijd op",
+            "description": "Haal de tijd vann het Davis weerstation op"
+        },
+        "get_raw_data": {
+            "name": "Haal ruwe gegevens op",
+            "description": "Haal de ruwe, onbewerkte gegevens op van de laatste meting"
+        },
+        "get_info": {
+            "name": "Haal informatie op",
+            "description": "Haal informatie over de firmware en diagnostiek op"
+        },
+        "set_yearly_rain": {
+            "name": "Stel de jaarlijke neerslag in",
+            "description": "Stel de jaarlijkse neerslag in kliks in",
+            "fields": {
+                "rain_clicks": {
+                    "name": "Regen kliks",
+                    "description": "Neerslag in kliks (afhankelijk van de instelling is één klik = 0.01\" of 0.2mm)"
+                }
+            }
+        },
+        "set_archive_period": {
+            "name": "Stel archiefinterval in",
+            "description": "Stel de archiefinterval in minuten in. WAARSCHUWING: Alle gearchiveerde data wordt verwijderd!!!",
+            "fields": {
+                "archive_period": {
+                    "name": "Archiefinterval",
+                    "description": "Archiefinterval in minuten"
+                }
             }
         }
     }

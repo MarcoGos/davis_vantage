@@ -465,5 +465,43 @@
                 "name": "Regnet"
             }
         }
+    },
+    "services": {
+        "set_davis_time": {
+            "name": "Davis-Zeit einstellen",
+            "description": "Die Zeit der Davis-Wetterstation einstellen"
+        },
+        "get_davis_time": {
+            "name": "Davis-Zeit abrufen",
+            "description": "Die Zeit der Davis-Wetterstation abrufen"
+        },
+        "get_raw_data": {
+            "name": "Rohdaten abrufen",
+            "description": "Die rohen, unverarbeiteten Daten des letzten Abrufs abrufen"
+        },
+        "get_info": {
+            "name": "Informationen abrufen",
+            "description": "Informationen über Firmware und Diagnose abrufen"
+        },
+        "set_yearly_rain": {
+            "name": "Jährlichen Niederschlag einstellen",
+            "description": "Jährlichen Niederschlag in Klicks einstellen",
+            "fields": {
+                "rain_clicks": {
+                    "name": "Regen-Klicks",
+                    "description": "Regen in Klicks (je nach Einrichtung entspricht ein Klick 0,01\" oder 0,2 mm)"
+                }
+            }
+        },
+        "set_archive_period": {
+            "name": "Archivierungsperiode einstellen",
+            "description": "Die Archivierungsperiode in Minuten einstellen. WARNUNG: Alle gespeicherten Archivdaten werden gelöscht!!!",
+            "fields": {
+                "archive_period": {
+                    "name": "Archivierungsperiode",
+                    "description": "Archivierungsperiode in Minuten"
+                }
+            }
+        }
     }
 }

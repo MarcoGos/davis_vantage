@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any
 import logging
 import json
+import voluptuous as vol
 from zoneinfo import ZoneInfo
 
 from homeassistant.config_entries import ConfigEntry
@@ -20,6 +21,8 @@ from .const import (
     SERVICE_GET_DAVIS_TIME,
     SERVICE_GET_RAW_DATA,
     SERVICE_GET_INFO,
+    SERVICE_SET_YEARLY_RAIN,
+    SERVICE_SET_ARCHIVE_PERIOD,
     CONFIG_RAIN_COLLECTOR,
     CONFIG_STATION_MODEL,
     CONFIG_INTERVAL,
@@ -97,7 +100,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def get_raw_data(_: ServiceCall) -> dict[str, Any]:
         raw_data = client.get_raw_data()
-        json_data = safe_serialize(raw_data)
+        json_data = Serializer.serialize(raw_data)
         return json.loads(json_data)
 
     async def get_info(_: ServiceCall) -> dict[str, Any]:
@@ -108,6 +111,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             return {
                 "error": "Couldn't get firmware information from Davis weather station"
             }
+
+    async def set_yearly_rain(call: ServiceCall) -> None:
+        await client.async_set_yearly_rain(call.data["rain_clicks"])
+
+    async def set_archive_period(call: ServiceCall) -> None:
+        await client.async_set_archive_period(call.data["archive_period"])
 
     hass.services.async_register(DOMAIN, SERVICE_SET_DAVIS_TIME, set_davis_time)
     hass.services.async_register(
@@ -128,13 +137,25 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         DOMAIN, SERVICE_GET_INFO, get_info, supports_response=SupportsResponse.ONLY
     )
 
-    def safe_serialize(obj: Any):
-        # default = lambda obj: f"<<non-serializable: {type(obj).__qualname__}>>" # type: ignore
-        default = get_default(obj)
-        return json.dumps(obj, default=default)  # type: ignore
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_SET_YEARLY_RAIN,
+        set_yearly_rain,
+        schema=vol.Schema({
+            vol.Required('rain_clicks'): int
+        })
+    )
 
-    def get_default(obj: Any):
-        return f"<<non-serializable: {type(obj).__qualname__}>>"
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_SET_ARCHIVE_PERIOD,
+        set_archive_period,
+        schema=vol.Schema({
+            vol.Required('archive_period'): vol.In(
+                ["1", "5", "10", "15", "30", "60", "120"]
+            )
+        })
+    )
 
     return True
 
@@ -150,3 +171,16 @@ async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
     await async_unload_entry(hass, entry)
     await async_setup_entry(hass, entry)
+
+class Serializer(object):
+    @staticmethod
+    def serialize(obj):
+        def check(o):
+            for k, v in o.__dict__.items():
+                try:
+                    _ = json.dumps(v)
+                    o.__dict__[k] = v
+                except TypeError:
+                    o.__dict__[k] = str(v)
+            return o
+        return json.dumps(check(obj).__dict__, indent=2)

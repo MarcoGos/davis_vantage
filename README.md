@@ -155,6 +155,24 @@ Diagnostic entities:
 
 The entity information is updated every 30 seconds (default or other value is choosen otherwise during setup).
 
+## Actions
+
+The following actions are available:
+
+- Davis Vantage: Set Davis Time
+    - Set the time of the Davis weather station
+- Davis Vantage: Get Davis Time
+    - Get the time of the Davis weather station
+- Davis Vantage: Get Raw Data
+    - Get the raw, unprocessed data from the last fetch
+- Davis Vantage: Get Information
+    - Get information about firmware and diagnostics
+- Davis Vantage: Set Yearly Rain
+    - Change yearly rain in clicks (depending on setup one click =  0.01" or 0.2mm)
+- Davis Vantage: Set Archive Period
+    - Change archive period in minutes (accepted values: 1, 5, 10, 15, 30, 60, 120). WARNING: This will erase all archived data.=
+
+
 ## Known problems
 
 During first setup the communication to the weather station can be a bit tricky, resulting in an error saying the device didn't communicate. Please try again to set it up (can take up to 5 times).
@@ -171,6 +189,6 @@ Due to the somewhat unstable hardware interface some communication runs result i
 [release-url]: https://github.com/MarcoGos/davis_vantage/releases
 
 [^1]: If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using action "Davis Vantage: Get Davis Time" and, if necessary, correct it by using action "Davis Vantage: Set Davis Time".
-[^2]: The Archive Interval value can only be changed by using the original WeatherLink software.
+[^2]: The Archive Interval value can be set by action "Set Archive Period"
 
 

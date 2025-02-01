@@ -49,7 +49,6 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             icon="mdi:clock-outline",
             device_class=SensorDeviceClass.TIMESTAMP,
             entity_category=EntityCategory.DIAGNOSTIC,
-            entity_registry_enabled_default=False
         ),
         SensorEntityDescription(
             key="LastSuccessTime",
@@ -57,7 +56,6 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             icon="mdi:clock-outline",
             device_class=SensorDeviceClass.TIMESTAMP,
             entity_category=EntityCategory.DIAGNOSTIC,
-            entity_registry_enabled_default=False
         ),
         SensorEntityDescription(
             key="LastErrorTime",
@@ -71,15 +69,13 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             key="LastError",
             translation_key="last_error_message",
             icon="mdi:message-alert-outline",
-            entity_category=EntityCategory.DIAGNOSTIC,
-            entity_registry_enabled_default=False
+            entity_category=EntityCategory.DIAGNOSTIC
         ),
         SensorEntityDescription(
             key="ArchiveInterval",
             translation_key="archive_interval",
             icon="mdi:archive-clock-outline",
             entity_category=EntityCategory.DIAGNOSTIC,
-            entity_registry_enabled_default=False,
             native_unit_of_measurement=UnitOfTime.MINUTES
         ),
         SensorEntityDescription(
@@ -321,7 +317,6 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             translation_key="wind_speed_bft",
             icon="mdi:weather-windy",
             state_class="measurement",
-            entity_registry_enabled_default=False
         ),
         SensorEntityDescription(
             key="RainDay",
@@ -439,7 +434,6 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             translation_key="rain_collector",
             icon="mdi:bucket-outline",
             entity_category=EntityCategory.DIAGNOSTIC,
-            entity_registry_enabled_default=False,
             device_class=SensorDeviceClass.ENUM,
             options=[
                 RAIN_COLLECTOR_IMPERIAL,

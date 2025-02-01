@@ -21,6 +21,7 @@ SERVICE_GET_DAVIS_TIME = 'get_davis_time'
 SERVICE_GET_RAW_DATA = 'get_raw_data'
 SERVICE_GET_INFO = 'get_info'
 SERVICE_SET_YEARLY_RAIN = 'set_yearly_rain'
+SERVICE_SET_ARCHIVE_PERIOD = 'set_archive_period'
 
 MODEL_VANTAGE_PRO2 = 'Vantage Pro2'
 MODEL_VANTAGE_PRO2PLUS = 'Vantage Pro2 Plus'

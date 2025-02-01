@@ -91,12 +91,15 @@ class DavisVantageClient:
             pass
 
         if self._hass.data.get(DATA_ARCHIVE_PERIOD, None) is None:
-            self._hass.data.setdefault(DATA_ARCHIVE_PERIOD, self._vantagepro2.archive_period)
+            self._hass.data.setdefault(
+                DATA_ARCHIVE_PERIOD, self._vantagepro2.archive_period
+            )
 
         try:
             end_datetime = datetime.now()
-            start_datetime = end_datetime - \
-                timedelta(minutes=self._vantagepro2.archive_period * 2)  # type: ignore
+            start_datetime = end_datetime - timedelta(
+                minutes=self._vantagepro2.archive_period * 2
+            )  # type: ignore
             archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
         except Exception:
             pass
@@ -272,6 +275,23 @@ class DavisVantageClient:
             await loop.run_in_executor(None, self.set_yearly_rain, rain_clicks)
         except Exception as e:
             _LOGGER.error("Couldn't set yearly rain: %s", e)
+
+    def set_archive_period(self, archive_period: int) -> None:
+        """Set archive periode, this will erase all archive data"""
+        try:
+            self._vantagepro2.link.open()
+            self._vantagepro2.set_archive_period(archive_period)
+        except Exception as e:
+            raise e
+        finally:
+            self._vantagepro2.link.close()
+
+    async def async_set_archive_period(self, archive_period: int) -> None:
+        try:
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, self.set_archive_period, archive_period)
+        except Exception as e:
+            _LOGGER.error("Couldn't set archive period: %s", e)
 
     def add_additional_info(self, data: dict[str, Any]) -> None:
         if data["TempOut"] is not None:

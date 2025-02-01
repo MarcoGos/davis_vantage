@@ -12,10 +12,28 @@ get_info:
   description: Get information about firmware and diagnostics
 set_yearly_rain:
   name: Set Yearly Rain
-  description: Set yearly rain in clicks (depending in setup one click = 0.2mm of 0.01")
+  description: Set yearly rain in clicks (depending on setup one click = 0.2mm or 0.01")
   fields:
     rain_clicks:
       required: true
+      example: 500
+      default: 500
+set_archive_period:
+  name: Set Archive Period
+  description: "Set the archive period in minutes. Please restart HA after change. WARNING: All stored archive data will be erased!!!"
+  fields:
+    archive_period:
+      required: true
+      example: 10
+      default: 10
       selector:
-        number:
-          min: 0
+        select:
+          options:
+            - 1
+            - 5
+            - 10
+            - 15
+            - 30
+            - 60
+            - 120
+

@@ -90,14 +90,14 @@ class DavisVantageClient:
 
         try:
             hilows = self._vantagepro2.get_hilows()
-        except Exception:
-            pass
+        except Exception as e:
+            _LOGGER.error("Couldn't get hilows: %s", e)
 
         try:
             end_datetime = datetime.now()
             start_datetime = end_datetime - timedelta(
-                minutes=self._vantagepro2.archive_period * 2
-            )  # type: ignore
+                minutes=self._vantagepro2.archive_period * 2 # type: ignore
+            )
             archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
         except Exception:
             pass

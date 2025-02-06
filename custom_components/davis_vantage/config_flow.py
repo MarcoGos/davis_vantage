@@ -25,6 +25,7 @@ from .const import (
     CONFIG_RAIN_COLLECTOR,
     CONFIG_STATION_MODEL,
     CONFIG_INTERVAL,
+    CONFIG_MINIMAL_INTERVAL,
     CONFIG_PROTOCOL,
     CONFIG_LINK,
 )
@@ -34,7 +35,7 @@ RECONFIGURE_SCHEMA = vol.Schema(
     {
         vol.Required(CONFIG_LINK): str,
         vol.Required(CONFIG_INTERVAL, default=DEFAULT_SYNC_INTERVAL): vol.All(
-            int, vol.Range(min=30)  # type: ignore
+            int, vol.Range(min=CONFIG_MINIMAL_INTERVAL)  # type: ignore
         ),
         vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(
             [RAIN_COLLECTOR_IMPERIAL, RAIN_COLLECTOR_METRIC]
@@ -157,7 +158,7 @@ class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
                     [MODEL_VANTAGE_PRO2, MODEL_VANTAGE_PRO2PLUS]
                 ),
                 vol.Required(CONFIG_INTERVAL, default=DEFAULT_SYNC_INTERVAL): vol.All(
-                    int, vol.Range(min=30)  # type: ignore
+                    int, vol.Range(min=CONFIG_MINIMAL_INTERVAL)  # type: ignore
                 ),
                 vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(
                     [RAIN_COLLECTOR_IMPERIAL, RAIN_COLLECTOR_METRIC]

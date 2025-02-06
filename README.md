@@ -16,7 +16,7 @@ WeatherLink Live | No
 Davis Weather Envoy8X (6318EU) | No
 Other models | Unsure
 
-Every readout takes up about 20-25 seconds. So intervals smaller than 30 seconds are not available.
+Every readout takes up about 2-3 seconds. So intervals smaller than 5 seconds are not available.
 
 ## Installation
 

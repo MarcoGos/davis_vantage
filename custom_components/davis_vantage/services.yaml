@@ -24,4 +24,14 @@ set_archive_period:
             - "30"
             - "60"
             - "120"
-
+set_rain_collector:
+  fields:
+    rain_collector:
+      required: true
+      example: "0.2 mm"
+      selector:
+        select:
+          options:
+            - "0.01\""
+            - "0.2 mm"
+            - "0.1 mm"

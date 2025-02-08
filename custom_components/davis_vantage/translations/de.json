@@ -28,16 +28,14 @@
             "setup_other_info": {
                 "data": {
                     "station_model": "Davis-Wetterstationsmodell",
-                    "interval": "Intervall",
-                    "rain_collector": "Regensammler"
+                    "interval": "Intervall"
                 }
             },
             "reconfigure_confirm": {
                 "description": "Neukonfiguration für {name}.",
                 "data": {
                     "link": "Hostname",
-                    "interval": "Intervall",
-                    "rain_collector": "Regensammler"
+                    "interval": "Intervall"
                 }
             }
         }
@@ -500,6 +498,16 @@
                 "archive_period": {
                     "name": "Archivierungsperiode",
                     "description": "Archivierungsperiode in Minuten"
+                }
+            }
+        },
+        "set_rain_collector": {
+            "name": "Regensammler einstellen",
+            "description": "Die Regensammler einstellen (0.01\", 0.2 mm oder 0.1 mm)",
+            "fields": {
+                "rain_collector": {
+                    "name": "Regensammler",
+                    "description": "Regensammler Einstellung"
                 }
             }
         }

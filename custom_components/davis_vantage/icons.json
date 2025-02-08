@@ -5,7 +5,8 @@
     "get_raw_data": "mdi:export",
     "get_info": "mdi:information-box-outline",
     "set_yearly_rain": "mdi:weather-pouring",
-    "set_archive_period": "mdi:archive-clock-outline"
+    "set_archive_period": "mdi:archive-clock-outline",
+    "set_rain_collector": "mdi:bucket-outline"
   },
   "entity": {
     "sensor": {

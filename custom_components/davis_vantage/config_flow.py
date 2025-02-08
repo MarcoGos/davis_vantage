@@ -16,13 +16,11 @@ from .const import (
     NAME,
     DOMAIN,
     DEFAULT_SYNC_INTERVAL,
-    RAIN_COLLECTOR_IMPERIAL,
-    RAIN_COLLECTOR_METRIC,
     PROTOCOL_NETWORK,
     PROTOCOL_SERIAL,
     MODEL_VANTAGE_PRO2,
     MODEL_VANTAGE_PRO2PLUS,
-    CONFIG_RAIN_COLLECTOR,
+    MODEL_VANTAGE_VUE,
     CONFIG_STATION_MODEL,
     CONFIG_INTERVAL,
     CONFIG_MINIMAL_INTERVAL,
@@ -36,9 +34,6 @@ RECONFIGURE_SCHEMA = vol.Schema(
         vol.Required(CONFIG_LINK): str,
         vol.Required(CONFIG_INTERVAL, default=DEFAULT_SYNC_INTERVAL): vol.All(
             int, vol.Range(min=CONFIG_MINIMAL_INTERVAL)  # type: ignore
-        ),
-        vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(
-            [RAIN_COLLECTOR_IMPERIAL, RAIN_COLLECTOR_METRIC]
         ),
     }
 )
@@ -56,7 +51,7 @@ class PlaceholderHub:
     async def authenticate(self, protocol: str, link: str) -> bool:
         """Test if we can find data for the given link."""
         _LOGGER.info("authenticate called")
-        client = DavisVantageClient(self._hass, protocol, link, "")
+        client = DavisVantageClient(self._hass, protocol, link)
         await client.connect_to_station()
         return (await client.async_get_davis_time()) is not None
 
@@ -155,13 +150,10 @@ class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
         step_user_data_schema = vol.Schema(
             {
                 vol.Required(CONFIG_STATION_MODEL): vol.In(
-                    [MODEL_VANTAGE_PRO2, MODEL_VANTAGE_PRO2PLUS]
+                    [MODEL_VANTAGE_PRO2, MODEL_VANTAGE_PRO2PLUS, MODEL_VANTAGE_VUE]
                 ),
                 vol.Required(CONFIG_INTERVAL, default=DEFAULT_SYNC_INTERVAL): vol.All(
                     int, vol.Range(min=CONFIG_MINIMAL_INTERVAL)  # type: ignore
-                ),
-                vol.Required(CONFIG_RAIN_COLLECTOR): vol.In(
-                    [RAIN_COLLECTOR_IMPERIAL, RAIN_COLLECTOR_METRIC]
                 ),
             }
         )

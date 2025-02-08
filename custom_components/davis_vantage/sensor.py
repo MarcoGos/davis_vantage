@@ -33,6 +33,7 @@ from .const import (
     DOMAIN,
     RAIN_COLLECTOR_IMPERIAL,
     RAIN_COLLECTOR_METRIC,
+    RAIN_COLLECTOR_METRIC_0_1,
     CONFIG_STATION_MODEL,
     MODEL_VANTAGE_PRO2PLUS,
     KEY_TO_NAME
@@ -437,7 +438,8 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             device_class=SensorDeviceClass.ENUM,
             options=[
                 RAIN_COLLECTOR_IMPERIAL,
-                RAIN_COLLECTOR_METRIC
+                RAIN_COLLECTOR_METRIC,
+                RAIN_COLLECTOR_METRIC_0_1
             ]
         ),
         SensorEntityDescription(

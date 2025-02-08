@@ -28,6 +28,8 @@ from .utils import (
 )
 from .const import (
     RAIN_COLLECTOR_IMPERIAL,
+    RAIN_COLLECTOR_METRIC,
+    RAIN_COLLECTOR_METRIC_0_1,
     PROTOCOL_NETWORK,
 )
 
@@ -40,12 +42,12 @@ class DavisVantageClient:
     _vantagepro2: VantagePro2 = None  # type: ignore
 
     def __init__(
-        self, hass: HomeAssistant, protocol: str, link: str, rain_collector: str
+        self, hass: HomeAssistant, protocol: str, link: str
     ) -> None:
         self._hass = hass
         self._protocol = protocol
         self._link = link
-        self._rain_collector = rain_collector
+        self._rain_collector = ""
         self._last_data: LoopDataParserRevB = {}  # type: ignore
         self._last_raw_data: DataParser = {}  # type: ignore
 
@@ -96,11 +98,14 @@ class DavisVantageClient:
         try:
             end_datetime = datetime.now()
             start_datetime = end_datetime - timedelta(
-                minutes=self._vantagepro2.archive_period * 2 # type: ignore
+                minutes=self._vantagepro2.archive_period * 2  # type: ignore
             )
             archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
         except Exception:
             pass
+
+        try:
+            self._rain_collector = self.get_rain_collector()
         finally:
             self._vantagepro2.link.close()
 
@@ -321,27 +326,22 @@ class DavisVantageClient:
         if data["SolarRad"] is not None:
             data["SolarRad"] = get_solar_rad(data["SolarRad"])
         if data["ForecastRuleNo"] is not None:
-            # data["ForecastRuleNo"] = get_forecast_string(data["ForecastRuleNo"])
             data["ForecastRuleNo"] = data["ForecastRuleNo"]
         data["RainCollector"] = self._rain_collector
-        if data["RainCollector"] != RAIN_COLLECTOR_IMPERIAL:
-            self.correct_rain_values(data)
         data["StormStartDate"] = self.strtodate(data["StormStartDate"])
+        self.correct_rain_values(data)
 
     def correct_rain_values(self, data: dict[str, Any]):
-        if data["RainDay"] is not None:
-            data["RainDay"] *= 2 / 2.54
-        if data["RainMonth"] is not None:
-            data["RainMonth"] *= 2 / 2.54
-        if data["RainYear"] is not None:
-            data["RainYear"] *= 2 / 2.54
-        if data["RainRate"] is not None:
-            data["RainRate"] *= 2 / 2.54
-        if data["RainStorm"] is not None:
-            data["RainStorm"] *= 2 / 2.54
-        if "RainRateDay" in data:
-            if data["RainRateDay"] is not None:
-                data["RainRateDay"] *= 2 / 2.54
+        rain_collector_factor: dict[str, float] = {
+            RAIN_COLLECTOR_IMPERIAL: 1.0,
+            RAIN_COLLECTOR_METRIC: 2 / 2.54,
+            RAIN_COLLECTOR_METRIC_0_1: 1 / 2.54,
+        }
+        factor = rain_collector_factor.get(data["RainCollector"], 1.0)
+        for key in ["RainDay", "RainMonth", "RainYear", "RainRate", "RainStorm", "RainRateDay"]:
+            if key in data:
+                if data[key] is not None:
+                    data[key] *= factor
 
     def remove_all_incorrect_data(self, raw_data: DataParser, data: LoopDataParserRevB):
         data_info = {key: value for key, value in LoopDataParserRevB.LOOP_FORMAT}
@@ -431,3 +431,36 @@ class DavisVantageClient:
 
     def clear_cached_property(self, property_name: str):
         del self._vantagepro2.__dict__[property_name]
+
+    def get_rain_collector(self) -> str:
+        rain_collector_map = {
+            0x00: RAIN_COLLECTOR_IMPERIAL,
+            0x10: RAIN_COLLECTOR_METRIC,
+            0x20: RAIN_COLLECTOR_METRIC_0_1,
+        }
+        rain_collector = self._vantagepro2.get_rain_collector() # type: ignore
+        return rain_collector_map.get(rain_collector, "") # type: ignore
+
+    async def async_get_rain_collector(self) -> str:
+        info = ''
+        try:
+            loop = asyncio.get_event_loop()
+            info = await loop.run_in_executor(None, self.get_rain_collector)
+        except Exception as e:
+            _LOGGER.error("Couldn't get rain collector: %s", e)
+        return info
+
+    def set_rain_collector(self, rain_collector: str):
+        rain_collector_map = {
+            RAIN_COLLECTOR_IMPERIAL: 0x00,
+            RAIN_COLLECTOR_METRIC: 0x10,
+            RAIN_COLLECTOR_METRIC_0_1: 0x20,
+        }
+        self._vantagepro2.set_rain_collector(rain_collector_map.get(rain_collector, 0x00))
+
+    async def async_set_rain_collector(self, rain_collector: str):
+        try:
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, self.set_rain_collector, rain_collector)
+        except Exception as e:
+            _LOGGER.error("Couldn't set rain collector: %s", e)

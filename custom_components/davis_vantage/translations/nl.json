@@ -28,16 +28,14 @@
             "setup_other_info": {
                 "data": {
                     "station_model": "Davis weerstation model",
-                    "interval": "Interval",
-                    "rain_collector": "Regenmeter"
+                    "interval": "Interval"
                 }
             },
             "reconfigure_confirm": {
                 "description": "Bijwerken configuratie voor {name}.",
                 "data": {
                     "link": "Hostnaam",
-                    "interval": "Interval",
-                    "rain_collector": "Regenmeter"
+                    "interval": "Interval"
                 }
             }
         }
@@ -500,6 +498,16 @@
                 "archive_period": {
                     "name": "Archiefinterval",
                     "description": "Archiefinterval in minuten"
+                }
+            }
+        },
+        "set_rain_collector": {
+            "name": "Stel regenmeter in",
+            "description": "Stel de regenmeter in. Keuze uit 0.01\", 0.2 mm of 0.1 mm",
+            "fields": {
+                "rain_collector": {
+                    "name": "Regenmeter",
+                    "description": "Regenmeter instelling"
                 }
             }
         }

@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 from typing import Any
+from zoneinfo import ZoneInfo
 import logging
 import json
 import voluptuous as vol
-from zoneinfo import ZoneInfo
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall, SupportsResponse
@@ -17,13 +17,15 @@ from .const import (
     NAME,
     MANUFACTURER,
     RAIN_COLLECTOR_IMPERIAL,
+    RAIN_COLLECTOR_METRIC,
+    RAIN_COLLECTOR_METRIC_0_1,
     SERVICE_SET_DAVIS_TIME,
     SERVICE_GET_DAVIS_TIME,
     SERVICE_GET_RAW_DATA,
     SERVICE_GET_INFO,
     SERVICE_SET_YEARLY_RAIN,
     SERVICE_SET_ARCHIVE_PERIOD,
-    CONFIG_RAIN_COLLECTOR,
+    SERVICE_SET_RAIN_COLLECTOR,
     CONFIG_STATION_MODEL,
     CONFIG_INTERVAL,
     CONFIG_PROTOCOL,
@@ -50,11 +52,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     protocol = entry.data.get(CONFIG_PROTOCOL, "")
     link = entry.data.get(CONFIG_LINK, "")
-    rain_collector = entry.data.get(CONFIG_RAIN_COLLECTOR, RAIN_COLLECTOR_IMPERIAL)
 
     hass.data[DOMAIN]["interval"] = entry.data.get(CONFIG_INTERVAL, 30)
 
-    client = DavisVantageClient(hass, protocol, link, rain_collector)
+    client = DavisVantageClient(hass, protocol, link)
     await client.connect_to_station()
     static_info = await client.async_get_static_info()
     firmware_version = (
@@ -74,7 +75,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass=hass, client=client, device_info=device_info
     )
 
-    await coordinator.async_config_entry_first_refresh()
+    await coordinator.async_refresh()
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
@@ -114,6 +115,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await client.async_set_archive_period(call.data["archive_period"])
         client.clear_cached_property('archive_period')
 
+    async def set_rain_collector(call: ServiceCall) -> None:
+        await client.async_set_rain_collector(call.data["rain_collector"])
+
     hass.services.async_register(DOMAIN, SERVICE_SET_DAVIS_TIME, set_davis_time)
     hass.services.async_register(
         DOMAIN,
@@ -149,6 +153,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         schema=vol.Schema({
             vol.Required('archive_period'): vol.In(
                 ["1", "5", "10", "15", "30", "60", "120"]
+            )
+        })
+    )
+
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_SET_RAIN_COLLECTOR,
+        set_rain_collector,
+        schema=vol.Schema({
+            vol.Required('rain_collector'): vol.In(
+                [RAIN_COLLECTOR_IMPERIAL, RAIN_COLLECTOR_METRIC, RAIN_COLLECTOR_METRIC_0_1]
             )
         })
     )

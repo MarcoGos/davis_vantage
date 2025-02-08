@@ -168,9 +168,11 @@ The following actions are available:
 - Davis Vantage: Get Information
     - Get information about firmware and diagnostics
 - Davis Vantage: Set Yearly Rain
-    - Change yearly rain in clicks (depending on setup one click =  0.01" or 0.2mm)
+    - Change yearly rain in clicks (depending on setup one click =  0.01", 0.2 mm or 0.1 mm)
 - Davis Vantage: Set Archive Period
     - Change archive period in minutes (accepted values: 1, 5, 10, 15, 30, 60, 120). WARNING: This will erase all archived data within the console/envoy.
+- Davis Vantage: Set Rain Collector
+    - Change rain collector (accepted values: 0.01", 0.2 mm or 0.1 mm)
 
 
 ## Known problems

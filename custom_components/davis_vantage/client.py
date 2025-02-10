@@ -41,9 +41,7 @@ class DavisVantageClient:
 
     _vantagepro2: VantagePro2 = None  # type: ignore
 
-    def __init__(
-        self, hass: HomeAssistant, protocol: str, link: str
-    ) -> None:
+    def __init__(self, hass: HomeAssistant, protocol: str, link: str) -> None:
         self._hass = hass
         self._protocol = protocol
         self._link = link
@@ -317,6 +315,11 @@ class DavisVantageClient:
             data["IsRaining"] = data["RainRate"] > 0
         data["ArchiveInterval"] = self._vantagepro2.archive_period
 
+        data["Latitude"] = self._hass.data.get("latitude", None)
+        data["Longitude"] = self._hass.data.get("longitude", None)
+        data["Elevation"] = self._hass.data.get("elevation", None)
+        data["TransmitterID"] = self._hass.data.get("transmitter_id", None)
+
     def convert_values(self, data: dict[str, Any]) -> None:
         del data["Datetime"]
         if data["BarTrend"] is not None:
@@ -338,7 +341,14 @@ class DavisVantageClient:
             RAIN_COLLECTOR_METRIC_0_1: 1 / 2.54,
         }
         factor = rain_collector_factor.get(data["RainCollector"], 1.0)
-        for key in ["RainDay", "RainMonth", "RainYear", "RainRate", "RainStorm", "RainRateDay"]:
+        for key in [
+            "RainDay",
+            "RainMonth",
+            "RainYear",
+            "RainRate",
+            "RainStorm",
+            "RainRateDay",
+        ]:
             if key in data:
                 if data[key] is not None:
                     data[key] *= factor
@@ -438,11 +448,11 @@ class DavisVantageClient:
             0x10: RAIN_COLLECTOR_METRIC,
             0x20: RAIN_COLLECTOR_METRIC_0_1,
         }
-        rain_collector = self._vantagepro2.get_rain_collector() # type: ignore
-        return rain_collector_map.get(rain_collector, "") # type: ignore
+        rain_collector = self._vantagepro2.get_rain_collector()  # type: ignore
+        return rain_collector_map.get(rain_collector, "")  # type: ignore
 
     async def async_get_rain_collector(self) -> str:
-        info = ''
+        info = ""
         try:
             loop = asyncio.get_event_loop()
             info = await loop.run_in_executor(None, self.get_rain_collector)
@@ -456,7 +466,9 @@ class DavisVantageClient:
             RAIN_COLLECTOR_METRIC: 0x10,
             RAIN_COLLECTOR_METRIC_0_1: 0x20,
         }
-        self._vantagepro2.set_rain_collector(rain_collector_map.get(rain_collector, 0x00))
+        self._vantagepro2.set_rain_collector(
+            rain_collector_map.get(rain_collector, 0x00)
+        )
 
     async def async_set_rain_collector(self, rain_collector: str):
         try:
@@ -464,3 +476,44 @@ class DavisVantageClient:
             await loop.run_in_executor(None, self.set_rain_collector, rain_collector)
         except Exception as e:
             _LOGGER.error("Couldn't set rain collector: %s", e)
+
+    def get_latitude_longitude_elevation(self) -> tuple[float, float, int]:
+        latitude = longitude = None
+        data = self._vantagepro2.read_from_eeprom("0B", 6)
+        latitude, longitude, elevation = struct.unpack(b"hhh", data)
+        latitude /= 10
+        longitude /= 10
+        return latitude, longitude, elevation
+
+    async def async_get_latitude_longitude_elevation(self):
+        latitude = longitude = elevation = None
+        try:
+            loop = asyncio.get_event_loop()
+            latitude, longitude, elevation = await loop.run_in_executor(
+                None, self.get_latitude_longitude_elevation
+            )
+        except Exception as e:
+            _LOGGER.error("Couldn't get latitude longitude: %s", e)
+        return latitude, longitude, elevation
+
+    def get_transmitter_id(self) -> int:
+        transmitter_id = 1
+        data = self._vantagepro2.read_from_eeprom("17", 1)
+        bits, = struct.unpack(b"B", data)
+        if bits == 0:
+            return -1
+        while bits > 1:
+            bits >>= 1
+            transmitter_id += 1
+        return transmitter_id
+
+    async def async_get_transmitter_id(self):
+        transmitter_id = -1
+        try:
+            loop = asyncio.get_event_loop()
+            transmitter_id = await loop.run_in_executor(
+                None, self.get_transmitter_id
+            )
+        except Exception as e:
+            _LOGGER.error("Couldn't get transmitter id: %s", e)
+        return transmitter_id

@@ -456,6 +456,18 @@
             },
             "extra_humidity_7": {
                 "name": "Extra luchtvochtigheid 7"
+            },
+            "latitude": {
+                "name": "Breedtegraad"
+            },
+            "longitude": {
+                "name": "Lengtegraad"
+            },
+            "elevation": {
+                "name": "Hoogte"
+            },
+            "transmitter_id": {
+                "name": "Zender ID"
             }
         },
         "binary_sensor": {

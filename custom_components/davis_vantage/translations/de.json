@@ -456,6 +456,18 @@
             },
             "extra_humidity_7": {
                 "name": "Zusätzliche Luftfeuchtigkeit 7"
+            },
+            "latitude": {
+                "name": "Breitengrad"
+            },
+            "longitude": {
+                "name": "Längengrad"
+            },
+            "elevation": {
+                "name": "Höhe"
+            },
+            "transmitter_id": {
+                "name": "Sender-ID"
             }
         },
         "binary_sensor": {

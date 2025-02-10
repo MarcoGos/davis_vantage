@@ -61,6 +61,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     firmware_version = (
         static_info.get("version", None) if static_info is not None else None
     )
+    latitude, longitude, elevation = await client.async_get_latitude_longitude_elevation()
+    hass.data.setdefault("latitude", latitude)
+    hass.data.setdefault("longitude", longitude)
+    hass.data.setdefault("elevation", elevation)
+    transmitter_id = await client.async_get_transmitter_id()
+    hass.data.setdefault("transmitter_id", transmitter_id)
 
     device_info = DeviceInfo(
         identifiers={(DOMAIN, entry.entry_id)},

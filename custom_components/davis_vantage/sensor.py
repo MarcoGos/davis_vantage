@@ -575,6 +575,37 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             native_unit_of_measurement=PERCENTAGE,
             suggested_display_precision=0,
             entity_registry_enabled_default=False
+        ),
+        SensorEntityDescription(
+            key="Latitude",
+            translation_key="latitude",
+            icon="mdi:latitude",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            native_unit_of_measurement=DEGREE,
+            entity_registry_enabled_default=False
+        ),
+        SensorEntityDescription(
+            key="Longitude",
+            translation_key="longitude",
+            icon="mdi:longitude",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            native_unit_of_measurement=DEGREE,
+            entity_registry_enabled_default=False
+        ),
+        SensorEntityDescription(
+            key="Elevation",
+            translation_key="elevation",
+            icon="mdi:image-filter-hdr-outline",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            native_unit_of_measurement=UnitOfLength.FEET,
+            entity_registry_enabled_default=False
+        ),
+        SensorEntityDescription(
+            key="TransmitterID",
+            translation_key="transmitter_id",
+            icon="mdi:antenna",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            entity_registry_enabled_default=False
         )
     ]
     return descriptions

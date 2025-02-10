@@ -318,7 +318,6 @@ class DavisVantageClient:
         data["Latitude"] = self._hass.data.get("latitude", None)
         data["Longitude"] = self._hass.data.get("longitude", None)
         data["Elevation"] = self._hass.data.get("elevation", None)
-        data["TransmitterID"] = self._hass.data.get("transmitter_id", None)
 
     def convert_values(self, data: dict[str, Any]) -> None:
         del data["Datetime"]
@@ -496,24 +495,3 @@ class DavisVantageClient:
             _LOGGER.error("Couldn't get latitude longitude: %s", e)
         return latitude, longitude, elevation
 
-    def get_transmitter_id(self) -> int:
-        transmitter_id = 1
-        data = self._vantagepro2.read_from_eeprom("17", 1)
-        bits, = struct.unpack(b"B", data)
-        if bits == 0:
-            return -1
-        while bits > 1:
-            bits >>= 1
-            transmitter_id += 1
-        return transmitter_id
-
-    async def async_get_transmitter_id(self):
-        transmitter_id = -1
-        try:
-            loop = asyncio.get_event_loop()
-            transmitter_id = await loop.run_in_executor(
-                None, self.get_transmitter_id
-            )
-        except Exception as e:
-            _LOGGER.error("Couldn't get transmitter id: %s", e)
-        return transmitter_id

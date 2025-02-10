@@ -465,9 +465,6 @@
             },
             "elevation": {
                 "name": "Hoogte"
-            },
-            "transmitter_id": {
-                "name": "Zender ID"
             }
         },
         "binary_sensor": {

@@ -104,6 +104,5 @@ KEY_TO_NAME = {
     "IsRaining": "Is Raining",
     "Latitude": "Latitude",
     "Longitude": "Longitude",
-    "Elevation": "Elevation",
-    "TransmitterID": "Transmitter ID"
+    "Elevation": "Elevation"
 }

@@ -465,9 +465,6 @@
             },
             "elevation": {
                 "name": "Höhe"
-            },
-            "transmitter_id": {
-                "name": "Sender-ID"
             }
         },
         "binary_sensor": {

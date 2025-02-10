@@ -595,16 +595,10 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         SensorEntityDescription(
             key="Elevation",
             translation_key="elevation",
+            device_class=SensorDeviceClass.DISTANCE,
             icon="mdi:image-filter-hdr-outline",
             entity_category=EntityCategory.DIAGNOSTIC,
             native_unit_of_measurement=UnitOfLength.FEET,
-            entity_registry_enabled_default=False
-        ),
-        SensorEntityDescription(
-            key="TransmitterID",
-            translation_key="transmitter_id",
-            icon="mdi:antenna",
-            entity_category=EntityCategory.DIAGNOSTIC,
             entity_registry_enabled_default=False
         )
     ]

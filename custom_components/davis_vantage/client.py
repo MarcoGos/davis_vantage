@@ -1,6 +1,7 @@
 """All client function"""
 
 from typing import Any
+from functools import cached_property
 from datetime import datetime, timedelta, time, date
 from zoneinfo import ZoneInfo
 import logging
@@ -40,6 +41,10 @@ class DavisVantageClient:
     """Davis Vantage Client class"""
 
     _vantagepro2: VantagePro2 = None  # type: ignore
+    _latitude: float = 0.0
+    _longitude: float = 0.0
+    _elevation: int = 0
+    _firmware_version: str|None = None
 
     def __init__(self, hass: HomeAssistant, protocol: str, link: str) -> None:
         self._hass = hass
@@ -48,6 +53,22 @@ class DavisVantageClient:
         self._rain_collector = ""
         self._last_data: LoopDataParserRevB = {}  # type: ignore
         self._last_raw_data: DataParser = {}  # type: ignore
+
+    @property
+    def latitude(self) -> float:
+        return self._latitude
+
+    @property
+    def longitude(self) -> float:
+        return self._longitude
+
+    @property
+    def elevation(self) -> int:
+        return self._elevation
+
+    @cached_property
+    def firmware_version(self) -> str|None:
+        return self._firmware_version
 
     def get_vantagepro2fromurl(self, url: str) -> VantagePro2 | None:
         try:
@@ -69,6 +90,19 @@ class DavisVantageClient:
 
     async def connect_to_station(self):
         self._vantagepro2 = await self.async_get_vantagepro2fromurl(self.get_link())  # type: ignore
+
+    async def get_station_info(self):
+        static_info = await self.async_get_static_info()
+        self._firmware_version = (
+            static_info.get("version", None) if static_info is not None else None
+        )
+        latitude, longitude, elevation = await self.async_get_latitude_longitude_elevation()
+        if latitude:
+            self._latitude = latitude
+        if longitude:
+            self._longitude = longitude
+        if elevation:
+            self._elevation = elevation
 
     def get_current_data(
         self,
@@ -315,9 +349,9 @@ class DavisVantageClient:
             data["IsRaining"] = data["RainRate"] > 0
         data["ArchiveInterval"] = self._vantagepro2.archive_period
 
-        data["Latitude"] = self._hass.data.get("latitude", None)
-        data["Longitude"] = self._hass.data.get("longitude", None)
-        data["Elevation"] = self._hass.data.get("elevation", None)
+        data["Latitude"] = self.latitude
+        data["Longitude"] = self.longitude
+        data["Elevation"] = self.elevation
 
     def convert_values(self, data: dict[str, Any]) -> None:
         del data["Datetime"]
@@ -478,8 +512,8 @@ class DavisVantageClient:
 
     def get_latitude_longitude_elevation(self) -> tuple[float, float, int]:
         latitude = longitude = None
-        data = self._vantagepro2.read_from_eeprom("0B", 6)
-        latitude, longitude, elevation = struct.unpack(b"hhh", data)
+        data = self._vantagepro2.read_from_eeprom("0B", 6) # type: ignore
+        latitude, longitude, elevation = struct.unpack(b"hhh", data) # type: ignore
         latitude /= 10
         longitude /= 10
         return latitude, longitude, elevation

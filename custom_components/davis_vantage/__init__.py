@@ -57,21 +57,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     client = DavisVantageClient(hass, protocol, link)
     await client.connect_to_station()
-    static_info = await client.async_get_static_info()
-    firmware_version = (
-        static_info.get("version", None) if static_info is not None else None
-    )
-    latitude, longitude, elevation = await client.async_get_latitude_longitude_elevation()
-    hass.data.setdefault("latitude", latitude)
-    hass.data.setdefault("longitude", longitude)
-    hass.data.setdefault("elevation", elevation)
+    await client.get_station_info()
 
     device_info = DeviceInfo(
         identifiers={(DOMAIN, entry.entry_id)},
         manufacturer=MANUFACTURER,
         name=NAME,
         model=entry.data.get(CONFIG_STATION_MODEL, "Unknown"),
-        sw_version=firmware_version,
+        sw_version=client.firmware_version,
         hw_version=None,
     )
 

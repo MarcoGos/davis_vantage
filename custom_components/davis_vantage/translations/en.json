@@ -515,7 +515,7 @@
             "description": "Set the rain collector (0.01\", 0.2 mm or 0.1 mm)",
             "fields": {
                 "rain_collector": {
-                    "name": "Regen Collector",
+                    "name": "Rain Collector",
                     "description": "Rain Collector setting"
                 }
             }

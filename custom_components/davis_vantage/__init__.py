@@ -30,6 +30,7 @@ from .const import (
     CONFIG_INTERVAL,
     CONFIG_PROTOCOL,
     CONFIG_LINK,
+    CONFIG_PERSISTENT_CONNECTION
 )
 from .coordinator import DavisVantageDataUpdateCoordinator
 from .utils import convert_to_iso_datetime
@@ -52,10 +53,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     protocol = entry.data.get(CONFIG_PROTOCOL, "")
     link = entry.data.get(CONFIG_LINK, "")
+    persistent_connection = entry.data.get(CONFIG_PERSISTENT_CONNECTION, False)
 
     hass.data[DOMAIN]["interval"] = entry.data.get(CONFIG_INTERVAL, 30)
 
-    client = DavisVantageClient(hass, protocol, link)
+    client = DavisVantageClient(hass, protocol, link, persistent_connection)
     await client.connect_to_station()
     await client.get_station_info()
 

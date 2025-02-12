@@ -28,7 +28,8 @@
             "setup_other_info": {
                 "data": {
                     "station_model": "Davis weerstation model",
-                    "interval": "Interval"
+                    "interval": "Interval",
+                    "persistent_connection": "Persistente verbinding"
                 }
             },
             "reconfigure_confirm": {

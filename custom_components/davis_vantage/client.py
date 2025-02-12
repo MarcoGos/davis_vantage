@@ -46,13 +46,14 @@ class DavisVantageClient:
     _elevation: int = 0
     _firmware_version: str|None = None
 
-    def __init__(self, hass: HomeAssistant, protocol: str, link: str) -> None:
+    def __init__(self, hass: HomeAssistant, protocol: str, link: str, persistent_connection: bool) -> None:
         self._hass = hass
         self._protocol = protocol
         self._link = link
         self._rain_collector = ""
         self._last_data: LoopDataParserRevB = {}  # type: ignore
         self._last_raw_data: DataParser = {}  # type: ignore
+        self._persistent_connection = persistent_connection
 
     @property
     def latitude(self) -> float:
@@ -73,7 +74,8 @@ class DavisVantageClient:
     def get_vantagepro2fromurl(self, url: str) -> VantagePro2 | None:
         try:
             vp = VantagePro2.from_url(url)
-            vp.link.close()
+            if not self._persistent_connection:
+                vp.link.close()
             return vp
         except Exception as e:
             raise e
@@ -119,7 +121,8 @@ class DavisVantageClient:
             self._vantagepro2.link.open()
             data = self._vantagepro2.get_current_data()
         except Exception as e:
-            self._vantagepro2.link.close()
+            if not self._persistent_connection:
+                self._vantagepro2.link.close()
             raise e
 
         try:
@@ -139,7 +142,8 @@ class DavisVantageClient:
         try:
             self._rain_collector = self.get_rain_collector()
         finally:
-            self._vantagepro2.link.close()
+            if not self._persistent_connection:
+                self._vantagepro2.link.close()
 
         return data, archives, hilows
 
@@ -215,7 +219,8 @@ class DavisVantageClient:
         except Exception as e:
             raise e
         finally:
-            self._vantagepro2.link.close()
+            if not self._persistent_connection:
+                self._vantagepro2.link.close()
         return data
 
     async def async_get_davis_time(self) -> datetime | None:
@@ -236,7 +241,8 @@ class DavisVantageClient:
         except Exception as e:
             raise e
         finally:
-            self._vantagepro2.link.close()
+            if not self._persistent_connection:
+                self._vantagepro2.link.close()
 
     async def async_set_davis_time(self) -> None:
         """Set time of weather station async."""
@@ -256,7 +262,8 @@ class DavisVantageClient:
         except Exception as e:
             raise e
         finally:
-            self._vantagepro2.link.close()
+            if not self._persistent_connection:
+                self._vantagepro2.link.close()
         return {
             "version": firmware_version,
             "date": firmware_date,
@@ -281,7 +288,8 @@ class DavisVantageClient:
         except Exception as e:
             raise e
         finally:
-            self._vantagepro2.link.close()
+            if not self._persistent_connection:
+                self._vantagepro2.link.close()
         return {"version": firmware_version, "archive_period": archive_period}
 
     async def async_get_static_info(self) -> dict[str, Any] | None:
@@ -301,7 +309,8 @@ class DavisVantageClient:
         except Exception as e:
             raise e
         finally:
-            self._vantagepro2.link.close()
+            if not self._persistent_connection:
+                self._vantagepro2.link.close()
 
     async def async_set_yearly_rain(self, rain_clicks: int) -> None:
         """Set yearly rain of weather station async."""
@@ -319,7 +328,8 @@ class DavisVantageClient:
         except Exception as e:
             raise e
         finally:
-            self._vantagepro2.link.close()
+            if not self._persistent_connection:
+                self._vantagepro2.link.close()
 
     async def async_set_archive_period(self, archive_period: int) -> None:
         try:

@@ -26,6 +26,7 @@ from .const import (
     CONFIG_MINIMAL_INTERVAL,
     CONFIG_PROTOCOL,
     CONFIG_LINK,
+    CONFIG_PERSISTENT_CONNECTION,
 )
 from .client import DavisVantageClient
 
@@ -51,7 +52,7 @@ class PlaceholderHub:
     async def authenticate(self, protocol: str, link: str) -> bool:
         """Test if we can find data for the given link."""
         _LOGGER.info("authenticate called")
-        client = DavisVantageClient(self._hass, protocol, link)
+        client = DavisVantageClient(self._hass, protocol, link, False)
         await client.connect_to_station()
         return (await client.async_get_davis_time()) is not None
 
@@ -155,6 +156,7 @@ class DavisVantageConfigFlow(ConfigFlow, domain=DOMAIN):
                 vol.Required(CONFIG_INTERVAL, default=DEFAULT_SYNC_INTERVAL): vol.All(
                     int, vol.Range(min=CONFIG_MINIMAL_INTERVAL)  # type: ignore
                 ),
+                vol.Required(CONFIG_PERSISTENT_CONNECTION, default=False): bool,
             }
         )
 

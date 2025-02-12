@@ -35,7 +35,8 @@
                 "description": "Neukonfiguration für {name}.",
                 "data": {
                     "link": "Hostname",
-                    "interval": "Intervall"
+                    "interval": "Intervall",
+                    "persistent_connection": "Persistente Verbindung"
                 }
             }
         }

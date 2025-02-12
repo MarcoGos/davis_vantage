@@ -32,6 +32,7 @@ CONFIG_INTERVAL = "interval"
 CONFIG_MINIMAL_INTERVAL = 5
 CONFIG_PROTOCOL = "protocol"
 CONFIG_LINK = "link"
+CONFIG_PERSISTENT_CONNECTION = "persistent_connection"
 
 KEY_TO_NAME = {
     "Datetime": "Last Fetch Time",

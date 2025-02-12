@@ -16,19 +16,24 @@ WeatherLink Live | No
 Davis Weather Envoy8X (6318EU) | No
 Other models | Unsure
 
-Every readout takes up about 2-3 seconds. So intervals smaller than 5 seconds are not available.
-
 ## Installation
 
 Via HACS, just search for Davis Vantage.
 
 ## Setup
 
-During the setup of the integration the serial port or the hostname of the weather station needs to be provided.
+### Serial or network
+During the setup of the integration the serial port or the hostname of the weather station needs to be provided. When choosing serial a list of possible ports are visible. When choosing network, provide a hostname or ip address and port number:
 
 Example network host: 192.168.0.18:22222
 
 If you're not sure about the port number (usually port 22222), then browse to the ip address of the IP logger and look at the port number on the configuration page.
+
+### Interval
+Every readout takes up about 2-3 seconds. So intervals smaller than 5 seconds are not available.
+
+### Persistent connection
+When getting errors like "Broken pipe", try enabling this setting. This keeps the connection to the console or Envoy open between readouts.
 
 ## What to expect?
 
@@ -151,9 +156,15 @@ Diagnostic entities:
 - Last Success Time: 
     - Last success time
 - Rain Collector: 
-    - Current rain collector setup (0.01" or 0.2 mm)
+    - Current rain collector setup (0.01", 0.2 mm or 0.1 mm)
+- Latitude:
+    - Latitude read from the console
+- Longitude:
+    - Longitude read from the console
+- Elevation:
+    - Elevation read from the console
 
-The entity information is updated every 30 seconds (default or other value is choosen otherwise during setup).
+The entity information is updated every 30 seconds (default or other value if choosen otherwise during setup).
 
 ## Actions
 
@@ -191,6 +202,7 @@ Due to the somewhat unstable hardware interface some communication runs result i
 [release-url]: https://github.com/MarcoGos/davis_vantage/releases
 
 [^1]: If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using action "Davis Vantage: Get Davis Time" and, if necessary, correct it by using action "Davis Vantage: Set Davis Time".
+
 [^2]: The Archive Interval value can be set by action "Set Archive Period"
 
 

@@ -195,8 +195,6 @@ During first setup the communication to the weather station can be a bit tricky,
 
 Due to the somewhat unstable hardware interface some communication runs result in an error like "Check ACK: BAD ('\n\r' != '')". This is normal behavior.
 
-<!-- Badges -->
-
 [hacs-url]: https://github.com/hacs/integration
 [hacs-badge]: https://img.shields.io/badge/hacs-default-orange.svg?style=flat-square
 [release-badge]: https://img.shields.io/github/v/release/MarcoGos/davis_vantage?style=flat-square
@@ -208,7 +206,6 @@ Due to the somewhat unstable hardware interface some communication runs result i
 
 [^2]: The Archive Interval value can be set by action "Set Archive Period"
 
----
 [commits-shield]: https://img.shields.io/github/commit-activity/y/MarcoGos/davis_vantage.svg?style=for-the-badge
 [commits]: https://github.com/MarcoGos/davis_vantage/commits/main
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge

@@ -3,9 +3,8 @@
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
 ![Install Stats][stats]
-![Project Maintenance][maintenance-shield]
 
-[![GitHub Activity][commits-shield]][commits]
+![Project Maintenance][maintenance-shield]
 [![Community Forum][forum-shield]][forum]
 
 This is a custom integration for the Davis Vantage Pro2. Either use a serial port or use an ip adress to connect to your device.

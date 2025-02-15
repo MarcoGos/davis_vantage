@@ -512,7 +512,7 @@
             }
         },
         "set_rain_collector": {
-            "name": "Set rain collector",
+            "name": "Set Rain Collector",
             "description": "Set the rain collector (0.01\", 0.2 mm or 0.1 mm)",
             "fields": {
                 "rain_collector": {

@@ -1,8 +1,11 @@
 # Davis Vantage
 
-[![hacs][hacs-badge]][hacs-url]
-[![release][release-badge]][release-url]
-![downloads][downloads-badge]
+[![GitHub Release][releases-shield]][releases]
+[![GitHub Activity][commits-shield]][commits]
+![Install Stats][stats]
+
+![Project Maintenance][maintenance-shield]
+[![Community Forum][forum-shield]][forum]
 
 This is a custom integration for the Davis Vantage Pro2. Either use a serial port or use an ip adress to connect to your device.
 
@@ -194,8 +197,6 @@ During first setup the communication to the weather station can be a bit tricky,
 
 Due to the somewhat unstable hardware interface some communication runs result in an error like "Check ACK: BAD ('\n\r' != '')". This is normal behavior.
 
-<!-- Badges -->
-
 [hacs-url]: https://github.com/hacs/integration
 [hacs-badge]: https://img.shields.io/badge/hacs-default-orange.svg?style=flat-square
 [release-badge]: https://img.shields.io/github/v/release/MarcoGos/davis_vantage?style=flat-square
@@ -206,4 +207,11 @@ Due to the somewhat unstable hardware interface some communication runs result i
 
 [^2]: The Archive Interval value can be set by action "Set Archive Period"
 
-
+[commits-shield]: https://img.shields.io/github/commit-activity/y/MarcoGos/davis_vantage.svg?style=for-the-badge
+[commits]: https://github.com/MarcoGos/davis_vantage/commits/main
+[forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
+[forum]: https://community.home-assistant.io/
+[maintenance-shield]: https://img.shields.io/badge/maintainer-%40MarcoGos-blue.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/release/MarcoGos/davis_vantage.svg?style=for-the-badge
+[releases]: https://github.com/MarcoGos/davis_vantage/releases
+[stats]: https://img.shields.io/badge/dynamic/json?color=41BDF5&logo=home-assistant&label=integration%20usage&suffix=%20installs&cacheSeconds=15600&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.davis_vantage.total&style=for-the-badge

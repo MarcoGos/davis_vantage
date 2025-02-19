@@ -11,6 +11,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall, SupportsResponse
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.const import Platform
+from pyvantagepro.utils import bytes_to_hex # type: ignore
 from .client import DavisVantageClient
 from .const import (
     DOMAIN,
@@ -95,8 +96,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def get_raw_data(_: ServiceCall) -> dict[str, Any]:
         raw_data = client.get_raw_data()
-        json_data = Serializer.serialize(raw_data)
-        return json.loads(json_data)
+        data: dict[str, Any] = {}
+        keys = raw_data.keys() # type: ignore
+        for key in keys: # type: ignore
+            value = raw_data[key] # type: ignore
+            if isinstance(value, bytes):
+                data[key] = bytes_to_hex(value)
+            else:
+                data[key] = value
+        return data
 
     async def get_info(_: ServiceCall) -> dict[str, Any]:
         info = await client.async_get_info()

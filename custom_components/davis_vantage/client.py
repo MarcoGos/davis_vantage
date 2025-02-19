@@ -267,7 +267,6 @@ class DavisVantageClient:
         try:
             self._vantagepro2.link.open()
             firmware_version = self._vantagepro2.firmware_version  # type: ignore
-            archive_period = self._vantagepro2.archive_period  # type: ignore
             firmware_date = self._vantagepro2.firmware_date  # type: ignore
             diagnostics = self._vantagepro2.diagnostics  # type: ignore
         except Exception as e:
@@ -278,8 +277,7 @@ class DavisVantageClient:
         return {
             "version": firmware_version,
             "date": firmware_date,
-            "diagnostics": diagnostics,
-            "archive_period": archive_period,
+            "diagnostics": diagnostics
         }
 
     async def async_get_info(self) -> dict[str, Any] | None:

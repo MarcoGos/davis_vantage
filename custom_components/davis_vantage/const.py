@@ -3,7 +3,7 @@
 NAME = "Davis Vantage"
 DOMAIN = "davis_vantage"
 MANUFACTURER = "Davis"
-VERSION = "1.3.8"
+VERSION = "1.3.9"
 
 DEFAULT_SYNC_INTERVAL = 30  # seconds
 DEFAULT_NAME = NAME
@@ -105,5 +105,6 @@ KEY_TO_NAME = {
     "IsRaining": "Is Raining",
     "Latitude": "Latitude",
     "Longitude": "Longitude",
-    "Elevation": "Elevation"
+    "Elevation": "Elevation",
+    "LastReadoutDuration": "Last Readout Duration"
 }

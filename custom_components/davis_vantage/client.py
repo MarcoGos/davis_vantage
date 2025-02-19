@@ -45,6 +45,7 @@ class DavisVantageClient:
     _longitude: float = 0.0
     _elevation: int = 0
     _firmware_version: str|None = None
+    _last_readout_duration: float = 0
 
     def __init__(self, hass: HomeAssistant, protocol: str, link: str, persistent_connection: bool) -> None:
         self._hass = hass
@@ -114,19 +115,25 @@ class DavisVantageClient:
         archives = None
         hilows = None
 
+        start_readout = datetime.now()
+
         if not self._vantagepro2:
             self.get_vantagepro2fromurl(self.get_link())
 
         try:
             self._vantagepro2.link.open()
+            _LOGGER.debug("Start get_current_data")
             data = self._vantagepro2.get_current_data()
+            _LOGGER.debug("End get_current_data")
         except Exception as e:
             if not self._persistent_connection:
                 self._vantagepro2.link.close()
             raise e
 
         try:
+            _LOGGER.debug("Start get_hilows")
             hilows = self._vantagepro2.get_hilows()
+            _LOGGER.debug("End get_hilows")
         except Exception as e:
             _LOGGER.error("Couldn't get hilows: %s", e)
 
@@ -135,24 +142,27 @@ class DavisVantageClient:
             start_datetime = end_datetime - timedelta(
                 minutes=self._vantagepro2.archive_period * 2  # type: ignore
             )
+            _LOGGER.debug("Start get_archives")
             archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
+            _LOGGER.debug("End get_archives")
         except Exception:
             pass
 
         try:
+            _LOGGER.debug("Start get_rain_collector")
             self._rain_collector = self.get_rain_collector()
+            _LOGGER.debug("End get_rain_collector")
         finally:
             if not self._persistent_connection:
                 self._vantagepro2.link.close()
+
+        self._last_readout_duration = (datetime.now() - start_readout).total_seconds()
 
         return data, archives, hilows
 
     async def async_get_current_data(self) -> LoopDataParserRevB | None:
         """Get current date from weather station async."""
         data = self._last_data
-        now = convert_to_iso_datetime(
-            datetime.now(), ZoneInfo(self._hass.config.time_zone)
-        )
         try:
             loop = asyncio.get_event_loop()
             new_data, archives, hilows = await loop.run_in_executor(
@@ -171,21 +181,22 @@ class DavisVantageClient:
                     self.remove_all_incorrect_hilows(new_raw_hilows, hilows)
                     self.add_hilows(hilows, new_data)
                 data = new_data
-                data["Datetime"] = now
+                data["Datetime"] = self.get_iso_now()
                 if contains_correct_raw_data(new_raw_data):
                     data["LastError"] = ""
-                    data["LastSuccessTime"] = now
+                    data["LastSuccessTime"] = self.get_iso_now()
                 else:
                     data["LastError"] = "Received partly incorrect data"
             else:
                 data["LastError"] = "Couldn't acquire data, no data received"
+            data["LastReadoutDuration"] = self._last_readout_duration
 
         except Exception as e:
             _LOGGER.error("Couldn't acquire data from %s: %s", self.get_link(), e)
             data["LastError"] = f"Couldn't acquire data on {self.get_link()}: {e}"
 
         if data["LastError"]:
-            data["LastErrorTime"] = now
+            data["LastErrorTime"] = self.get_iso_now()
 
         self._last_data = data
         return data
@@ -371,8 +382,6 @@ class DavisVantageClient:
             data["UV"] = get_uv(data["UV"])
         if data["SolarRad"] is not None:
             data["SolarRad"] = get_solar_rad(data["SolarRad"])
-        if data["ForecastRuleNo"] is not None:
-            data["ForecastRuleNo"] = data["ForecastRuleNo"]
         data["RainCollector"] = self._rain_collector
         data["StormStartDate"] = self.strtodate(data["StormStartDate"])
         self.correct_rain_values(data)
@@ -419,8 +428,8 @@ class DavisVantageClient:
     def is_incorrect_value(self, raw_value: int, data_type: str) -> bool:
         if (
             ((data_type in ["B", "7s"]) and (raw_value == 255))
-            or ((data_type == "H") and (raw_value == 65535))
-            or ((data_type == "h") and (abs(raw_value) == 32767))
+            or ((data_type == "H") and (raw_value in [32767, 65535]))
+            or ((data_type == "h") and (raw_value in [32767, -32768]))
         ):
             return True
         else:
@@ -539,3 +548,8 @@ class DavisVantageClient:
             _LOGGER.error("Couldn't get latitude longitude: %s", e)
         return latitude, longitude, elevation
 
+    def get_iso_now(self) -> datetime:
+        now = convert_to_iso_datetime(
+            datetime.now(), ZoneInfo(self._hass.config.time_zone)
+        )
+        return now

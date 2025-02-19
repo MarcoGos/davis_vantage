@@ -10,7 +10,7 @@ Model | Compatible
 ---|:---:
 Davis WeatherLink SER (6510SER) | Yes
 Davis WeatherLink USB (6510USB) | Yes
-Davis Weatherlink IP (6555IP) | Yes 
+Davis WeatherlinkIP (6555IP) | Yes 
 Vantage Vue | Yes
 WeatherLink Live | No
 Davis Weather Envoy8X (6318EU) | No
@@ -22,18 +22,20 @@ Via HACS, just search for Davis Vantage.
 
 ## Setup
 
-### Serial or network
-During the setup of the integration the serial port or the hostname of the weather station needs to be provided. When choosing serial a list of possible ports are visible. When choosing network, provide a hostname or ip address and port number:
+### Protocol
+During the setup of the integration the serial port or the hostname of the weather station needs to be provided. When choosing serial a list of possible ports are visible. 
 
-Example network host: 192.168.0.18:22222
+When choosing network, provide a hostname or ip address and port number:
+
+Example: 192.168.1.8:22222
 
 If you're not sure about the port number (usually port 22222), then browse to the ip address of the IP logger and look at the port number on the configuration page.
 
 ### Interval
-Every readout takes up about 2-3 seconds. So intervals smaller than 5 seconds are not available.
+Every readout takes up about 1-2 seconds for WeatherLink USB and WeatherLink SER and about 5-6 seconds for WeatherLinkIP. The interval shouldn't be lower than the readout time.
 
 ### Persistent connection
-When getting errors like "Broken pipe", try enabling this setting. This keeps the connection to the console or Envoy open between readouts.
+When getting errors like "Broken pipe", try enabling this setting. This keeps the connection to the console or Envoy open between readouts. This is a recommended setting when using the WeatherLinkIP.
 
 ## What to expect?
 
@@ -164,7 +166,7 @@ Diagnostic entities:
 - Elevation:
     - Elevation read from the console
 
-The entity information is updated every 30 seconds (default or other value if choosen otherwise during setup).
+The entity information is updated every 30 seconds (default or other value if choosen during setup).
 
 ## Actions
 
@@ -198,7 +200,6 @@ Due to the somewhat unstable hardware interface some communication runs result i
 [hacs-badge]: https://img.shields.io/badge/hacs-default-orange.svg?style=flat-square
 [release-badge]: https://img.shields.io/github/v/release/MarcoGos/davis_vantage?style=flat-square
 [downloads-badge]: https://img.shields.io/github/downloads/MarcoGos/davis_vantage/total?style=flat-square
-
 [release-url]: https://github.com/MarcoGos/davis_vantage/releases
 
 [^1]: If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using action "Davis Vantage: Get Davis Time" and, if necessary, correct it by using action "Davis Vantage: Set Davis Time".

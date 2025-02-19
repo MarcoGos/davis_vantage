@@ -466,6 +466,9 @@
             },
             "elevation": {
                 "name": "Hoogte"
+            },
+            "last_readout_duration": {
+                "name": "Laatste uitleesduur"
             }
         },
         "binary_sensor": {

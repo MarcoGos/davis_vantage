@@ -600,6 +600,15 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             entity_category=EntityCategory.DIAGNOSTIC,
             native_unit_of_measurement=UnitOfLength.FEET,
             entity_registry_enabled_default=False
+        ),
+        SensorEntityDescription(
+            key="LastReadoutDuration",
+            translation_key="last_readout_duration",
+            icon="mdi:timer-outline",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            native_unit_of_measurement=UnitOfTime.SECONDS,
+            suggested_display_precision=1,
+            entity_registry_enabled_default=False
         )
     ]
     return descriptions

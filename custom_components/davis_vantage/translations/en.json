@@ -466,6 +466,9 @@
             },
             "elevation": {
                 "name": "Elevation"
+            },
+            "last_readout_duration": {
+                "name": "Last Readout Duration"
             }
         },
         "binary_sensor": {

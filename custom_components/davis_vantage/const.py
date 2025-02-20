@@ -106,5 +106,7 @@ KEY_TO_NAME = {
     "Latitude": "Latitude",
     "Longitude": "Longitude",
     "Elevation": "Elevation",
-    "LastReadoutDuration": "Last Readout Duration"
+    "LastReadoutDuration": "Last Readout Duration",
+    "SunRise": "Sunrise",
+    "SunSet": "Sunset"
 }

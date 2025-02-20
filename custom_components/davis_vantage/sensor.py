@@ -609,6 +609,18 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             native_unit_of_measurement=UnitOfTime.SECONDS,
             suggested_display_precision=1,
             entity_registry_enabled_default=False
+        ),
+        SensorEntityDescription(
+            key="SunRise",
+            translation_key="sunrise",
+            icon="mdi:sun-clock-outline",
+            entity_registry_enabled_default=False
+        ),
+        SensorEntityDescription(
+            key="SunSet",
+            translation_key="sunset",
+            icon="mdi:sun-clock-outline",
+            entity_registry_enabled_default=False
         )
     ]
     return descriptions

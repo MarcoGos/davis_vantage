@@ -54,6 +54,7 @@ class DavisVantageClient:
         self._rain_collector = ""
         self._last_data: LoopDataParserRevB = {}  # type: ignore
         self._last_raw_data: DataParser = {}  # type: ignore
+        self._last_raw_hilows: DataParser = {}  # type: ignore
         self._persistent_connection = persistent_connection
 
     @property
@@ -178,6 +179,7 @@ class DavisVantageClient:
                     self.add_wind_gust(archives, new_data)
                 if hilows:
                     new_raw_hilows = self.__get_full_raw_data_hilows(hilows)
+                    self._last_raw_hilows = new_raw_hilows
                     self.remove_all_incorrect_hilows(new_raw_hilows, hilows)
                     self.add_hilows(hilows, new_data)
                 data = new_data
@@ -382,6 +384,8 @@ class DavisVantageClient:
             data["SolarRad"] = get_solar_rad(data["SolarRad"])
         data["RainCollector"] = self._rain_collector
         data["StormStartDate"] = self.strtodate(data["StormStartDate"])
+        data["SunRise"] = self.strtotime(data["SunRise"])
+        data["SunSet"] = self.strtotime(data["SunSet"])
         self.correct_rain_values(data)
 
     def correct_rain_values(self, data: dict[str, Any]):
@@ -476,6 +480,9 @@ class DavisVantageClient:
 
     def get_raw_data(self) -> DataParser:
         return self._last_raw_data
+    
+    def get_raw_hilows(self) -> DataParser:
+        return self._last_raw_hilows
 
     def strtotime(self, time_str: str | None) -> time | None:
         if time_str is None:

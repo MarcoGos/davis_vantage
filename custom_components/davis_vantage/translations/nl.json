@@ -469,6 +469,12 @@
             },
             "last_readout_duration": {
                 "name": "Laatste uitleesduur"
+            },
+            "sunrise": {
+                "name": "Zonsopkomst"
+            },
+            "sunset": {
+                "name": "Zonsondergang"
             }
         },
         "binary_sensor": {

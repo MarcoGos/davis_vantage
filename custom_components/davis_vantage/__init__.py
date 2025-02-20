@@ -96,9 +96,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def get_raw_data(_: ServiceCall) -> dict[str, Any]:
         raw_data = client.get_raw_data()
+        raw_data.update(client.get_raw_hilows())
         data: dict[str, Any] = {}
-        keys = raw_data.keys() # type: ignore
-        for key in keys: # type: ignore
+        for key in raw_data: # type: ignore
             value = raw_data[key] # type: ignore
             if isinstance(value, bytes):
                 data[key] = bytes_to_hex(value)

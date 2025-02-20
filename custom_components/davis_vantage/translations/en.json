@@ -469,6 +469,12 @@
             },
             "last_readout_duration": {
                 "name": "Last Readout Duration"
+            },
+            "sunrise": {
+                "name": "Sunrise"
+            },
+            "sunset": {
+                "name": "Sunset"
             }
         },
         "binary_sensor": {

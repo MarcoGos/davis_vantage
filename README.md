@@ -13,7 +13,7 @@ Model | Compatible
 ---|:---:
 Davis WeatherLink SER (6510SER) | Yes
 Davis WeatherLink USB (6510USB) | Yes
-Davis WeatherlinkIP (6555IP) | Yes 
+Davis WeatherlinkIP (6555IP) | Yes[^3]
 Vantage Vue | Yes
 WeatherLink Live | No
 Davis Weather Envoy8X (6318EU) | No
@@ -35,7 +35,7 @@ Example: 192.168.1.8:22222
 If you're not sure about the port number (usually port 22222), then browse to the ip address of the IP logger and look at the port number on the configuration page.
 
 ### Interval
-Every readout takes up about 1-2 seconds for WeatherLink USB and WeatherLink SER and about 5-6 seconds for WeatherLinkIP. The interval shouldn't be lower than the readout time.
+Interval between readouts. Every readout takes up about 1-2 seconds for WeatherLink USB and WeatherLink SER and about 5-6 seconds for WeatherLinkIP.
 
 ### Persistent connection
 When getting errors like "Broken pipe", try enabling this setting. This keeps the connection to the console or Envoy open between readouts. This is a recommended setting when using the WeatherLinkIP.
@@ -206,6 +206,8 @@ Due to the somewhat unstable hardware interface some communication runs result i
 [^1]: If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using action "Davis Vantage: Get Davis Time" and, if necessary, correct it by using action "Davis Vantage: Set Davis Time".
 
 [^2]: The Archive Interval value can be set by action "Set Archive Period"
+
+[^3]: Using WeatherLinkIP combined with sending information to weatherlink.com, may cause problems. It is recommended to disable sending information to weatherlink.com for best results.
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/MarcoGos/davis_vantage.svg?style=for-the-badge
 [commits]: https://github.com/MarcoGos/davis_vantage/commits/main

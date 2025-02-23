@@ -3,7 +3,7 @@
 NAME = "Davis Vantage"
 DOMAIN = "davis_vantage"
 MANUFACTURER = "Davis"
-VERSION = "1.3.11beta"
+VERSION = "1.3.11"
 
 DEFAULT_SYNC_INTERVAL = 30  # seconds
 DEFAULT_NAME = NAME

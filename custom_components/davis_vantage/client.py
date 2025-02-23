@@ -125,7 +125,7 @@ class DavisVantageClient:
             self._vantagepro2.link.open()
             _LOGGER.debug("Start get_current_data")
             data = self._vantagepro2.get_current_data()
-            _LOGGER.debug("End get_current_data")
+            _LOGGER.debug("End get_current_data:")
         except Exception as e:
             if not self._persistent_connection:
                 self._vantagepro2.link.close()
@@ -146,13 +146,15 @@ class DavisVantageClient:
             _LOGGER.debug("Start get_archives")
             archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
             _LOGGER.debug("End get_archives")
-        except Exception:
-            pass
+        except Exception as e:
+            _LOGGER.error("Couldn't get archives: %s", e)
 
         try:
             _LOGGER.debug("Start get_rain_collector")
             self._rain_collector = self.get_rain_collector()
             _LOGGER.debug("End get_rain_collector")
+        except Exception as e:
+            _LOGGER.error("Couldn't get rain_collector: %s", e)
         finally:
             if not self._persistent_connection:
                 self._vantagepro2.link.close()
@@ -505,6 +507,7 @@ class DavisVantageClient:
             0x10: RAIN_COLLECTOR_METRIC,
             0x20: RAIN_COLLECTOR_METRIC_0_1,
         }
+        self._vantagepro2.wake_up()
         rain_collector = self._vantagepro2.get_rain_collector()  # type: ignore
         return rain_collector_map.get(rain_collector, "")  # type: ignore
 

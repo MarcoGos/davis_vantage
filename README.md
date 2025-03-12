@@ -21,7 +21,7 @@ Other models | Unsure
 
 ## Prerequirements
 
-Be sure your Davis device is on the lastest firmware:
+Mark sure your Davis device is on the lastest firmware:
 
 Model | Version
 ---|:---:

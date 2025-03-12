@@ -1,14 +1,15 @@
+"""Binary sensor setup for our Integration."""
+
 from homeassistant.components.binary_sensor import (
     DOMAIN as BINARY_SENSOR_DOMAIN,
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DEFAULT_NAME, DOMAIN, KEY_TO_NAME
+from . import DavisConfigEntry
+from .const import DEFAULT_NAME, KEY_TO_NAME
 from .coordinator import DavisVantageDataUpdateCoordinator
 
 DESCRIPTIONS: list[BinarySensorEntityDescription] = [
@@ -17,12 +18,12 @@ DESCRIPTIONS: list[BinarySensorEntityDescription] = [
 
 
 async def async_setup_entry(
-    hass: HomeAssistant,
-    entry: ConfigEntry,
+    _,
+    config_entry: DavisConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Davis Vantage sensors based on a config entry."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = config_entry.runtime_data.coordinator
 
     entities: list[DavisVantageBinarySensor] = []
 
@@ -31,7 +32,7 @@ async def async_setup_entry(
         entities.append(
             DavisVantageBinarySensor(
                 coordinator=coordinator,
-                entry_id=entry.entry_id,
+                entry_id=config_entry.entry_id,
                 description=description,
             )
         )

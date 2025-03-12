@@ -1,3 +1,5 @@
+"""Sensor setup for our Integration."""
+
 import logging
 
 from homeassistant.components.sensor import (
@@ -9,7 +11,6 @@ from homeassistant.components.sensor.const import (
     SensorDeviceClass
 )
 
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
     DEGREE,
@@ -23,14 +24,13 @@ from homeassistant.const import (
     UnitOfTime,
     EntityCategory
 )
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from . import DavisConfigEntry
 from .const import (
     DEFAULT_NAME,
-    DOMAIN,
     RAIN_COLLECTOR_IMPERIAL,
     RAIN_COLLECTOR_METRIC,
     RAIN_COLLECTOR_METRIC_0_1,
@@ -43,6 +43,7 @@ from .coordinator import DavisVantageDataUpdateCoordinator
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
+    """Return the sensor descriptions for the specified model."""
     descriptions: list[SensorEntityDescription] = [
         SensorEntityDescription(
             key="Datetime",
@@ -626,21 +627,22 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
     return descriptions
 
 async def async_setup_entry(
-    hass: HomeAssistant,
-    entry: ConfigEntry,
+    _,
+    config_entry: DavisConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Davis Vantage sensors based on a config entry."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    # coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = config_entry.runtime_data.coordinator
     entities: list[DavisVantageSensor] = []
-    model = entry.data.get(CONFIG_STATION_MODEL, '')
+    model = config_entry.data.get(CONFIG_STATION_MODEL, '')
 
     # Add all meter sensors described above.
     for description in get_sensor_descriptions(model):
         entities.append(
             DavisVantageSensor(
                 coordinator=coordinator,
-                entry_id=entry.entry_id,
+                entry_id=config_entry.entry_id,
                 description=description,
             )
         )

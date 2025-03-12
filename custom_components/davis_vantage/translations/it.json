@@ -1,0 +1,534 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Il dispositivo è già configurato",
+            "reconfigure_successful": "La riconfigurazione è stata completata con successo"
+        },
+        "error": {
+            "cannot_connect": "Connessione fallita",
+            "invalid_auth": "Sembra che la stazione meteorologica non risponda, riprova",
+            "unknown": "Errore imprevisto"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "protocol": "Protocollo"
+                }
+            },
+            "setup_serial": {
+                "data": {
+                    "link": "Dispositivo"
+                }
+            },
+            "setup_network": {
+                "data": {
+                    "link": "Host"
+                }
+            },
+            "setup_other_info": {
+                "data": {
+                    "station_model": "Modello di stazione meteorologica Davis",
+                    "interval": "Intervallo",
+                    "persistent_connection": "Connessione persistente"
+                }
+            },
+            "reconfigure_confirm": {
+                "description": "Aggiorna la configurazione per {name}.",
+                "data": {
+                    "link": "Host",
+                    "interval": "Intervallo"
+                }
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "last_fetch_time": {
+                "name": "Ultimo tempo di recupero"
+            },
+            "last_success_time": {
+                "name": "Ultimo tempo di successo"
+            },
+            "last_error_time": {
+                "name": "Ultimo tempo di errore"
+            },
+            "last_error_message": {
+                "name": "Ultimo messaggio di errore"
+            },
+            "archive_internal": {
+                "name": "Intervallo di archiviazione"
+            },
+            "temperature": {
+                "name": "Temperatura"
+            },
+            "temperature_high_day": {
+                "name": "Temperatura massima (giorno)"
+            },
+            "temperature_high_time": {
+                "name": "Ora della temperatura massima"
+            },
+            "temperature_low_day": {
+                "name": "Temperatura minima (giorno)"
+            },
+            "temperature_low_time": {
+                "name": "Ora della temperatura minima"
+            },
+            "temperature_inside": {
+                "name": "Temperatura (interna)"
+            },
+            "heat_index": {
+                "name": "Indice di calore"
+            },
+            "wind_chill": {
+                "name": "Vento gelido"
+            },
+            "feels_like": {
+                "name": "Percepita come"
+            },
+            "dew_point": {
+                "name": "Punto di rugiada"
+            },
+            "dew_point_high_day": {
+                "name": "Punto di rugiada massimo (giorno)"
+            },
+            "dew_point_high_time": {
+                "name": "Ora del punto di rugiada massimo"
+            },
+            "dew_point_low_day": {
+                "name": "Punto di rugiada minimo (giorno)"
+            },
+            "dew_point_low_time": {
+                "name": "Ora del punto di rugiada minimo"
+            },
+            "barometric_pressure": {
+                "name": "Pressione barometrica"
+            },
+            "barometric_pressure_high_day": {
+                "name": "Pressione barometrica massima (giorno)"
+            },
+            "barometric_pressure_high_time": {
+                "name": "Ora della pressione barometrica massima"
+            },
+            "barometric_pressure_low_day": {
+                "name": "Pressione barometrica minima (giorno)"
+            },
+            "barometric_pressure_low_time": {
+                "name": "Ora della pressione barometrica minima"
+            },
+            "barometric_trend": {
+                "name": "Tendenza barometrica",
+                "state": {
+                    "falling_rapidly": "In calo rapido",
+                    "falling_slowly": "In calo lento",
+                    "steady": "Stabile",
+                    "rising_slowly": "In aumento lento",
+                    "rising_rapidly": "In aumento rapido"
+                }
+            },
+            "humidity_inside": {
+                "name": "Umidità (interna)"
+            },
+            "humidity": {
+                "name": "Umidità"
+            },
+            "wind_speed": {
+                "name": "Velocità del vento"
+            },
+            "wind_speed_average": {
+                "name": "Velocità media del vento"
+            },
+            "wind_gust": {
+                "name": "Raffica di vento"
+            },
+            "wind_gust_day": {
+                "name": "Raffica di vento (giorno)"
+            },
+            "wind_gust_time": {
+                "name": "Ora della raffica di vento"
+            },
+            "wind_direction": {
+                "name": "Direzione del vento"
+            },
+            "wind_direction_rose": {
+                "name": "Direzione del vento (rosa dei venti)",
+                "state": {
+                    "n": "N",
+                    "ne": "NE",
+                    "e": "E",
+                    "se": "SE",
+                    "s": "S",
+                    "sw": "SO",
+                    "w": "O",
+                    "nw": "NO"
+                }
+            },
+            "wind_speed_bft": {
+                "name": "Velocità del vento (Bft)"
+            },
+            "rain_day": {
+                "name": "Pioggia (giorno)"
+            },
+            "rain_month": {
+                "name": "Pioggia (mese)"
+            },
+            "rain_year": {
+                "name": "Pioggia (anno)"
+            },
+            "rain_rate": {
+                "name": "Tasso di pioggia"
+            },
+            "rain_rate_day": {
+                "name": "Tasso di pioggia (giorno)"
+            },
+            "rain_rate_time": {
+                "name": "Ora del tasso di pioggia"
+            },
+            "uv_level": {
+                "name": "Livello UV"
+            },
+            "uv_level_day": {
+                "name": "Livello UV (giorno)"
+            },
+            "uv_level_time": {
+                "name": "Ora del livello UV"
+            },
+            "solar_radiation": {
+                "name": "Radiazione solare"
+            },
+            "solar_radiation_day": {
+                "name": "Radiazione solare (giorno)"
+            },
+            "solar_radiation_time": {
+                "name": "Ora della radiazione solare"
+            },
+            "battery_voltage": {
+                "name": "Tensione della batteria"
+            },
+            "forecast_icon": {
+                "name": "Icona previsioni"
+            },
+            "forecast_rule": {
+                "name": "Regola Previsioni",
+                "state": {
+                    "0": "Prevalentemente sereno e più fresco",
+                    "1": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "2": "Prevalentemente sereno per 12 ore con poco cambiamento di temperatura",
+                    "3": "Prevalentemente sereno per 12-24 ore e più fresco",
+                    "4": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "5": "Parzialmente nuvoloso e più fresco",
+                    "6": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "7": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "8": "Prevalentemente sereno e più caldo",
+                    "9": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "10": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "11": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "12": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 24-48 ore",
+                    "13": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "14": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "15": "Aumento della nuvolosità con poco cambiamento di temperatura. Possibili precipitazioni entro 24 ore",
+                    "16": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "17": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "18": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "19": "Aumento della nuvolosità con poco cambiamento di temperatura. Possibili precipitazioni entro 12 ore",
+                    "20": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "21": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "22": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "23": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 24 ore",
+                    "24": "Prevalentemente sereno e più caldo. Venti in aumento",
+                    "25": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "26": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "27": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 12 ore. Venti in aumento",
+                    "28": "Prevalentemente sereno e più caldo. Venti in aumento",
+                    "29": "Aumento della nuvolosità e più caldo",
+                    "30": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "31": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "32": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 12 ore. Venti in aumento",
+                    "33": "Prevalentemente sereno e più caldo. Venti in aumento",
+                    "34": "Aumento della nuvolosità e più caldo",
+                    "35": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "36": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "37": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 12 ore. Venti in aumento",
+                    "38": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "39": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "40": "Prevalentemente sereno e più caldo. Possibili precipitazioni entro 48 ore",
+                    "41": "Prevalentemente sereno e più caldo",
+                    "42": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "43": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "44": "Aumento della nuvolosità con poco cambiamento di temperatura. Possibili precipitazioni entro 24-48 ore",
+                    "45": "Aumento della nuvolosità con poco cambiamento di temperatura",
+                    "46": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "47": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "48": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 12-24 ore",
+                    "49": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "50": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "51": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 12-24 ore. Ventoso",
+                    "52": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "53": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "54": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 12-24 ore. Ventoso",
+                    "55": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "56": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "57": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 6-12 ore",
+                    "58": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "59": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "60": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 6-12 ore. Ventoso",
+                    "61": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "62": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "63": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 12-24 ore. Ventoso",
+                    "64": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "65": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "66": "Aumento della nuvolosità e più caldo. Possibili precipitazioni entro 12 ore",
+                    "67": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "68": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "69": "Aumento della nuvolosità e più caldo. Probabili precipitazioni",
+                    "70": "Schiarite e più fresco. Precipitazioni in esaurimento entro 6 ore",
+                    "71": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "72": "Schiarite e più fresco. Precipitazioni in esaurimento entro 6 ore",
+                    "73": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "74": "Schiarite e più fresco. Precipitazioni in esaurimento entro 6 ore",
+                    "75": "Parzialmente nuvoloso e più fresco",
+                    "76": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "77": "Prevalentemente sereno e più fresco",
+                    "78": "Schiarite e più fresco. Precipitazioni in esaurimento entro 6 ore",
+                    "79": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "80": "Schiarite e più fresco. Precipitazioni in esaurimento entro 6 ore",
+                    "81": "Prevalentemente sereno e più fresco",
+                    "82": "Parzialmente nuvoloso con poco cambiamento di temperatura",
+                    "83": "Prevalentemente sereno con poco cambiamento di temperatura",
+                    "84": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili entro 24 ore",
+                    "85": "Per lo più nuvoloso e più fresco. Precipitazioni in corso",
+                    "86": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "87": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "88": "Per lo più nuvoloso e più fresco. Precipitazioni probabili",
+                    "89": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni in corso",
+                    "90": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni probabili",
+                    "91": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "92": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "93": "Aumento delle nuvole e più fresco. Precipitazioni possibili e ventoso entro 6 ore",
+                    "94": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili e ventoso entro 6 ore",
+                    "95": "Per lo più nuvoloso e più fresco. Precipitazioni in corso. Aumento del vento",
+                    "96": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "97": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "98": "Per lo più nuvoloso e più fresco. Precipitazioni probabili. Aumento del vento",
+                    "99": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni in corso. Aumento del vento",
+                    "100": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni probabili. Aumento del vento",
+                    "101": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "102": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "103": "Aumento delle nuvole e più fresco. Precipitazioni possibili entro 12-24 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "104": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili entro 12-24 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "105": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "106": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "107": "Aumento delle nuvole e più fresco. Precipitazioni possibili entro 6 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "108": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili entro 6 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "109": "Per lo più nuvoloso e più fresco. Precipitazioni che termineranno entro 12 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "110": "Per lo più nuvoloso e più fresco. Possibile cambio di direzione del vento verso W, NW o N",
+                    "111": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni che termineranno entro 12 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "112": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Possibile cambio di direzione del vento verso W, NW o N",
+                    "113": "Per lo più nuvoloso e più fresco. Precipitazioni che termineranno entro 12 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "114": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "115": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "116": "Per lo più nuvoloso e più fresco. Precipitazioni possibili entro 24 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "117": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni che termineranno entro 12 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "118": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni possibili entro 24 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "119": "Schiarite, più fresco e ventoso. Precipitazioni che termineranno entro 6 ore",
+                    "120": "Schiarite, più fresco e ventoso",
+                    "121": "Per lo più nuvoloso e più fresco. Precipitazioni che termineranno entro 6 ore. Vento con possibile cambio di direzione verso W, NW o N",
+                    "122": "Per lo più nuvoloso e più fresco. Vento con possibile cambio di direzione verso W, NW o N",
+                    "123": "Schiarite, più fresco e ventoso",
+                    "124": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "125": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "126": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni possibili entro 12 ore. Ventoso",
+                    "127": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "128": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "129": "Aumento delle nuvole e più fresco. Precipitazioni possibili entro 12 ore, forse forti a volte. Ventoso",
+                    "130": "Per lo più nuvoloso e più fresco. Precipitazioni che termineranno entro 6 ore. Ventoso",
+                    "131": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "132": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "133": "Per lo più nuvoloso e più fresco. Precipitazioni possibili entro 12 ore. Ventoso",
+                    "134": "Per lo più nuvoloso e più fresco. Precipitazioni che termineranno entro 12-24 ore",
+                    "135": "Per lo più nuvoloso e più fresco",
+                    "136": "Per lo più nuvoloso e più fresco. Precipitazioni in corso, possibilmente forti a volte. Ventoso",
+                    "137": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "138": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "139": "Per lo più nuvoloso e più fresco. Precipitazioni possibili entro 6-12 ore. Ventoso",
+                    "140": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni in corso, possibilmente forti a volte. Ventoso",
+                    "141": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "142": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "143": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni possibili entro 6-12 ore. Ventoso",
+                    "144": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "145": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "146": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili entro 12 ore, forse forti a volte. Ventoso",
+                    "147": "Per lo più nuvoloso e più fresco. Ventoso",
+                    "148": "Per lo più nuvoloso e più fresco. Precipitazioni in corso, possibilmente forti a volte. Ventoso",
+                    "150": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "151": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "152": "Per lo più nuvoloso e più fresco. Precipitazioni probabili, forse forti a volte. Ventoso",
+                    "153": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni in corso, possibilmente forti a volte. Ventoso",
+                    "154": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni probabili, forse forti a volte. Ventoso",
+                    "155": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "156": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "157": "Aumento delle nuvole e più fresco. Precipitazioni possibili entro 6 ore. Ventoso",
+                    "158": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili entro 6 ore. Ventoso",
+                    "159": "Aumento delle nuvole e più fresco. Precipitazioni in corso. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "160": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "161": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "162": "Per lo più nuvoloso e più fresco. Precipitazioni probabili. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "163": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni in corso. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "164": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni probabili. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "165": "Aumento delle nuvole e più fresco. Precipitazioni possibili entro 6 ore. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "166": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "167": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "168": "Aumento delle nuvole e più fresco. Precipitazioni possibili entro 6 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "169": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili entro 6 ore. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "170": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili entro 6 ore. Possibile cambio di direzione del vento verso W, NW o N",
+                    "171": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "172": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "173": "Aumento delle nuvole e più fresco. Precipitazioni possibili entro 6 ore. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "174": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili entro 6 ore. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "175": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "176": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "177": "Aumento delle nuvole e più fresco. Precipitazioni possibili entro 12-24 ore. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "178": "Aumento delle nuvole con pochi cambiamenti di temperatura. Precipitazioni possibili entro 12-24 ore. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "179": "Per lo più nuvoloso e più fresco. Precipitazioni possibilmente forti a volte e che termineranno entro 12 ore. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "180": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "181": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "182": "Per lo più nuvoloso e più fresco. Precipitazioni possibili entro 6-12 ore, forse forti a volte. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "183": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni che termineranno entro 12 ore. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "184": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni possibili entro 6-12 ore, forse forti a volte. Ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "185": "Per lo più nuvoloso e più fresco. Precipitazioni in corso",
+                    "186": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "187": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "188": "Per lo più nuvoloso e più fresco. Precipitazioni probabili, ventoso con possibile cambio di direzione del vento verso W, NW o N",
+                    "189": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni in corso",
+                    "190": "Per lo più nuvoloso con pochi cambiamenti di temperatura. Precipitazioni probabili",
+                    "191": "Parzialmente nuvoloso con pochi cambiamenti di temperatura",
+                    "192": "Per lo più sereno con pochi cambiamenti di temperatura",
+                    "193": "Per lo più nuvoloso e più fresco. Precipitazioni possibili entro 12 ore, forse forti a volte. Ventoso",
+                    "194": "LA PREVISIONE RICHIEDE 3 ORE DI DATI RECENTI",
+                    "195": "Per lo più sereno e più fresco"
+                }
+            },
+            "rain_collector": {
+                "name": "Collettore di Pioggia"
+            },
+            "rain_storm": {
+                "name": "Tempesta di Pioggia"
+            },
+            "rain_storm_start_date": {
+                "name": "Data di Inizio Tempesta di Pioggia"
+            },
+            "extra_temperature_1": {
+                "name": "Temperatura Extra 1"
+            },
+            "extra_temperature_2": {
+                "name": "Temperatura Extra 2"
+            },
+            "extra_temperature_3": {
+                "name": "Temperatura Extra 3"
+            },
+            "extra_temperature_4": {
+                "name": "Temperatura Extra 4"
+            },
+            "extra_temperature_5": {
+                "name": "Temperatura Extra 5"
+            },
+            "extra_temperature_6": {
+                "name": "Temperatura Extra 6"
+            },
+            "extra_temperature_7": {
+                "name": "Temperatura Extra 7"
+            },
+            "extra_humidity_1": {
+                "name": "Umidità Extra 1"
+            },
+            "extra_humidity_2": {
+                "name": "Umidità Extra 2"
+            },
+            "extra_humidity_3": {
+                "name": "Umidità Extra 3"
+            },
+            "extra_humidity_4": {
+                "name": "Umidità Extra 4"
+            },
+            "extra_humidity_5": {
+                "name": "Umidità Extra 5"
+            },
+            "extra_humidity_6": {
+                "name": "Umidità Extra 6"
+            },
+            "extra_humidity_7": {
+                "name": "Umidità Extra 7"
+            },
+            "latitude": {
+                "name": "Latitudine"
+            },
+            "longitude": {
+                "name": "Longitudine"
+            },
+            "elevation": {
+                "name": "Altitudine"
+            },
+            "last_readout_duration": {
+                "name": "Durata dell'Ultima Lettura"
+            },
+            "sunrise": {
+                "name": "Alba"
+            },
+            "sunset": {
+                "name": "Tramonto"
+            }
+        },
+        "binary_sensor": {
+            "is_raining": {
+                "name": "Sta Piovendo"
+            }
+        }
+    },
+    "services": {
+        "set_davis_time": {
+            "name": "Imposta ora Davis",
+            "description": "Imposta l'orario della stazione meteorologica Davis"
+        },
+        "get_davis_time": {
+            "name": "Ottieni ora Davis",
+            "description": "Ottieni l'orario della stazione meteorologica Davis"
+        },
+        "get_raw_data": {
+            "name": "Ottieni dati grezzi",
+            "description": "Ottieni i dati grezzi non elaborati dall'ultimo recupero"
+        },
+        "get_info": {
+            "name": "Ottieni informazioni",
+            "description": "Ottieni informazioni su firmware e diagnostica"
+        },
+        "set_yearly_rain": {
+            "name": "Imposta pioggia annuale",
+            "description": "Imposta la pioggia annuale in clic",
+            "fields": {
+                "rain_clicks": {
+                    "name": "Clic pioggia",
+                    "description": "Pioggia in clic (a seconda della configurazione un clic = 0,01\" o 0,2 mm)"
+                }
+            }
+        },
+        "set_archive_period": {
+            "name": "Imposta periodo di archivio",
+            "description": "Imposta il periodo di archivio in minuti. ATTENZIONE: tutti i dati di archivio salvati verranno cancellati!!!",
+            "fields": {
+                "archive_period": {
+                    "name": "Periodo di archivio",
+                    "description": "Periodo di archivio in minuti"
+                }
+            }
+        },
+        "set_rain_collector": {
+            "name": "Imposta raccoglitore di pioggia",
+            "description": "Imposta il raccoglitore di pioggia (0,01\", 0,2 mm o 0,1 mm)",
+            "fields": {
+                "rain_collector": {
+                    "name": "Raccoglitore di pioggia",
+                    "description": "Impostazione del raccoglitore di pioggia"
+                }
+            }
+        }
+    }
+}

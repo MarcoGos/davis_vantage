@@ -19,6 +19,17 @@ WeatherLink Live | No
 Davis Weather Envoy8X (6318EU) | No
 Other models | Unsure
 
+## Prerequirements
+
+Be sure your Davis device is on the lastest firmware:
+
+Model | Version
+---|:---:
+Vantage Pro2 Console (Wired/Cabled) | 3.88
+Weather Envoy Wireless | 3.88
+Weather Envoy Cabled | 3.12
+WeatherLinkIP Data Logger | 1.1.5
+
 ## Installation
 
 Via HACS, just search for Davis Vantage.

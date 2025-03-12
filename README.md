@@ -77,8 +77,14 @@ The following entities will be created:
     - Today's lowest dew point
 - Dew Point Low Time
     - Time of today's lowest dew point
+- Extra Humidity 1-7: 
+    - Current humidity extra sensor 1-7
+- Extra Temperature 1-7:
+    - Current temperature extra sensor 1-7
 - Feels Like: 
     - Current feels like temperature
+- Forecast Icon: 
+    - Current forecast icon number
 - Forecast Rule: 
     - Current forecast rule
 - Heat Index: 
@@ -89,6 +95,8 @@ The following entities will be created:
     - Today's highest outside relative humididy
 - Humidity Low (Day): 
     - Today's lowest outside relative humidity
+- Humidity (Inside): 
+    - Current inside relative humidity
 - Is Raining: 
     - True if it's currently raining (based on rain rate)
 - Rain (Day): 
@@ -113,6 +121,8 @@ The following entities will be created:
     - Today's highest solar radiation
 - Solar Radiation Time:
     - Time of today's highest solar radiation (or Unknown if dark day)
+- Sun Rise
+- Sun Set
 - Temperature: 
     - Current outside temperature
 - Temperature High (Day): 
@@ -123,6 +133,8 @@ The following entities will be created:
     - Today's lowest outside temperature
 - Temperature Low Time: 
     - Time of today's lowest outside temperature
+- Temperature (Inside): 
+    - Current inside temperature
 - UV Level: 
     - Current UV level
 - UV Level (Day): 
@@ -147,38 +159,28 @@ The following entities will be created:
     - 10 minutes average wind speed
 - Wind Speed (Bft): 
     - 10 minutes average wind speed in Beaufort
-- Extra Humidity 1-7: 
-    - Current humidity extra sensor 1-7
-- Extra Temperature 1-7:
-    - Current temperature extra sensor 1-7
-- Forecast Icon: 
-    - Current forecast icon number
-- Humidity (Inside): 
-    - Current inside relative humidity
-- Temperature (Inside): 
-    - Current inside temperature
 
 Diagnostic entities:
 - Archive Interval: 
     - Archive data interval (usual around 10 minutes). [^2]
-- Last Error Message: 
-    - Last error message, if no error then empty
-- Last Fetch Time: 
-    - Last fetch time
 - Battery Voltage: 
     - Current battery voltage
-- Last Error Time: 
-    - Last error time
-- Last Success Time: 
-    - Last success time
-- Rain Collector: 
-    - Current rain collector setup (0.01", 0.2 mm or 0.1 mm)
-- Latitude:
-    - Latitude read from the console
-- Longitude:
-    - Longitude read from the console
 - Elevation:
     - Elevation read from the console
+- Latitude:
+    - Latitude read from the console
+- Last Error Message: 
+    - Last error message, if no error then empty
+- Last Error Time: 
+    - Last error time
+- Last Fetch Time: 
+    - Last fetch time
+- Last Success Time: 
+    - Last success time
+- Longitude:
+    - Longitude read from the console
+- Rain Collector: 
+    - Current rain collector setup (0.01", 0.2 mm or 0.1 mm)
 
 The entity information is updated every 30 seconds (default or other value if choosen during setup).
 

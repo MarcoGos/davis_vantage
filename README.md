@@ -122,7 +122,9 @@ The following entities will be created:
 - Solar Radiation Time:
     - Time of today's highest solar radiation (or Unknown if dark day)
 - Sun Rise
+    - Time of sun rise
 - Sun Set
+    - Time of sun set
 - Temperature: 
     - Current outside temperature
 - Temperature High (Day): 

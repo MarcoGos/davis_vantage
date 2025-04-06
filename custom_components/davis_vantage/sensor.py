@@ -295,6 +295,7 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
             key="WindDir",
             translation_key="wind_direction",
             icon="mdi:compass-outline",
+            device_class=SensorDeviceClass.WIND_DIRECTION,
             state_class="measurement",
             native_unit_of_measurement=DEGREE,
             suggested_display_precision=0

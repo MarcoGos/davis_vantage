@@ -147,8 +147,12 @@ The following entities will be created:
     - Current wind chill
 - Wind Direction: 
     - Current wind direction in degrees
+- Wind Direction (Average):
+    - Average wind direction in degrees [^1]
 - Wind Direction Rose: 
     - Current wind direction in cardinal directions (N, NE, E, etc.)
+- Wind Direction (Rose) (Average)
+    - Average wind direction in cardinal directions (N, NE, E, etc.) [^1]
 - Wind Gust: 
     - Current wind gust, based on the highest value within an Archive Interval [^1]
 - Wind Gust (Day): 
@@ -218,7 +222,7 @@ Due to the somewhat unstable hardware interface some communication runs result i
 [downloads-badge]: https://img.shields.io/github/downloads/MarcoGos/davis_vantage/total?style=flat-square
 [release-url]: https://github.com/MarcoGos/davis_vantage/releases
 
-[^1]: If Wind Gust doesn't show a value or "Unknown" make sure the Davis time is set correctly. You can check this by using action "Davis Vantage: Get Davis Time" and, if necessary, correct it by using action "Davis Vantage: Set Davis Time".
+[^1]: If values show as "Unknown" make sure the Davis time is set correctly. You can check this by using action "Davis Vantage: Get Davis Time" and, if necessary, correct it by using action "Davis Vantage: Set Davis Time".
 
 [^2]: The Archive Interval value can be set by action "Set Archive Period"
 

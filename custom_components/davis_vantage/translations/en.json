@@ -149,8 +149,24 @@
             "wind_direction": {
                 "name": "Wind Direction"
             },
+            "wind_direction_average": {
+                "name": "Wind Direction (Average)"
+            },
             "wind_direction_rose": {
                 "name": "Wind Direction (Rose)",
+                "state": {
+                    "n": "N",
+                    "ne": "NE",
+                    "e": "E",
+                    "se": "SE",
+                    "s": "S",
+                    "sw": "SW",
+                    "w": "W",
+                    "nw": "NW"
+                }
+            },
+            "wind_direction_rose_average": {
+                "name": "Wind Direction (Rose) (Average)",
                 "state": {
                     "n": "N",
                     "ne": "NE",

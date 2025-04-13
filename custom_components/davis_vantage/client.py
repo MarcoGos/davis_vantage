@@ -178,7 +178,7 @@ class DavisVantageClient:
                 self.add_additional_info(new_data)
                 self.convert_values(new_data)
                 if archives:
-                    self.add_wind_gust(archives, new_data)
+                    self.add_additional_wind_info(archives, new_data)
                 if hilows:
                     new_raw_hilows = self.__get_full_raw_data_hilows(hilows)
                     self._last_raw_hilows = new_raw_hilows
@@ -439,10 +439,13 @@ class DavisVantageClient:
         else:
             return False
 
-    def add_wind_gust(self, archives: ListDict | None, data: dict[str, Any]):
+    def add_additional_wind_info(self, archives: ListDict | None, data: dict[str, Any]):
         if not archives:
             return
         data["WindGust"] = archives[-1]["WindHi"]
+        data['WindAvgDir'] = archives[-1]["WindAvgDir"]
+        if data["WindAvgDir"] is not None:
+            data["WindAvgDirRose"] = get_wind_rose(data['WindAvgDir'])
 
     def add_hilows(self, hilows: HighLowParserRevB | None, data: dict[str, Any]):
         if not hilows:

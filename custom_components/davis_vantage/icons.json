@@ -32,6 +32,19 @@
           "w": "mdi:arrow-right-bold-outline",
           "nw": "mdi:arrow-bottom-right-bold-outline"
         }
+      },
+      "wind_direction_rose_average": {
+        "default": "mdi:compass-outline",
+        "state": {
+          "n": "mdi:arrow-down-bold-outline",
+          "ne": "mdi:arrow-bottom-left-bold-outline",
+          "e": "mdi:arrow-left-bold-outline",
+          "se": "mdi:arrow-top-left-bold-outline",
+          "s": "mdi:arrow-up-bold-outline",
+          "sw": "mdi:arrow-top-right-bold-outline",
+          "w": "mdi:arrow-right-bold-outline",
+          "nw": "mdi:arrow-bottom-right-bold-outline"
+        }
       }
     },
     "binary_sensor": {

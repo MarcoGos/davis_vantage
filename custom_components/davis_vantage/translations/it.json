@@ -149,8 +149,24 @@
             "wind_direction": {
                 "name": "Direzione del vento"
             },
+            "wind_direction_average": {
+                "name": "Direzione media del vento"
+            },
             "wind_direction_rose": {
                 "name": "Direzione del vento (rosa dei venti)",
+                "state": {
+                    "n": "N",
+                    "ne": "NE",
+                    "e": "E",
+                    "se": "SE",
+                    "s": "S",
+                    "sw": "SO",
+                    "w": "O",
+                    "nw": "NO"
+                }
+            },
+            "wind_direction_rose_average": {
+                "name": "Direzione media del vento (rosa dei venti)",
                 "state": {
                     "n": "N",
                     "ne": "NE",

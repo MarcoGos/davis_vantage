@@ -149,8 +149,24 @@
             "wind_direction": {
                 "name": "Windrichting"
             },
+            "wind_direction_average": {
+                "name": "Gem. windrichting"
+            },
             "wind_direction_rose": {
                 "name": "Windrichting (roos)",
+                "state": {
+                    "n": "N",
+                    "ne": "NO",
+                    "e": "O",
+                    "se": "ZO",
+                    "s": "Z",
+                    "sw": "ZW",
+                    "w": "W",
+                    "nw": "NW"
+                }
+            },
+            "wind_direction_rose_average": {
+                "name": "Gem. windrichting (roos)",
                 "state": {
                     "n": "N",
                     "ne": "NO",

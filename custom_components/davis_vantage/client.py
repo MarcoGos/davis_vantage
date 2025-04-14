@@ -44,10 +44,12 @@ class DavisVantageClient:
     _latitude: float = 0.0
     _longitude: float = 0.0
     _elevation: int = 0
-    _firmware_version: str|None = None
+    _firmware_version: str | None = None
     _last_readout_duration: float = 0
 
-    def __init__(self, hass: HomeAssistant, protocol: str, link: str, persistent_connection: bool) -> None:
+    def __init__(
+        self, hass: HomeAssistant, protocol: str, link: str, persistent_connection: bool
+    ) -> None:
         self._hass = hass
         self._protocol = protocol
         self._link = link
@@ -70,7 +72,7 @@ class DavisVantageClient:
         return self._elevation
 
     @cached_property
-    def firmware_version(self) -> str|None:
+    def firmware_version(self) -> str | None:
         return self._firmware_version
 
     def get_vantagepro2fromurl(self, url: str) -> VantagePro2 | None:
@@ -100,7 +102,9 @@ class DavisVantageClient:
         self._firmware_version = (
             static_info.get("version", None) if static_info is not None else None
         )
-        latitude, longitude, elevation = await self.async_get_latitude_longitude_elevation()
+        latitude, longitude, elevation = (
+            await self.async_get_latitude_longitude_elevation()
+        )
         if latitude:
             self._latitude = latitude
         if longitude:
@@ -281,7 +285,7 @@ class DavisVantageClient:
         return {
             "version": firmware_version,
             "date": firmware_date,
-            "diagnostics": diagnostics
+            "diagnostics": diagnostics,
         }
 
     async def async_get_info(self) -> dict[str, Any] | None:
@@ -443,9 +447,13 @@ class DavisVantageClient:
         if not archives:
             return
         data["WindGust"] = archives[-1]["WindHi"]
-        data['WindAvgDir'] = archives[-1]["WindAvgDir"]
+        data["WindAvgDir"] = (
+            archives[-1]["WindAvgDir"] * 22.5
+            if archives[-1]["WindAvgDir"] < 255
+            else None
+        )
         if data["WindAvgDir"] is not None:
-            data["WindAvgDirRose"] = get_wind_rose(data['WindAvgDir'])
+            data["WindAvgDirRose"] = get_wind_rose(data["WindAvgDir"])
 
     def add_hilows(self, hilows: HighLowParserRevB | None, data: dict[str, Any]):
         if not hilows:
@@ -485,7 +493,7 @@ class DavisVantageClient:
 
     def get_raw_data(self) -> DataParser:
         return self._last_raw_data
-    
+
     def get_raw_hilows(self) -> DataParser:
         return self._last_raw_hilows
 
@@ -542,8 +550,8 @@ class DavisVantageClient:
 
     def get_latitude_longitude_elevation(self) -> tuple[float, float, int]:
         latitude = longitude = None
-        data = self._vantagepro2.read_from_eeprom("0B", 6) # type: ignore
-        latitude, longitude, elevation = struct.unpack(b"hhh", data) # type: ignore
+        data = self._vantagepro2.read_from_eeprom("0B", 6)  # type: ignore
+        latitude, longitude, elevation = struct.unpack(b"hhh", data)  # type: ignore
         latitude /= 10
         longitude /= 10
         return latitude, longitude, elevation

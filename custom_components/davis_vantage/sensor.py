@@ -698,6 +698,10 @@ class DavisVantageSensor(CoordinatorEntity[DavisVantageDataUpdateCoordinator], S
     def native_value(self) -> StateType: # type: ignore
         """Return the state of the sensor."""
         key = self.entity_description.key
+        return self._get_value(key)
+
+    def _get_value(self, key: str) -> StateType:
+        """Return the key value"""
         data = self.coordinator.data # type: ignore
         if key not in data:
             return None
@@ -707,5 +711,7 @@ class DavisVantageSensor(CoordinatorEntity[DavisVantageDataUpdateCoordinator], S
             default_value = '-'
         value = data.get(key, default_value)
         if (key in ['WindDir', 'WindDirRose']) and (data.get('WindSpeed', 0) == 0):
+            value = None
+        if (key in ['WindAvgDir', 'WindAvgDirRose']) and (data.get('WindSpeed10Min', 0) == 0):
             value = None
         return value

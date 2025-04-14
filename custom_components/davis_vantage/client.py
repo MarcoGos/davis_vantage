@@ -366,6 +366,8 @@ class DavisVantageClient:
                     data["FeelsLike"] = calc_feels_like(
                         data["TempOut"], data["HumOut"], data["WindSpeed"]
                     )
+        if data["WindSpeed"] == 0:
+            data["WindDir"] = None
         if data["WindDir"] is not None:
             data["WindDirRose"] = get_wind_rose(data["WindDir"])
         if data["WindSpeed10Min"] is not None:
@@ -446,14 +448,12 @@ class DavisVantageClient:
     def add_additional_wind_info(self, archives: ListDict | None, data: dict[str, Any]):
         if not archives:
             return
-        data["WindGust"] = archives[-1]["WindHi"]
-        data["WindAvgDir"] = (
-            archives[-1]["WindAvgDir"] * 22.5
-            if archives[-1]["WindAvgDir"] < 255
-            else None
-        )
-        if data["WindAvgDir"] is not None:
-            data["WindAvgDirRose"] = get_wind_rose(data["WindAvgDir"])
+        latest_archive = archives[-1]
+        data["WindGust"] = latest_archive["WindHi"]
+        if data["WindSpeed10Min"] > 0:
+            if latest_archive["WindAvgDir"] < 255:
+                data["WindAvgDir"] = latest_archive["WindAvgDir"] * 22.5
+                data["WindAvgDirRose"] = get_wind_rose(data["WindAvgDir"])
 
     def add_hilows(self, hilows: HighLowParserRevB | None, data: dict[str, Any]):
         if not hilows:

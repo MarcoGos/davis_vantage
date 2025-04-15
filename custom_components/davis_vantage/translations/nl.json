@@ -134,6 +134,9 @@
             "wind_speed": {
                 "name": "Windsnelheid"
             },
+            "wind_speed_average_10min": {
+                "name": "Gem. windsnelheid (10 min.)"
+            },
             "wind_speed_average": {
                 "name": "Gem. windsnelheid"
             },

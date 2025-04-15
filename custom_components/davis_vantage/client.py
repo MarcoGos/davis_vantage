@@ -450,7 +450,8 @@ class DavisVantageClient:
             return
         latest_archive = archives[-1]
         data["WindGust"] = latest_archive["WindHi"]
-        if data["WindSpeed10Min"] > 0:
+        data["WindSpeedAvg"] = latest_archive["WindAvg"]
+        if data["WindSpeedAvg"] > 0:
             if latest_archive["WindAvgDir"] < 255:
                 data["WindAvgDir"] = latest_archive["WindAvgDir"] * 22.5
                 data["WindAvgDirRose"] = get_wind_rose(data["WindAvgDir"])

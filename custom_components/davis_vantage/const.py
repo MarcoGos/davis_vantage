@@ -67,6 +67,7 @@ KEY_TO_NAME = {
     "WindGustDay": "Wind Gust (Day)",
     "WindGustTime": "Wind Gust Time",
     "WindDir": "Wind Direction",
+    "WindSpeedAvg": "Wind Speed (Average) (AI)",
     "WindAvgDir": "Wind Direction (Average)",
     "WindDirRose": "Wind Direction Rose",
     "WindAvgDirRose": "Wind Direction Rose (Average)",

@@ -262,6 +262,15 @@ def get_sensor_descriptions(model: str) -> list[SensorEntityDescription]:
         ),
         SensorEntityDescription(
             key="WindSpeed10Min",
+            translation_key="wind_speed_average_10min",
+            icon="mdi:weather-windy",
+            device_class=SensorDeviceClass.WIND_SPEED,
+            state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement=UnitOfSpeed.MILES_PER_HOUR,
+            suggested_display_precision=1
+        ),
+        SensorEntityDescription(
+            key="WindSpeedAvg",
             translation_key="wind_speed_average",
             icon="mdi:weather-windy",
             device_class=SensorDeviceClass.WIND_SPEED,

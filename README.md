@@ -148,11 +148,11 @@ The following entities will be created:
 - Wind Direction: 
     - Current wind direction in degrees [^4]
 - Wind Direction (Average):
-    - Average/dominant wind direction in degrees [^1] [^4]
+    - Average/dominant wind direction in degrees, based on Archive Interval [^1] [^4]
 - Wind Direction Rose: 
     - Current wind direction in cardinal directions (N, NE, E, etc.) [^4]
 - Wind Direction (Rose) (Average)
-    - Average/dominant wind direction in cardinal directions (N, NE, E, etc.) [^1] [^4]
+    - Average/dominant wind direction in cardinal directions (N, NE, E, etc.), based on Archive Interval [^1] [^4]
 - Wind Gust: 
     - Current wind gust, based on the highest value within an Archive Interval [^1]
 - Wind Gust (Day): 
@@ -161,8 +161,10 @@ The following entities will be created:
     - Time of today's highest wind gust
 - Wind Speed: 
     - Current wind speed
-- Wind Speed (Avarage):
+- Wind Speed (10 min. Average):
     - 10 minutes average wind speed
+- Wind Speed (Average):
+    - Average wind speed, based on Archive Interval [^4]
 - Wind Speed (Bft): 
     - 10 minutes average wind speed in Beaufort
 
@@ -224,7 +226,7 @@ Due to the somewhat unstable hardware interface some communication runs result i
 
 [^1]: If values show as "Unknown" make sure the Davis time is set correctly. You can check this by using action "Davis Vantage: Get Davis Time" and, if necessary, correct it by using action "Davis Vantage: Set Davis Time".
 
-[^2]: The Archive Interval value can be set by action "Set Archive Period"
+[^2]: The Archive Interval value can be set by action "Davis Vantage: Set Archive Period"
 
 [^3]: Using WeatherLinkIP combined with sending information to weatherlink.com, may cause problems. It is recommended to disable sending information to weatherlink.com for best results.
 

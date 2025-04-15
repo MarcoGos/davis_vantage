@@ -134,6 +134,9 @@
             "wind_speed": {
                 "name": "Velocità del vento"
             },
+            "wind_speed_average_10min": {
+                "name": "Velocità media del vento (10 min.)"
+            },
             "wind_speed_average": {
                 "name": "Velocità media del vento"
             },

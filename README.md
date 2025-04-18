@@ -146,14 +146,14 @@ The following entities will be created:
 - Wind Chill: 
     - Current wind chill
 - Wind Direction: 
-    - Current wind direction in degrees [^4]
+    - Current wind direction in degrees [^4] [^5]
 - Wind Direction (Average):
     - Average/dominant wind direction in degrees, based on Archive Interval [^1] [^4]
 - Wind Direction Rose: 
     - Current wind direction in cardinal directions (N, NE, E, etc.) [^4]
 - Wind Direction (Rose) (Average)
     - Average/dominant wind direction in cardinal directions (N, NE, E, etc.), based on Archive Interval [^1] [^4]
-- Wind Gust: 
+- Wind Gust:
     - Current wind gust, based on the highest value within an Archive Interval [^1]
 - Wind Gust (Day): 
     - Today's highest wind gust
@@ -231,6 +231,8 @@ Due to the somewhat unstable hardware interface some communication runs result i
 [^3]: Using WeatherLinkIP combined with sending information to weatherlink.com, may cause problems. It is recommended to disable sending information to weatherlink.com for best results.
 
 [^4]: The Wind Direction and Wind Direction (Rose) will be Unknown when the Wind Speed is 0.0. Also the Wind Direction (Average) and Wind Direction (Rose) (Average) will be Unknown when the Wind Speed (Average) is 0.0. As the standard prescribes.
+
+[^5]: As of version 1.5.0 the mean type of Wind Direction is changed. This means the existing long term statistics need to be removed from the database. Home Assistant will generate a repair warning for it.
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/MarcoGos/davis_vantage.svg?style=for-the-badge
 [commits]: https://github.com/MarcoGos/davis_vantage/commits/main

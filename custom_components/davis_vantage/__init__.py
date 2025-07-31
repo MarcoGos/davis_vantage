@@ -64,7 +64,7 @@ async def async_setup_entry(
 
     coordinator = (
         DavisVantageDataUpdateCoordinator(
-            hass=hass, client=client, device_info=device_info
+            hass=hass, client=client, device_info=device_info, config_entry=config_entry
         )
     )
 

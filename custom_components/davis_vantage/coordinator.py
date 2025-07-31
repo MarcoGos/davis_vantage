@@ -2,6 +2,7 @@ from datetime import timedelta
 from typing import Any
 import logging
 
+from homeassistant import config_entries
 from homeassistant.helpers.update_coordinator import UpdateFailed, DataUpdateCoordinator
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.core import HomeAssistant
@@ -19,7 +20,7 @@ class DavisVantageDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the weather station."""
 
     def __init__(
-        self, hass: HomeAssistant, client: DavisVantageClient, device_info: DeviceInfo
+        self, hass: HomeAssistant, client: DavisVantageClient, device_info: DeviceInfo, config_entry: config_entries.ConfigEntry,
     ) -> None:
         """Initialize."""
         self.client: DavisVantageClient = client
@@ -33,6 +34,7 @@ class DavisVantageDataUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER,
             name=DOMAIN,
             update_interval=timedelta(seconds=interval),
+            config_entry=config_entry,
         )
 
     async def _async_update_data(self) -> dict[str, Any]:

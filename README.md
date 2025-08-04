@@ -166,7 +166,7 @@ The following entities will be created:
 - Wind Speed (Average):
     - Average wind speed, based on Archive Interval [^4]
 - Wind Speed (Bft): 
-    - 10 minutes average wind speed in Beaufort
+    - Wind Speed (Average) in Beaufort
 
 Diagnostic entities:
 - Archive Interval: 

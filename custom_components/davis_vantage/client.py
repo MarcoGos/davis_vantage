@@ -182,12 +182,12 @@ class DavisVantageClient:
                 self.add_additional_info(new_data)
                 self.convert_values(new_data)
                 if archives:
-                    self.add_additional_wind_info(archives, new_data)
+                    self.add_archive_info(archives, new_data)
                 if hilows:
                     new_raw_hilows = self.__get_full_raw_data_hilows(hilows)
                     self._last_raw_hilows = new_raw_hilows
                     self.remove_all_incorrect_hilows(new_raw_hilows, hilows)
-                    self.add_hilows(hilows, new_data)
+                    self.add_hilows_info(hilows, new_data)
                 data = new_data
                 data["Datetime"] = self.get_iso_now()
                 if contains_correct_raw_data(new_raw_data):
@@ -370,10 +370,6 @@ class DavisVantageClient:
             data["WindDir"] = None
         if data["WindDir"] is not None:
             data["WindDirRose"] = get_wind_rose(data["WindDir"])
-        if data["WindSpeed10Min"] is not None:
-            data["WindSpeedBft"] = convert_kmh_to_bft(
-                convert_to_kmh(data["WindSpeed10Min"])
-            )
         if data["RainRate"] is not None:
             data["IsRaining"] = data["RainRate"] > 0
         data["ArchiveInterval"] = self._vantagepro2.archive_period
@@ -445,7 +441,7 @@ class DavisVantageClient:
         else:
             return False
 
-    def add_additional_wind_info(self, archives: ListDict | None, data: dict[str, Any]):
+    def add_archive_info(self, archives: ListDict | None, data: dict[str, Any]):
         if not archives:
             return
         latest_archive = archives[-1]
@@ -455,8 +451,12 @@ class DavisVantageClient:
             if latest_archive["WindAvgDir"] < 255:
                 data["WindAvgDir"] = latest_archive["WindAvgDir"] * 22.5
                 data["WindAvgDirRose"] = get_wind_rose(data["WindAvgDir"])
+        if data["WindSpeedAvg"] is not None:
+            data["WindSpeedBft"] = convert_kmh_to_bft(
+                convert_to_kmh(data["WindSpeedAvg"])
+            )
 
-    def add_hilows(self, hilows: HighLowParserRevB | None, data: dict[str, Any]):
+    def add_hilows_info(self, hilows: HighLowParserRevB | None, data: dict[str, Any]):
         if not hilows:
             return
         data["TempOutHiDay"] = hilows["TempHiDay"]

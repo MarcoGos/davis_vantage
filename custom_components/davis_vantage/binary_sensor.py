@@ -1,5 +1,6 @@
 """Binary sensor setup for our Integration."""
 
+from dataclasses import dataclass
 from homeassistant.components.binary_sensor import (
     DOMAIN as BINARY_SENSOR_DOMAIN,
     BinarySensorEntity,
@@ -9,11 +10,20 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from . import DavisConfigEntry
-from .const import DEFAULT_NAME, KEY_TO_NAME
+from .const import DEFAULT_NAME
 from .coordinator import DavisVantageDataUpdateCoordinator
 
-DESCRIPTIONS: list[BinarySensorEntityDescription] = [
-    BinarySensorEntityDescription(key="IsRaining", translation_key="is_raining")
+@dataclass(frozen=True, kw_only=True)
+class DavisVantageBinarySensorEntityDescription(BinarySensorEntityDescription):
+    """Describes Davis Vantage binary sensor entity."""
+
+    entity_name: str
+
+DESCRIPTIONS: list[DavisVantageBinarySensorEntityDescription] = [
+    DavisVantageBinarySensorEntityDescription(
+        key="IsRaining", 
+        translation_key="is_raining", 
+        entity_name="Is Raining"),
 ]
 
 
@@ -51,16 +61,16 @@ class DavisVantageBinarySensor(
         self,
         coordinator: DavisVantageDataUpdateCoordinator,
         entry_id: str,
-        description: BinarySensorEntityDescription,
+        description: DavisVantageBinarySensorEntityDescription,
     ) -> None:
         """Initialize Davis Vantage sensor."""
         super().__init__(coordinator=coordinator)
         self.entity_description = description
         self.entity_id = (
-            f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME} {KEY_TO_NAME[description.key]}".lower()
+            f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME} {description.entity_name}".lower()
         )
         self._attr_unique_id = (
-            f"{entry_id}-{DEFAULT_NAME} {KEY_TO_NAME[description.key]}"
+            f"{entry_id}-{DEFAULT_NAME} {description.entity_name}"
         )
         self._attr_device_info = coordinator.device_info
 

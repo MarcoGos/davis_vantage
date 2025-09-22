@@ -397,7 +397,6 @@ def get_sensor_descriptions(model: str) -> list[DavisSensorEntityDescription]:
             translation_key="wind_speed_bft",
             entity_name="Wind Speed (Bft)",
             icon="mdi:weather-windy",
-            state_class=SensorStateClass.MEASUREMENT,
             device_class=SensorDeviceClass.ENUM,
         ),
         DavisSensorEntityDescription(

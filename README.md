@@ -48,9 +48,6 @@ If you're not sure about the port number (usually port 22222), then browse to th
 ### Interval
 Interval between readouts. Every readout takes up about 1-2 seconds for WeatherLink USB and WeatherLink SER and about 5-6 seconds for WeatherLinkIP.
 
-### Persistent connection
-When getting errors like "Broken pipe", try enabling this setting. This keeps the connection to the console or Envoy open between readouts. This is a recommended setting when using the WeatherLinkIP.
-
 ## What to expect?
 
 The following entities will be created:

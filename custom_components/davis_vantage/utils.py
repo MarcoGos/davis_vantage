@@ -87,7 +87,7 @@ def calc_wind_chill(temperature_f: float, windspeed: float) -> float:
             + (0.6215 * temperature_f) \
             - (35.75 * pow(windspeed,0.16)) \
             + (0.4275 * temperature_f * pow(windspeed, 0.16))
-    return max(wind_chill_f, temperature_f)
+    return min(wind_chill_f, temperature_f)
 
 def calc_feels_like(temperature_f: float, humidity: float, windspeed_mph: float) -> float:
     if windspeed_mph == 0:

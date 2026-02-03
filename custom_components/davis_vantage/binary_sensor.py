@@ -7,11 +7,13 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntityDescription,
 )
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.entity_registry import async_get as async_get_entity_registry
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from . import DavisConfigEntry
 from .const import DEFAULT_NAME
 from .coordinator import DavisVantageDataUpdateCoordinator
+from .utils import make_safe_entity_id
 
 @dataclass(frozen=True, kw_only=True)
 class DavisVantageBinarySensorEntityDescription(BinarySensorEntityDescription):
@@ -34,6 +36,15 @@ async def async_setup_entry(
 ) -> None:
     """Set up Davis Vantage sensors based on a config entry."""
     coordinator = config_entry.runtime_data.coordinator
+    entity_registry = async_get_entity_registry(coordinator.hass)
+
+    # Migrate old entity_ids with spaces to new ones with underscores
+    for desc in DESCRIPTIONS:
+        if desc.entity_name:
+            old_entity_id = f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME} {desc.entity_name}".lower()
+            new_entity_id = make_safe_entity_id(old_entity_id)
+            if entity_registry.async_get(old_entity_id):
+                entity_registry.async_update_entity(old_entity_id, new_entity_id=new_entity_id)
 
     entities: list[DavisVantageBinarySensor] = []
 
@@ -66,8 +77,8 @@ class DavisVantageBinarySensor(
         """Initialize Davis Vantage sensor."""
         super().__init__(coordinator=coordinator)
         self.entity_description = description
-        self.entity_id = (
-            f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME} {description.entity_name}".lower()
+        self.entity_id = make_safe_entity_id(
+            f"{BINARY_SENSOR_DOMAIN}.{DEFAULT_NAME} {description.entity_name}"
         )
         self._attr_unique_id = (
             f"{entry_id}-{DEFAULT_NAME} {description.entity_name}"

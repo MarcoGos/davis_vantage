@@ -27,6 +27,7 @@ from homeassistant.const import (
     EntityCategory
 )
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.entity_registry import async_get as async_get_entity_registry
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
@@ -40,6 +41,7 @@ from .const import (
     MODEL_VANTAGE_PRO2PLUS,
 )
 from .coordinator import DavisVantageDataUpdateCoordinator
+from .utils import make_safe_entity_id
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -642,13 +644,24 @@ async def async_setup_entry(
     """Set up Davis Vantage sensors based on a config entry."""
     coordinator = config_entry.runtime_data.coordinator
     model = config_entry.data.get(CONFIG_STATION_MODEL, '')
+    entity_registry = async_get_entity_registry(coordinator.hass)
+    sensor_descriptions = get_sensor_descriptions(model)
+
+    # Migrate old entity_ids with spaces to new ones with underscores
+    for description in sensor_descriptions:
+        if description.entity_name:
+            old_entity_id = f"{SENSOR_DOMAIN}.{DEFAULT_NAME} {description.entity_name}".lower()
+            new_entity_id = make_safe_entity_id(old_entity_id)
+            if entity_registry.async_get(old_entity_id):
+                entity_registry.async_update_entity(old_entity_id, new_entity_id=new_entity_id)
+
     entities = [
         DavisVantageSensor(
             coordinator=coordinator,
             entry_id=config_entry.entry_id,
-            description=desc,
+            description=description,
         )
-        for desc in get_sensor_descriptions(model)
+        for description in sensor_descriptions
     ]
     async_add_entities(entities)
 
@@ -666,7 +679,7 @@ class DavisVantageSensor(CoordinatorEntity[DavisVantageDataUpdateCoordinator], S
         """Initialize Davis Vantage sensor."""
         super().__init__(coordinator=coordinator)
         self.entity_description = description
-        self.entity_id = f"{SENSOR_DOMAIN}.{DEFAULT_NAME} {description.entity_name}".lower()
+        self.entity_id = make_safe_entity_id(f"{SENSOR_DOMAIN}.{DEFAULT_NAME} {description.entity_name}")
         self._attr_unique_id = f"{entry_id}-{DEFAULT_NAME} {description.entity_name}"
         self._attr_device_info = coordinator.device_info
 

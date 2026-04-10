@@ -60,6 +60,11 @@ class DavisVantageClient:
         self._last_raw_hilows: DataParser = {}  # type: ignore
         self._persistent_connection = persistent_connection
         self._executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="davis_vantage")
+        self._rain_collector_fetched = False
+        self._last_archive_fetch: datetime | None = None
+        self._last_hilows_fetch: datetime | None = None
+        self._cached_archives: ListDict | None = None
+        self._cached_hilows: HighLowParserRevB | None = None
 
     @property
     def latitude(self) -> float:
@@ -122,10 +127,15 @@ class DavisVantageClient:
     def get_current_data(
         self,
     ) -> tuple[LoopDataParserRevB | None, ListDict | None, HighLowParserRevB | None]:
-        """Get current date from weather station."""
+        """Get current data from weather station.
+
+        Only LOOP data is fetched every cycle. Archives and hilows are
+        fetched at most once per archive_period. Rain collector type is
+        read from EEPROM only once after startup.
+        """
         data = None
-        archives = None
-        hilows = None
+        archives = self._cached_archives
+        hilows = self._cached_hilows
 
         start_readout = datetime.now()
 
@@ -134,6 +144,13 @@ class DavisVantageClient:
         if not self._vantagepro2:
             raise RuntimeError("Could not initialize Davis station connection")
 
+        now = datetime.now()
+        archive_period = self._vantagepro2.archive_period  # type: ignore
+        need_slow_data = (
+            self._last_archive_fetch is None
+            or (now - self._last_archive_fetch).total_seconds() >= archive_period * 60
+        )
+
         try:
             self._vantagepro2.link.open()
 
@@ -141,30 +158,37 @@ class DavisVantageClient:
             data = self._vantagepro2.get_current_data()
             _LOGGER.debug("End get_current_data")
 
-            try:
-                _LOGGER.debug("Start get_hilows")
-                hilows = self._vantagepro2.get_hilows()
-                _LOGGER.debug("End get_hilows")
-            except Exception as e:
-                _LOGGER.error("Couldn't get hilows: %s", e)
+            if need_slow_data:
+                try:
+                    _LOGGER.debug("Start get_hilows")
+                    hilows = self._vantagepro2.get_hilows()
+                    self._cached_hilows = hilows
+                    _LOGGER.debug("End get_hilows")
+                except Exception as e:
+                    _LOGGER.error("Couldn't get hilows: %s", e)
 
-            try:
-                end_datetime = datetime.now()
-                start_datetime = end_datetime - timedelta(
-                    minutes=self._vantagepro2.archive_period * 2  # type: ignore
-                )
-                _LOGGER.debug("Start get_archives")
-                archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
-                _LOGGER.debug("End get_archives")
-            except Exception as e:
-                _LOGGER.error("Couldn't get archives: %s", e)
+                try:
+                    end_datetime = datetime.now()
+                    start_datetime = end_datetime - timedelta(
+                        minutes=archive_period * 2
+                    )
+                    _LOGGER.debug("Start get_archives")
+                    archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
+                    self._cached_archives = archives
+                    _LOGGER.debug("End get_archives")
+                except Exception as e:
+                    _LOGGER.error("Couldn't get archives: %s", e)
 
-            try:
-                _LOGGER.debug("Start get_rain_collector")
-                self._rain_collector = self.get_rain_collector()
-                _LOGGER.debug("End get_rain_collector")
-            except Exception as e:
-                _LOGGER.error("Couldn't get rain_collector: %s", e)
+                self._last_archive_fetch = now
+
+            if not self._rain_collector_fetched:
+                try:
+                    _LOGGER.debug("Start get_rain_collector")
+                    self._rain_collector = self.get_rain_collector()
+                    self._rain_collector_fetched = True
+                    _LOGGER.debug("End get_rain_collector")
+                except Exception as e:
+                    _LOGGER.error("Couldn't get rain_collector: %s", e)
 
         except Exception as e:
             raise e
@@ -555,6 +579,7 @@ class DavisVantageClient:
         try:
             loop = asyncio.get_event_loop()
             await loop.run_in_executor(self._executor, self.set_rain_collector, rain_collector)
+            self._rain_collector_fetched = False
         except Exception as e:
             _LOGGER.error("Couldn't set rain collector: %s", e)
 

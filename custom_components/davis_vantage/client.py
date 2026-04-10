@@ -2,6 +2,7 @@
 
 from typing import Any
 from functools import cached_property
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, time, date
 from zoneinfo import ZoneInfo
 import logging
@@ -58,6 +59,7 @@ class DavisVantageClient:
         self._last_raw_data: DataParser = {}  # type: ignore
         self._last_raw_hilows: DataParser = {}  # type: ignore
         self._persistent_connection = persistent_connection
+        self._executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="davis_vantage")
 
     @property
     def latitude(self) -> float:
@@ -89,7 +91,7 @@ class DavisVantageClient:
         vp = None
         try:
             loop = asyncio.get_event_loop()
-            vp = await loop.run_in_executor(None, self.get_vantagepro2fromurl, url)
+            vp = await loop.run_in_executor(self._executor, self.get_vantagepro2fromurl, url)
         except Exception as e:
             _LOGGER.error("Error on opening device from url: %s: %s", url, e)
         return vp
@@ -134,38 +136,38 @@ class DavisVantageClient:
 
         try:
             self._vantagepro2.link.open()
+
             _LOGGER.debug("Start get_current_data")
             data = self._vantagepro2.get_current_data()
-            _LOGGER.debug("End get_current_data:")
+            _LOGGER.debug("End get_current_data")
+
+            try:
+                _LOGGER.debug("Start get_hilows")
+                hilows = self._vantagepro2.get_hilows()
+                _LOGGER.debug("End get_hilows")
+            except Exception as e:
+                _LOGGER.error("Couldn't get hilows: %s", e)
+
+            try:
+                end_datetime = datetime.now()
+                start_datetime = end_datetime - timedelta(
+                    minutes=self._vantagepro2.archive_period * 2  # type: ignore
+                )
+                _LOGGER.debug("Start get_archives")
+                archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
+                _LOGGER.debug("End get_archives")
+            except Exception as e:
+                _LOGGER.error("Couldn't get archives: %s", e)
+
+            try:
+                _LOGGER.debug("Start get_rain_collector")
+                self._rain_collector = self.get_rain_collector()
+                _LOGGER.debug("End get_rain_collector")
+            except Exception as e:
+                _LOGGER.error("Couldn't get rain_collector: %s", e)
+
         except Exception as e:
-            if not self._persistent_connection:
-                self._vantagepro2.link.close()
             raise e
-
-        try:
-            _LOGGER.debug("Start get_hilows")
-            hilows = self._vantagepro2.get_hilows()
-            _LOGGER.debug("End get_hilows")
-        except Exception as e:
-            _LOGGER.error("Couldn't get hilows: %s", e)
-
-        try:
-            end_datetime = datetime.now()
-            start_datetime = end_datetime - timedelta(
-                minutes=self._vantagepro2.archive_period * 2  # type: ignore
-            )
-            _LOGGER.debug("Start get_archives")
-            archives = self._vantagepro2.get_archives(start_datetime, end_datetime)  # type: ignore
-            _LOGGER.debug("End get_archives")
-        except Exception as e:
-            _LOGGER.error("Couldn't get archives: %s", e)
-
-        try:
-            _LOGGER.debug("Start get_rain_collector")
-            self._rain_collector = self.get_rain_collector()
-            _LOGGER.debug("End get_rain_collector")
-        except Exception as e:
-            _LOGGER.error("Couldn't get rain_collector: %s", e)
         finally:
             if not self._persistent_connection:
                 self._vantagepro2.link.close()
@@ -180,7 +182,7 @@ class DavisVantageClient:
         try:
             loop = asyncio.get_event_loop()
             new_data, archives, hilows = await loop.run_in_executor(
-                None, self.get_current_data
+                self._executor, self.get_current_data
             )
             if new_data:
                 new_raw_data = self.__get_full_raw_data(new_data)
@@ -254,7 +256,7 @@ class DavisVantageClient:
         data = None
         try:
             loop = asyncio.get_event_loop()
-            data = await loop.run_in_executor(None, self.get_davis_time)
+            data = await loop.run_in_executor(self._executor, self.get_davis_time)
         except Exception as e:
             _LOGGER.error("Couldn't get davis time: %s", e)
         return data
@@ -274,7 +276,7 @@ class DavisVantageClient:
         """Set time of weather station async."""
         try:
             loop = asyncio.get_event_loop()
-            await loop.run_in_executor(None, self.set_davis_time, datetime.now())
+            await loop.run_in_executor(self._executor, self.set_davis_time, datetime.now())
         except Exception as e:
             _LOGGER.error("Couldn't set davis time: %s", e)
 
@@ -299,7 +301,7 @@ class DavisVantageClient:
         info = None
         try:
             loop = asyncio.get_event_loop()
-            info = await loop.run_in_executor(None, self.get_info)
+            info = await loop.run_in_executor(self._executor, self.get_info)
         except Exception as e:
             _LOGGER.error("Couldn't get firmware info: %s", e)
         return info
@@ -320,7 +322,7 @@ class DavisVantageClient:
         info = None
         try:
             loop = asyncio.get_event_loop()
-            info = await loop.run_in_executor(None, self.get_static_info)
+            info = await loop.run_in_executor(self._executor, self.get_static_info)
         except Exception as e:
             _LOGGER.error("Couldn't get static info: %s", e)
         return info
@@ -340,7 +342,7 @@ class DavisVantageClient:
         """Set yearly rain of weather station async."""
         try:
             loop = asyncio.get_event_loop()
-            await loop.run_in_executor(None, self.set_yearly_rain, rain_clicks)
+            await loop.run_in_executor(self._executor, self.set_yearly_rain, rain_clicks)
         except Exception as e:
             _LOGGER.error("Couldn't set yearly rain: %s", e)
 
@@ -358,7 +360,7 @@ class DavisVantageClient:
     async def async_set_archive_period(self, archive_period: int) -> None:
         try:
             loop = asyncio.get_event_loop()
-            await loop.run_in_executor(None, self.set_archive_period, archive_period)
+            await loop.run_in_executor(self._executor, self.set_archive_period, archive_period)
         except Exception as e:
             _LOGGER.error("Couldn't set archive period: %s", e)
 
@@ -534,7 +536,7 @@ class DavisVantageClient:
         info = ""
         try:
             loop = asyncio.get_event_loop()
-            info = await loop.run_in_executor(None, self.get_rain_collector)
+            info = await loop.run_in_executor(self._executor, self.get_rain_collector)
         except Exception as e:
             _LOGGER.error("Couldn't get rain collector: %s", e)
         return info
@@ -552,7 +554,7 @@ class DavisVantageClient:
     async def async_set_rain_collector(self, rain_collector: str):
         try:
             loop = asyncio.get_event_loop()
-            await loop.run_in_executor(None, self.set_rain_collector, rain_collector)
+            await loop.run_in_executor(self._executor, self.set_rain_collector, rain_collector)
         except Exception as e:
             _LOGGER.error("Couldn't set rain collector: %s", e)
 
@@ -569,7 +571,7 @@ class DavisVantageClient:
         try:
             loop = asyncio.get_event_loop()
             latitude, longitude, elevation = await loop.run_in_executor(
-                None, self.get_latitude_longitude_elevation
+                self._executor, self.get_latitude_longitude_elevation
             )
         except Exception as e:
             _LOGGER.error("Couldn't get latitude longitude: %s", e)

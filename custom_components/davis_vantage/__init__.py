@@ -84,6 +84,8 @@ async def async_setup_entry(
 
 async def async_unload_entry(hass: HomeAssistant, config_entry: DavisConfigEntry) -> bool:
     """Unload a config entry."""
+    coordinator = config_entry.runtime_data.coordinator
+    coordinator.client._executor.shutdown(wait=False)
     return await hass.config_entries.async_unload_platforms(
         config_entry, PLATFORMS
     )

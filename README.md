@@ -80,14 +80,6 @@ The following entities will be created:
     - Current humidity extra sensor 1-7
 - Extra Temperature 1-7:
     - Current temperature extra sensor 1-7
-- Soil Moisture 1-4:
-    - Current soil moisture 1-4
-- Soil Temperature 1-4:
-    - Current soil temperature sensor 1-4
-- Leaf Temperature 1-4:
-    - Current leaf temperature sensor 1-4
-- Leaf Wetness 1-4:
-    - Current leaf wetness sensor 1-4
 - Feels Like: 
     - Current feels like temperature
 - Forecast Icon: 
@@ -106,6 +98,10 @@ The following entities will be created:
     - Current inside relative humidity
 - Is Raining: 
     - True if it's currently raining (based on rain rate)
+- Leaf Temperature 1-4:
+    - Current leaf temperature sensor 1-4
+- Leaf Wetness 1-4:
+    - Current leaf wetness sensor 1-4
 - Rain (Day): 
     - Today's total precipitation
 - Rain (Month): 
@@ -124,6 +120,10 @@ The following entities will be created:
     - Start date of current rain storm. The rain period starts with a minimal of 2 ticks of the precipitation meter (0.4mm or 2/100") and ends after 24h of no rain.
 - Sea Level Pressure:
     - Barometric pressure normalized to sea level based on station elevation and temperature
+- Soil Moisture 1-4:
+    - Current soil moisture 1-4
+- Soil Temperature 1-4:
+    - Current soil temperature sensor 1-4
 - Solar Radiation: 
     - Current solar radiation
 - Solar Radiation (Day): 

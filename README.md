@@ -80,6 +80,14 @@ The following entities will be created:
     - Current humidity extra sensor 1-7
 - Extra Temperature 1-7:
     - Current temperature extra sensor 1-7
+- Soil Moisture 1-4:
+    - Current soil moisture 1-4
+- Soil Temperature 1-4:
+    - Current soil temperature sensor 1-4
+- Leaf Temperature 1-4:
+    - Current leaf temperature sensor 1-4
+- Leaf Wetness 1-4:
+    - Current leaf wetness sensor 1-4
 - Feels Like: 
     - Current feels like temperature
 - Forecast Icon: 

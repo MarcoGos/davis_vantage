@@ -32,7 +32,25 @@ WeatherLinkIP Data Logger | 1.1.5
 
 ## Installation
 
-Via HACS, just search for Davis Vantage.
+This integration is in the default HACS store. Click the button below, or search HACS for "Davis Vantage".
+
+[![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MarcoGos&repository=davis_vantage&category=integration)
+
+Restart Home Assistant after installing.
+
+<details>
+<summary>Manual installation</summary>
+
+1. Copy the `custom_components/davis_vantage` directory from this repository into your Home Assistant `config/custom_components/` folder.
+2. Restart Home Assistant.
+
+</details>
+
+## Setup
+
+After the restart, add the integration:
+
+[![Add integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=davis_vantage)
 
 ## Setup
 

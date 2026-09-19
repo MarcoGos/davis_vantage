@@ -1,12 +1,12 @@
+import logging
 from datetime import timedelta
 from typing import Any
-import logging
 
 from homeassistant import config_entries
-from homeassistant.helpers.update_coordinator import UpdateFailed, DataUpdateCoordinator
-from homeassistant.helpers.device_registry import DeviceInfo
-from homeassistant.helpers import device_registry as dr
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from pyvantagepro.parser import LoopDataParserRevB
 
 from .client import DavisVantageClient
@@ -45,7 +45,10 @@ class DavisVantageDataUpdateCoordinator(DataUpdateCoordinator):
         """Update integration device software version in the device registry."""
         self.device_info["sw_version"] = sw_version
         device_registry = dr.async_get(self.hass)
-        device = device_registry.async_get_device(identifiers={(DOMAIN, self._entry_id)})
+        if hasattr(device_registry, "async_get_device_by_identifier"):
+            device = device_registry.async_get_device_by_identifier((DOMAIN, self._entry_id), self._entry_id)  # type: ignore[attr-defined]
+        else:
+            device = device_registry.async_get_device(identifiers={(DOMAIN, self._entry_id)})
         if device is not None:
             device_registry.async_update_device(device.id, sw_version=sw_version)
 

@@ -82,7 +82,7 @@
             "last_error_message": {
                 "name": "Letzte Fehlermeldung"
             },
-            "archive_internal": {
+            "archive_interval": {
                 "name": "Archiv-Intervall"
             },
             "temperature": {

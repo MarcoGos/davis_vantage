@@ -1,8 +1,11 @@
 """Binary sensor setup for our Integration."""
 
 from dataclasses import dataclass
+
 from homeassistant.components.binary_sensor import (
     DOMAIN as BINARY_SENSOR_DOMAIN,
+)
+from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,
     BinarySensorEntityDescription,
@@ -16,6 +19,7 @@ from . import DavisConfigEntry
 from .const import DEFAULT_NAME
 from .coordinator import DavisVantageDataUpdateCoordinator
 from .utils import normalize_unique_id
+
 
 @dataclass(frozen=True, kw_only=True)
 class DavisVantageBinarySensorEntityDescription(BinarySensorEntityDescription):
@@ -32,6 +36,7 @@ DESCRIPTIONS: list[DavisVantageBinarySensorEntityDescription] = [
         key="TransmitterBatteryLow",
         translation_key="transmitter_battery_low",
         entity_name="Transmitter Battery Low",
+        icon="mdi:battery-alert-variant-outline",
         device_class=BinarySensorDeviceClass.BATTERY,
         entity_category=EntityCategory.DIAGNOSTIC),
 ]

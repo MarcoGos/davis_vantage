@@ -3,9 +3,11 @@
 from dataclasses import dataclass
 from homeassistant.components.binary_sensor import (
     DOMAIN as BINARY_SENSOR_DOMAIN,
+    BinarySensorDeviceClass,
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
+from homeassistant.const import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.entity_registry import async_get as async_get_entity_registry
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -26,6 +28,12 @@ DESCRIPTIONS: list[DavisVantageBinarySensorEntityDescription] = [
         key="IsRaining", 
         translation_key="is_raining", 
         entity_name="Is Raining"),
+    DavisVantageBinarySensorEntityDescription(
+        key="TransmitterBatteryLow",
+        translation_key="transmitter_battery_low",
+        entity_name="Transmitter Battery Low",
+        device_class=BinarySensorDeviceClass.BATTERY,
+        entity_category=EntityCategory.DIAGNOSTIC),
 ]
 
 

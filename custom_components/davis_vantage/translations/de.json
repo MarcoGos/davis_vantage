@@ -598,6 +598,9 @@
         "binary_sensor": {
             "is_raining": {
                 "name": "Regnet"
+            },
+            "transmitter_battery_low": {
+                "name": "Sender Batterie schwach"
             }
         }
     },

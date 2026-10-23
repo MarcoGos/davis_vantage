@@ -36,7 +36,6 @@ DESCRIPTIONS: list[DavisVantageBinarySensorEntityDescription] = [
         key="TransmitterBatteryLow",
         translation_key="transmitter_battery_low",
         entity_name="Transmitter Battery Low",
-        icon="mdi:battery-alert-variant-outline",
         device_class=BinarySensorDeviceClass.BATTERY,
         entity_category=EntityCategory.DIAGNOSTIC),
 ]

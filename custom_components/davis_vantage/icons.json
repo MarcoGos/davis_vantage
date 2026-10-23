@@ -53,6 +53,12 @@
           "on": "mdi:weather-pouring",
           "off": "mdi:weather-partly-cloudy"
         }
+      },
+      "transmitter_battery_low": {
+        "state": {
+          "on": "mdi:battery-alert-variant-outline",
+          "off": "mdi:battery-outline"
+        }
       }
     }
   }

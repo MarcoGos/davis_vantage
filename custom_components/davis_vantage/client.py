@@ -392,6 +392,8 @@ class DavisVantageClient:
             data["WindDirRose"] = get_wind_rose(data["WindDir"])
         if data["RainRate"] is not None:
             data["IsRaining"] = data["RainRate"] > 0
+        if data["BatteryStatus"] is not None:
+            data["TransmitterBatteryLow"] = data["BatteryStatus"] != 0
         data["ArchiveInterval"] = self._vantagepro2.archive_period
 
         data["Latitude"] = self.latitude

@@ -600,8 +600,8 @@
             "is_raining": {
                 "name": "Sta Piovendo"
             },
-            "transmitter_battery_low": {
-                "name": "Batteria trasmettitore scarica"
+            "transmitter_battery_status": {
+                "name": "Stato batteria trasmettitore"
             }
         }
     },

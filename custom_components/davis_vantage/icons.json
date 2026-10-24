@@ -54,7 +54,7 @@
           "off": "mdi:weather-partly-cloudy"
         }
       },
-      "transmitter_battery_low": {
+      "transmitter_battery_status": {
         "state": {
           "on": "mdi:battery-alert-variant-outline",
           "off": "mdi:battery-outline"

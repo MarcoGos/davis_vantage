@@ -600,8 +600,8 @@
             "is_raining": {
                 "name": "Is Raining"
             },
-            "transmitter_battery_low": {
-                "name": "Transmitter Battery Low"
+            "transmitter_battery_status": {
+                "name": "Transmitter Battery Status"
             }
         }
     },

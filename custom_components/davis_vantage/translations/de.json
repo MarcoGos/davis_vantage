@@ -599,8 +599,8 @@
             "is_raining": {
                 "name": "Regnet"
             },
-            "transmitter_battery_low": {
-                "name": "Sender Batterie schwach"
+            "transmitter_battery_status": {
+                "name": "Sender Batteriestatus"
             }
         }
     },

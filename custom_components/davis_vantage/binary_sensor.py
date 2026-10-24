@@ -33,11 +33,12 @@ DESCRIPTIONS: list[DavisVantageBinarySensorEntityDescription] = [
         translation_key="is_raining", 
         entity_name="Is Raining"),
     DavisVantageBinarySensorEntityDescription(
-        key="TransmitterBatteryLow",
-        translation_key="transmitter_battery_low",
-        entity_name="Transmitter Battery Low",
+        key="TransmitterBatteryStatus",
+        translation_key="transmitter_battery_status",
+        entity_name="Transmitter Battery Status",
         device_class=BinarySensorDeviceClass.BATTERY,
-        entity_category=EntityCategory.DIAGNOSTIC),
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False),
 ]
 
 

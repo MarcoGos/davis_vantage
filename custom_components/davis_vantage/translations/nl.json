@@ -600,8 +600,8 @@
             "is_raining": {
                 "name": "Het regent"
             },
-            "transmitter_battery_low": {
-                "name": "Zender batterij bijna leeg"
+            "transmitter_battery_status": {
+                "name": "Zender batterijstatus"
             }
         }
     },

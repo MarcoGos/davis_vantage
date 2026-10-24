@@ -600,8 +600,8 @@
             "is_raining": {
                 "name": "Il pleut"
             },
-            "transmitter_battery_low": {
-                "name": "Batterie émetteur faible"
+            "transmitter_battery_status": {
+                "name": "État de la batterie de l'émetteur"
             }
         }
     },

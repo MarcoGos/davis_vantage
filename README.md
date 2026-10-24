@@ -218,8 +218,8 @@ Diagnostic entities:
     - Longitude read from the console
 - Rain Collector: 
     - Current rain collector setup (0.01", 0.2 mm or 0.1 mm)
-- Transmitter Battery Low:
-    - On if the console reports a low battery on any wireless transmitter (e.g. the ISS). This is not the console battery (see Battery Voltage)
+- Transmitter Battery Status:
+    - Low if the console reports a low battery on any wireless transmitter (e.g. the ISS). This is not the console battery (see Battery Voltage)
 
 The entity information is updated every 30 seconds (default or other value if choosen during setup).
 

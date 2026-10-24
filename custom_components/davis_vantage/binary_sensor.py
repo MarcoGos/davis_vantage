@@ -26,6 +26,7 @@ class DavisVantageBinarySensorEntityDescription(BinarySensorEntityDescription):
     """Describes Davis Vantage binary sensor entity."""
 
     entity_name: str
+    legacy_entity_names: tuple[str, ...] = ()
 
 DESCRIPTIONS: list[DavisVantageBinarySensorEntityDescription] = [
     DavisVantageBinarySensorEntityDescription(
@@ -36,6 +37,7 @@ DESCRIPTIONS: list[DavisVantageBinarySensorEntityDescription] = [
         key="TransmitterBatteryStatus",
         translation_key="transmitter_battery_status",
         entity_name="Transmitter Battery Status",
+        legacy_entity_names=("Transmitter Battery Low",),
         device_class=BinarySensorDeviceClass.BATTERY,
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False),
@@ -54,15 +56,21 @@ async def async_setup_entry(
     # Migrate old unique_ids with spaces or brackets to new ones with underscores and no brackets (preserve entity history)
     for desc in DESCRIPTIONS:
         if desc.entity_name:
-            old_unique_id = f"{config_entry.entry_id}-{DEFAULT_NAME} {desc.entity_name}"
-            new_unique_id = normalize_unique_id(old_unique_id)
-            entity = entity_registry.async_get_entity_id(
-                BINARY_SENSOR_DOMAIN, config_entry.domain, old_unique_id
+            new_unique_id = normalize_unique_id(
+                f"{config_entry.entry_id}_{DEFAULT_NAME}_{desc.entity_name}"
             )
-            if entity and not entity_registry.async_get_entity_id(
-                BINARY_SENSOR_DOMAIN, config_entry.domain, new_unique_id
-            ):
-                entity_registry.async_update_entity(entity, new_unique_id=new_unique_id)
+            for entity_name in (desc.entity_name, *desc.legacy_entity_names):
+                old_unique_id = f"{config_entry.entry_id}-{DEFAULT_NAME} {entity_name}"
+                for candidate in (old_unique_id, normalize_unique_id(old_unique_id)):
+                    entity = entity_registry.async_get_entity_id(
+                        BINARY_SENSOR_DOMAIN, config_entry.domain, candidate
+                    )
+                    if entity and not entity_registry.async_get_entity_id(
+                        BINARY_SENSOR_DOMAIN, config_entry.domain, new_unique_id
+                    ):
+                        entity_registry.async_update_entity(
+                            entity, new_unique_id=new_unique_id
+                        )
 
     entities: list[DavisVantageBinarySensor] = []
 
